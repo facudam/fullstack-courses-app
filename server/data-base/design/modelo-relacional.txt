@@ -1,0 +1,9 @@
+Course <course_id(PK), title, is_free?, resource_link, rating, description, image, language_id(FK), type_id(FK), tech_id(FK)>
+User <user_id(PK), user_name, user_email>
+Course_language <language_id(PK), language_name>
+Course_type <type_id(PK), type_name>
+Comments <comment_id(PK), comment_description, course_id(FK), user_id(FK)>
+Technology <tech_id(PK), tech_name>
+Author <author_id(PK), author_name, author_country>
+StarRatingPerCourse <rate_id(PK), rate, course_id(FK)>
+CreadoPor <author_id(PK, FK), course_id(PK, FK)>
