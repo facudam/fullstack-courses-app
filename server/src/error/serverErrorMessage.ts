@@ -1,1 +1,3 @@
-export const serverErrorMessage: {'message': string} = {'message': 'Oops, there was a problem with the server. Please try again'}
+export const serverErrorMessage = 'Oops, something went wrong. Please try again. '
+ 
+
