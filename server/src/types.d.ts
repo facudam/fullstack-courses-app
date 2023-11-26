@@ -7,7 +7,12 @@ interface CourseLanguage {
     language_name: string
 }
 
+interface Type {
+    type_name: string
+}
+
 export {
     Author,
-    CourseLanguage
+    CourseLanguage,
+    Type
 }
