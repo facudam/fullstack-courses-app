@@ -4,7 +4,7 @@ import { ResultSetHeader } from "mysql2";
 import { Author } from "../types";
 import { serverErrorMessage } from "../error/serverErrorMessage";
 
-export const getAuthors = async(_req: Request, res: Response) => {
+const getAuthors = async(_req: Request, res: Response) => {
     try {
         const [ result ]  = await pool.query('SELECT * FROM author');
         return res.json(result)
@@ -14,9 +14,10 @@ export const getAuthors = async(_req: Request, res: Response) => {
     }
 }
 
-export const getAuthorById = async(req: Request, res: Response) => {
+const getAuthorById = async(req: Request, res: Response) => {
     try {
         const [ result ]  = await pool.query('SELECT * FROM author WHERE author_id = ?', [req.params.id])
+
         if (Array.isArray(result) &&  result.length <= 0) return res.status(404).json({'message': 'Author not found'})
     
         return res.json(result)
@@ -25,7 +26,7 @@ export const getAuthorById = async(req: Request, res: Response) => {
     }
 }
 
-export const createAuthor = async(req: Request, res: Response) => {
+const createAuthor = async(req: Request, res: Response) => {
     try {
         const { author_name, author_country }: Author = req.body;
         pool.query('INSERT INTO author (author_name, author_country) VALUES (?,?)', [author_name, author_country]);
@@ -35,7 +36,7 @@ export const createAuthor = async(req: Request, res: Response) => {
     }
 }
 
-export const updateAuthor = async(req: Request, res: Response) => {
+const updateAuthor = async(req: Request, res: Response) => {
     try {
         const { id } = req.params;
         const { name, country } = req.body;
@@ -48,7 +49,7 @@ export const updateAuthor = async(req: Request, res: Response) => {
     }
 }
 
-export const deleteAuthor = async(req: Request, res: Response) => {
+const deleteAuthor = async(req: Request, res: Response) => {
     try {
         const { id } = req.params;
         const [ result ] = await pool.query<ResultSetHeader>('DELETE FROM author WHERE author_id = ?', [ id ]);
@@ -59,3 +60,11 @@ export const deleteAuthor = async(req: Request, res: Response) => {
         return res.status(500).send(serverErrorMessage + error)
     }
 } 
+
+export {
+    getAuthors,
+    createAuthor,
+    updateAuthor,
+    deleteAuthor,
+    getAuthorById
+}
