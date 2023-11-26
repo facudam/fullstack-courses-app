@@ -11,8 +11,13 @@ interface Type {
     type_name: string
 }
 
+interface Technology {
+    tech_name: string
+}
+
 export {
     Author,
     CourseLanguage,
-    Type
+    Type,
+    Technology
 }
