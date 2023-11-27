@@ -29,15 +29,15 @@ CREATE TABLE course_type(
 
 CREATE TABLE course (
 	course_id INT NOT NULL AUTO_INCREMENT,
-	title VARCHAR(100),
-	is_free BOOLEAN,
-	resource_link VARCHAR(1000),
+	title VARCHAR(100) NOT NULL,
+	is_free BOOLEAN NOT NULL,
+	resource_link VARCHAR(1000) NOT NULL,
 	rating DECIMAL(3,2),
-	description VARCHAR(250),
-	image VARCHAR(250),
-	language_id INT,
-	type_id INT,
-	tech_id INT,
+	description VARCHAR(250) NOT NULL,
+	image VARCHAR(250) NOT NULL,
+	language_id INT NOT NULL,
+	type_id INT NOT NULL,
+	tech_id INT NOT NULL,
 	PRIMARY KEY(course_id),
 	CONSTRAINT fk_language_id FOREIGN KEY(language_id)
 	REFERENCES course_language(language_id),

@@ -15,9 +15,22 @@ interface Technology {
     tech_name: string
 }
 
+interface Course {
+    title: string,
+    is_free: boolean | number,
+    resource_link: string,
+    rating: number | null,
+    description: string,
+    image: string,
+    language_id: number,
+    type_id: number,
+    tech_id: number
+}
+
 export {
     Author,
     CourseLanguage,
     Type,
-    Technology
+    Technology,
+    Course
 }
