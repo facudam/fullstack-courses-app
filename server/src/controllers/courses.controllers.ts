@@ -1,4 +1,6 @@
 import { Request, Response } from "express"
+import multer from 'multer';
+import path from 'path';
 import { pool } from "../../data-base/connection_db"
 import { ResultSetHeader } from "mysql2";
 import { Course } from "../types";
@@ -26,15 +28,53 @@ const getCourseById = async(req: Request, res: Response) => {
     }
 }
 
-const createCourse = async(req: Request, res: Response) => {
-    try {
-        const { title, is_free, resource_link, description, image, language_id, type_id, tech_id }: Course = req.body;
-        pool.query('INSERT INTO course (title, is_free, resource_link, description, image, language_id, type_id, tech_id) VALUES (?,?,?,?,?,?,?,?)', [title, is_free, resource_link, description, image, language_id, type_id, tech_id]);
-        res.json({ title, is_free, resource_link, description, image, language_id, type_id, tech_id })
-    } catch(error: unknown) {
-        res.status(500).send(serverErrorMessage + error)
+// Configuración de multer para manejar la carga de archivos
+const storage = multer.diskStorage({
+    destination: function (_req, _file, cb) {
+      cb(null, 'uploads');  // La carpeta donde se guardarán las imágenes
+    },
+    filename: function (_req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     }
-}
+  });
+  
+const upload = multer({ storage: storage });
+
+const createCourse = async (req: Request, res: Response) => {
+    try {
+      const {
+        title,
+        is_free,
+        resource_link,
+        description,
+        language_id,
+        type_id,
+        tech_id
+      }: Course = req.body;
+  
+      // Obtén la ruta de la imagen cargada
+      const image = req.file ? req.file.path : null;
+  
+      // Inserta el curso en la base de datos
+      pool.query(
+        'INSERT INTO course (title, is_free, resource_link, description, image, language_id, type_id, tech_id) VALUES (?,?,?,?,?,?,?,?)',
+        [title, is_free, resource_link, description, image, language_id, type_id, tech_id]
+      );
+  
+      res.json({
+        title,
+        is_free,
+        resource_link,
+        description,
+        image,
+        language_id,
+        type_id,
+        tech_id
+      });
+    } catch (error: unknown) {
+      res.status(500).send(serverErrorMessage + String(error));
+    }
+  };
 
 const updateCourse = async(req: Request, res: Response) => {
     try {
@@ -66,5 +106,6 @@ export {
     createCourse,
     updateCourse,
     deleteCourse,
-    getCourseById
+    getCourseById,
+    upload
 }

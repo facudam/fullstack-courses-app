@@ -21,7 +21,7 @@ interface Course {
     resource_link: string,
     rating: number | null,
     description: string,
-    image: string,
+    image?: string,
     language_id: number,
     type_id: number,
     tech_id: number
