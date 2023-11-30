@@ -5,7 +5,7 @@ const router = Router()
 
 router.get('/api/courses', getCourses)
 router.post('/api/courses', upload.single('image'), createCourse)
-router.patch('/api/courses/:id', updateCourse)
+router.patch('/api/courses/:id', upload.single('image'),  updateCourse)
 router.get('/api/courses/:id', getCourseById)
 router.delete('/api/courses/:id', deleteCourse)
 
