@@ -27,6 +27,12 @@ interface Course {
     tech_id: number
 }
 
+interface Rating {
+    rate: number,
+    course_id: number,
+    user_id: number
+}
+
 
 export {
     Author,
@@ -34,4 +40,5 @@ export {
     Type,
     Technology,
     Course,
+    Rating
 }

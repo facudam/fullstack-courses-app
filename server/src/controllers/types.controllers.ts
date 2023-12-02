@@ -16,11 +16,10 @@ const getTypes = async(_req: Request, res: Response) => {
 
 const getTypeById = async(req: Request, res: Response) => {
     try {
-        const [ result ]  = await pool.query('SELECT * FROM course_type WHERE type_id = ?', [req.params.id])
+        const [ result ]  = await pool.query<ResultSetHeader[]>('SELECT * FROM course_type WHERE type_id = ?', [req.params.id])
 
-        if (Array.isArray(result) &&  result.length <= 0) return res.status(404).json({'message': 'Type not found'})
-    
-        return res.json(result)
+        if (result.length <= 0) return res.status(404).json({'message': 'Type not found'})
+        return res.json(result[0])
     } catch (error: unknown) {
         return res.status(500).json(serverErrorMessage + error)
     }

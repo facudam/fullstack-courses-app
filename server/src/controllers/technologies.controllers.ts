@@ -16,11 +16,11 @@ const getTechnologies = async(_req: Request, res: Response) => {
 
 const getTechnologyById = async(req: Request, res: Response) => {
     try {
-        const [ result ]  = await pool.query('SELECT * FROM technology WHERE tech_id = ?', [req.params.id])
+        const [ result ]  = await pool.query<ResultSetHeader[]>('SELECT * FROM technology WHERE tech_id = ?', [req.params.id])
 
-        if (Array.isArray(result) &&  result.length <= 0) return res.status(404).json({'message': 'Technology not found'})
+        if (result.length <= 0) return res.status(404).json({'message': 'Technology not found'})
     
-        return res.json(result)
+        return res.json(result[0])
     } catch (error: unknown) {
         return res.status(500).json(serverErrorMessage + error)
     }

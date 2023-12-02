@@ -50,9 +50,12 @@ CREATE TABLE star_rating_per_course(
 	rate_id INT NOT NULL AUTO_INCREMENT,
 	rate INT,
 	course_id INT,
+	user_id INT,
 	PRIMARY KEY(rate_id),
 	CONSTRAINT fk_course_id FOREIGN KEY(course_id)
-	REFERENCES course(course_id)
+	REFERENCES course(course_id),
+	CONSTRAINT fk_user_id_rating FOREIGN KEY (user_id)
+	REFERENCES user(user_id)
 );
 
 CREATE TABLE comments(

@@ -16,11 +16,10 @@ const getAuthors = async(_req: Request, res: Response) => {
 
 const getAuthorById = async(req: Request, res: Response) => {
     try {
-        const [ result ]  = await pool.query('SELECT * FROM author WHERE author_id = ?', [req.params.id])
-
-        if (Array.isArray(result) &&  result.length <= 0) return res.status(404).json({'message': 'Author not found'})
-    
-        return res.json(result)
+        const [ result ]  = await pool.query<ResultSetHeader[]>('SELECT * FROM author WHERE author_id = ?', [req.params.id])
+        
+        if (result.length <= 0) return res.status(404).json({'message': 'Author not found'})
+        return res.json(result[0])
     } catch (error: unknown) {
         return res.status(500).json(serverErrorMessage + error)
     }

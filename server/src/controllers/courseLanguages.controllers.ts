@@ -25,11 +25,11 @@ const createCourseLanguage =  async (req: Request, res: Response) => {
 
 const getCourseLanguageById = async(req: Request, res: Response) => {
     try {
-        const [ result ] = await pool.query('SELECT * FROM course_language WHERE language_id = ?', [req.params.id])
+        const [ result ] = await pool.query<ResultSetHeader[]>('SELECT * FROM course_language WHERE language_id = ?', [req.params.id])
 
-        if(Array.isArray(result) &&  result.length <= 0) return res.status(404).json({'message': 'Language not found'})
+        if(result.length <= 0) return res.status(404).json({'message': 'Language not found'})
 
-        return res.json(result)
+        return res.json(result[0])
     } catch (error: unknown) {
         return res.status(500).send(serverErrorMessage + error)
     }
