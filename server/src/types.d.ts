@@ -33,6 +33,11 @@ interface Rating {
     user_id: number
 }
 
+interface Comment {
+    comment_description: string,
+    course_id: number,
+    user_id: number
+}
 
 export {
     Author,
@@ -40,5 +45,6 @@ export {
     Type,
     Technology,
     Course,
-    Rating
+    Rating,
+    Comment
 }
