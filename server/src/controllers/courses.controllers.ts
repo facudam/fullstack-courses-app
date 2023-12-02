@@ -6,6 +6,9 @@ import { ResultSetHeader } from "mysql2";
 import { Course } from "../types";
 import { serverErrorMessage } from "../error/serverErrorMessage";
 
+
+const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', 'svg'];
+
 // Configuración de multer para manejar la carga de archivos
 const storage = multer.diskStorage({
   destination: function (_req, _file, cb) {
@@ -16,7 +19,19 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage: storage });
+const fileFilter = function (_req: Request, file: Express.Multer.File, cb: any) {
+  const extname = path.extname(file.originalname).toLowerCase();
+  if (imageExtensions.includes(extname)) {
+    cb(null, true);
+  } else {
+    cb(new Error('Solo se permiten archivos de imagen.'));
+  }
+};
+
+const upload = multer({ 
+  storage: storage,
+  fileFilter: fileFilter
+});
 
 const getCourses = async(_req: Request, res: Response) => {
     try {
@@ -30,11 +45,11 @@ const getCourses = async(_req: Request, res: Response) => {
 
 const getCourseById = async(req: Request, res: Response) => {
     try {
-        const [ result ]  = await pool.query('SELECT * FROM course WHERE course_id = ?', [req.params.id])
+        const [ result ]  = await pool.query<ResultSetHeader[]>('SELECT * FROM course WHERE course_id = ?', [req.params.id])
 
-        if (Array.isArray(result) &&  result.length <= 0) return res.status(404).json({'message': 'Course not found'})
+        if ( result.length <= 0) return res.status(404).json({'message': 'Course not found'})
     
-        return res.json(result)
+        return res.json(result[0])
     } catch (error: unknown) {
         return res.status(500).json(serverErrorMessage + error)
     }
@@ -58,7 +73,6 @@ const createCourse = async (req: Request, res: Response) => {
       // Este sería la url de la imagen para la api si estuviera alojada en mi sitio web personal:
       // const image = req.file ? `https://facundocaceres.dev/${ req.file.filename }` : null;
   
-      // Insertamos el curso en la base de datos:
       pool.query(
         'INSERT INTO course (title, is_free, resource_link, description, image, language_id, type_id, tech_id) VALUES (?,?,?,?,?,?,?,?)',
         [title, is_free, resource_link, description, image, language_id, type_id, tech_id]

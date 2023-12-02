@@ -27,10 +27,11 @@ interface Course {
     tech_id: number
 }
 
+
 export {
     Author,
     CourseLanguage,
     Type,
     Technology,
-    Course
+    Course,
 }
