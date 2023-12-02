@@ -32,7 +32,6 @@ CREATE TABLE course (
 	title VARCHAR(100) NOT NULL,
 	is_free BOOLEAN NOT NULL,
 	resource_link VARCHAR(1000) NOT NULL,
-	rating DECIMAL(3,2),
 	description VARCHAR(250) NOT NULL,
 	image VARCHAR(250) NOT NULL,
 	language_id INT NOT NULL,
