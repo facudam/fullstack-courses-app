@@ -6,6 +6,7 @@ import technologyRoutes from './routes/technologies.routes'
 import courseRoutes from './routes/courses.routes'
 import ratingRoutes from './routes/rating.routes'
 import commentsRoutes from './routes/comments.routes'
+import creadoPorRoutes from './routes/creadoPor.routes'
 
 
 const app = express()
@@ -21,6 +22,7 @@ app.use(technologyRoutes)
 app.use(courseRoutes)
 app.use(ratingRoutes)
 app.use(commentsRoutes)
+app.use(creadoPorRoutes)
 
 app.listen(PORT, () => {
     console.log('Server is listening on port', PORT)

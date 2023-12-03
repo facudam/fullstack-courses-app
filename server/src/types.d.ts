@@ -39,6 +39,11 @@ interface Comment {
     user_id: number
 }
 
+interface CreadoPor {
+    author_id: number,
+    course_id: number
+}
+
 export {
     Author,
     CourseLanguage,
@@ -46,5 +51,6 @@ export {
     Technology,
     Course,
     Rating,
-    Comment
+    Comment,
+    CreadoPor
 }

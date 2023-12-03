@@ -71,9 +71,10 @@ CREATE TABLE comments(
 );
 
 CREATE TABLE creado_por (
+	creadoPor_id INT AUTO_INCREMENT,
     author_id INT,
     course_id INT,
-    PRIMARY KEY (author_id, course_id),
+    PRIMARY KEY (creadoPor_id),
     CONSTRAINT fk_creado_por_author_id FOREIGN KEY (author_id) REFERENCES author(author_id),
     CONSTRAINT fk_creado_por_course_id FOREIGN KEY (course_id) REFERENCES course(course_id)
 );

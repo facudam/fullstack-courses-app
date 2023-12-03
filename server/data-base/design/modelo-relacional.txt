@@ -6,4 +6,4 @@ Comments <comment_id(PK), comment_description, course_id(FK), user_id(FK)>
 Technology <tech_id(PK), tech_name>
 Author <author_id(PK), author_name, author_country>
 StarRatingPerCourse <rate_id(PK), rate, course_id(FK)>
-CreadoPor <author_id(PK, FK), course_id(PK, FK)>
+CreadoPor <creadoPor_id(PK), author_id(FK), course_id(FK)>
