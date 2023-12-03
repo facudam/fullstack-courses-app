@@ -7,12 +7,13 @@ import courseRoutes from './routes/courses.routes'
 import ratingRoutes from './routes/rating.routes'
 import commentsRoutes from './routes/comments.routes'
 import creadoPorRoutes from './routes/creadoPor.routes'
+import { PORT } from './config';
 
 
 const app = express()
 app.use(express.json()) //Transformamos la req.body en json
 
-const PORT = 3000;
+
 
 app.get('/', (_req, res) => { res.send('inicio')})
 app.use(authorRoutes);
