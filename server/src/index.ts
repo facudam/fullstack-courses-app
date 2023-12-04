@@ -7,6 +7,7 @@ import courseRoutes from './routes/courses.routes'
 import ratingRoutes from './routes/rating.routes'
 import commentsRoutes from './routes/comments.routes'
 import creadoPorRoutes from './routes/creadoPor.routes'
+import usersRoutes from './routes/users.routes'
 import { PORT } from './config';
 
 
@@ -24,6 +25,7 @@ app.use(courseRoutes)
 app.use(ratingRoutes)
 app.use(commentsRoutes)
 app.use(creadoPorRoutes)
+app.use(usersRoutes)
 
 app.listen(PORT, () => {
     console.log('Server is listening on port', PORT)

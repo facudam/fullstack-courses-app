@@ -1,4 +1,4 @@
-import { Router } from "express";
+import Router from "express";
 import { createAuthor, deleteAuthor, getAuthorById, getAuthors, updateAuthor } from '../controllers/author.controllers';
 
 const router = Router()
