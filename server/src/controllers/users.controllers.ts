@@ -24,6 +24,31 @@ const getUserById = async(req: Request, res: Response) => {
     }
 }
 
+const createUser = async(req: Request, res: Response) => {
+    try {
+        const { name, email, password } = req.body
+
+        await pool.query('INSERT INTO user (user_name, user_email, user_password) VALUES(?,?,?)', [ name, email, password ])
+        res.json({ name, email, password })
+
+    } catch (error: unknown) {
+        res.status(500).send(serverErrorMessage + error)
+    }
+}
+
+const loginUser = async(req: Request, res: Response) => {
+    try {
+        const { email, password } = req.body
+        const [ result ] = await pool.query<ResultSetHeader[]>('SELECT * FROM user WHERE user_email = ? AND user_password = ?', [ email, password ])
+
+        if (result.length <= 0) return res.status(404).send({message: 'invalid email or password'})
+        return res.send( result[0])
+
+    } catch (error: unknown) {
+        return res.status(500).send( serverErrorMessage + error)
+    }
+}
+
 const updateUser = async(req: Request, res: Response) => {
     try {
         const { id } = req.params;
@@ -54,5 +79,7 @@ export {
     getUsers,
     getUserById,
     updateUser,
-    deleteUser
+    deleteUser,
+    createUser,
+    loginUser
 }

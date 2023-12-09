@@ -1,23 +1,45 @@
-import { Link } from "react-router-dom"
+import { ChangeEvent, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import axios from 'axios'
 
 
 export const Signup = () => {
+
+    const [ email, setEmail ] = useState<string>('')
+    const [ password, setPassword ] = useState<string>('')
+    const [ name, setName ] = useState<string>('')
+    const navigate = useNavigate()
+
+    const handleEmail = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)
+    const handlePassword = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)
+    const handleName = (e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)
+    
+
+    const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        axios.post('http://localhost:4000/api/users', { name, email, password } )
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+        navigate('/')
+        
+    }
+
   return (
     <div>
-        <form>
+        <form onSubmit={ handleSubmit }>
             <div>
                 <label htmlFor="name">name</label>
-                <input type="text" name="name" placeholder="Enter name" />
+                <input onChange={ handleName } type="text" name="name" placeholder="Enter name" value={ name } />
             </div>
             <div>
                 <label htmlFor="email">Email</label>
-                <input type="email" name="email" placeholder="Enter Email" />
+                <input onChange={ handleEmail } type="email" name="email" placeholder="Enter Email" value={ email } />
             </div>
             <div>
                 <label htmlFor="password">Password</label>
-                <input type="password" name="password" placeholder="Enter password" />
+                <input onChange={ handlePassword } type="password" name="password" placeholder="Enter password" value={ password } />
             </div>
-            <button>Log in</button>
+            <button type="submit">Signup</button>
             <p>Do you have an account already?</p>
             <Link to='/'>Login</Link>
         </form>

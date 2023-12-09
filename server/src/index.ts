@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors'
 import authorRoutes from './routes/authors.routes'
 import courseLanguages from './routes/course_languages.routes'
 import courseTypes from './routes/course_types.routes'
@@ -14,7 +15,7 @@ import { PORT } from './config';
 const app = express()
 app.use(express.json()) //Transformamos la req.body en json
 
-
+app.use(cors())
 
 app.get('/', (_req, res) => { res.send('inicio')})
 app.use(authorRoutes);
