@@ -34,7 +34,7 @@ export const Login = () => {
             } )
     }
 
-    useEffect(() => {console.log(isLoggedIn)}, [isLoggedIn])
+    useEffect(() => {console.log(isLoggedIn)}, [ isLoggedIn ])
 
 
   return (

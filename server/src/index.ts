@@ -10,10 +10,18 @@ import commentsRoutes from './routes/comments.routes'
 import creadoPorRoutes from './routes/creadoPor.routes'
 import usersRoutes from './routes/users.routes'
 import { PORT } from './config';
+import session from 'express-session'
+
 
 
 const app = express()
 app.use(express.json()) //Transformamos la req.body en json
+
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}))
 
 app.use(cors())
 

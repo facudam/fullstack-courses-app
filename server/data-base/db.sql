@@ -79,6 +79,14 @@ CREATE TABLE creado_por (
     CONSTRAINT fk_creado_por_course_id FOREIGN KEY (course_id) REFERENCES course(course_id)
 );
 
+CREATE TABLE user (
+	user_id INT AUTO_INCREMENT,
+	user_name VARCHAR(50),
+	user_email VARCHAR(100),
+	user_password VARCHAR(250),
+	PRIMARY KEY (user_id)
+);
+
 -- SELECT c.id, c.title, c.description, l.language, c.image FROM courses c
 -- INNER JOIN languages l
 -- WHERE l.language = 'python' AND l.id = c.type_id;

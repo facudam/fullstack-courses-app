@@ -1,8 +1,15 @@
 import { Request, Response } from "express";
 import { pool } from "../../data-base/connection_db";
 import { serverErrorMessage } from "../error/serverErrorMessage";
-import { ResultSetHeader } from "mysql2";
+import { ResultSetHeader} from "mysql2";
+import bcryptjs from "bcryptjs"
+import { User } from "../types";
+import { Session } from 'express-session';
 
+interface CustomSession extends Session {
+    isLogged?: boolean;
+    // Puedes agregar otras propiedades si es necesario
+}
 
 const getUsers = async(_req: Request, res: Response) => {
     try {
@@ -27,22 +34,33 @@ const getUserById = async(req: Request, res: Response) => {
 const createUser = async(req: Request, res: Response) => {
     try {
         const { name, email, password } = req.body
+        let encryptedPass = await bcryptjs.hash(password, 8)
 
-        await pool.query('INSERT INTO user (user_name, user_email, user_password) VALUES(?,?,?)', [ name, email, password ])
-        res.json({ name, email, password })
+        await pool.query('INSERT INTO user (user_name, user_email, user_password) VALUES(?,?,?)', [ name, email, encryptedPass ])
+        res.json({ name, email, encryptedPass })
 
     } catch (error: unknown) {
         res.status(500).send(serverErrorMessage + error)
     }
 }
 
-const loginUser = async(req: Request, res: Response) => {
+const loginUser = async(req: Request  & { session: CustomSession }, res: Response) => {
     try {
-        const { email, password } = req.body
-        const [ result ] = await pool.query<ResultSetHeader[]>('SELECT * FROM user WHERE user_email = ? AND user_password = ?', [ email, password ])
+        const { email, password } = req.body;
+        // 1. Obtener el usuario por correo electrónico
+        const [ result ] = await pool.query<any>('SELECT user_id, user_email, user_password, user_name FROM user WHERE user_email = ?', [email]);
 
-        if (result.length <= 0) return res.status(404).send({message: 'invalid email or password'})
-        return res.send( result[0])
+        // 2. Verificar si el usuario existe
+        if (result.length === 0) return res.status(404).send({ message: 'Invalid email or password' });
+        // 3. Verificamos la contraseña utilizando bcryptjs
+        const user: User = result[0];
+        console.log(user)
+        const passwordMatch = await bcryptjs.compare(password, user.user_password);
+
+        if (!passwordMatch) return res.status(401).send({ message: 'Invalid email or password' });
+        req.session.isLogged = true
+        const { user_id, user_name, user_email } = user
+        return res.send({ user_id, user_name, user_email });
 
     } catch (error: unknown) {
         return res.status(500).send( serverErrorMessage + error)

@@ -44,6 +44,13 @@ interface CreadoPor {
     course_id: number
 }
 
+interface User {
+    user_id: number
+    user_name: string,
+    user_email: string,
+    user_password: string
+}
+
 export {
     Author,
     CourseLanguage,
@@ -52,5 +59,6 @@ export {
     Course,
     Rating,
     Comment,
-    CreadoPor
+    CreadoPor,
+    User
 }
