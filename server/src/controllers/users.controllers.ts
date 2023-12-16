@@ -3,12 +3,17 @@ import { pool } from "../../data-base/connection_db";
 import { serverErrorMessage } from "../error/serverErrorMessage";
 import { ResultSetHeader} from "mysql2";
 import bcryptjs from "bcryptjs"
-import { User } from "../types";
 import { Session } from 'express-session';
 
 interface CustomSession extends Session {
     isLogged?: boolean;
-    // Puedes agregar otras propiedades si es necesario
+}
+
+interface UserReq extends ResultSetHeader {
+    user_id: number
+    user_name: string,
+    user_email: string,
+    user_password: string
 }
 
 const getUsers = async(_req: Request, res: Response) => {
@@ -47,20 +52,22 @@ const createUser = async(req: Request, res: Response) => {
 const loginUser = async(req: Request  & { session: CustomSession }, res: Response) => {
     try {
         const { email, password } = req.body;
+        
         // 1. Obtener el usuario por correo electrónico
-        const [ result ] = await pool.query<any>('SELECT user_id, user_email, user_password, user_name FROM user WHERE user_email = ?', [email]);
+        const [ result ] = await pool.query<UserReq[]>('SELECT user_id, user_email, user_password, user_name FROM user WHERE user_email = ?', [email]);
 
-        // 2. Verificar si el usuario existe
+        // 2. Verificamos si el usuario existe
         if (result.length === 0) return res.status(404).send({ message: 'Invalid email or password' });
+        
         // 3. Verificamos la contraseña utilizando bcryptjs
-        const user: User = result[0];
-        console.log(user)
+        const user= result[0];
         const passwordMatch = await bcryptjs.compare(password, user.user_password);
 
         if (!passwordMatch) return res.status(401).send({ message: 'Invalid email or password' });
         req.session.isLogged = true
+
         const { user_id, user_name, user_email } = user
-        return res.send({ user_id, user_name, user_email });
+        return res.json({ user_id, user_name, user_email, isLogged: req.session.isLogged });
 
     } catch (error: unknown) {
         return res.status(500).send( serverErrorMessage + error)
