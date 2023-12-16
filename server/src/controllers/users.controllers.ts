@@ -74,6 +74,16 @@ const loginUser = async(req: Request  & { session: CustomSession }, res: Respons
     }
 }
 
+
+
+const logoutUser = (req: Request, res: Response) => {
+    req.session.destroy((err) => {
+        if (err) return console.log('Error al destruir la sesión: ', err)
+        res.redirect('/')
+    })
+    
+}
+
 const updateUser = async(req: Request, res: Response) => {
     try {
         const { id } = req.params;
@@ -106,5 +116,6 @@ export {
     updateUser,
     deleteUser,
     createUser,
-    loginUser
+    loginUser,
+    logoutUser
 }
