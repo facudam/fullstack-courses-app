@@ -6,7 +6,7 @@ import bcryptjs from "bcryptjs"
 import { Session } from 'express-session';
 
 interface CustomSession extends Session {
-    isLogged?: boolean;
+    username: string;
 }
 
 interface UserReq extends ResultSetHeader {
@@ -15,6 +15,8 @@ interface UserReq extends ResultSetHeader {
     user_email: string,
     user_password: string
 }
+
+// type MyRequestHandler = (req: Request & { session: CustomSession }, res: Response) => Promise<Response<any, Record<string, any>>>;
 
 const getUsers = async(_req: Request, res: Response) => {
     try {
@@ -49,7 +51,7 @@ const createUser = async(req: Request, res: Response) => {
     }
 }
 
-const loginUser = async(req: Request  & { session: CustomSession }, res: Response) => {
+const loginUser: any  = async(req: Request  & { session: CustomSession }, res: Response) => {
     try {
         const { email, password } = req.body;
         
@@ -57,23 +59,23 @@ const loginUser = async(req: Request  & { session: CustomSession }, res: Respons
         const [ result ] = await pool.query<UserReq[]>('SELECT user_id, user_email, user_password, user_name FROM user WHERE user_email = ?', [email]);
 
         // 2. Verificamos si el usuario existe
-        if (result.length === 0) return res.status(404).send({ message: 'Invalid email or password' });
+        if (result.length === 0) return res.status(404).send({ message: 'Invalid email or password', login: false });
         
         // 3. Verificamos la contraseña utilizando bcryptjs
         const user= result[0];
         const passwordMatch = await bcryptjs.compare(password, user.user_password);
 
-        if (!passwordMatch) return res.status(401).send({ message: 'Invalid email or password' });
-        req.session.isLogged = true
+        if (!passwordMatch) return res.status(401).json({ message: 'Invalid email or password', login: false });
+        // if (!passwordMatch) return res.status(401).json({ login: false})
+        req.session.username = user.user_name
 
-        const { user_id, user_name, user_email } = user
-        return res.json({ user_id, user_name, user_email, isLogged: req.session.isLogged });
+        // const { user_id, user_name, user_email } = user
+        return res.json({ login: true, user });
 
     } catch (error: unknown) {
         return res.status(500).send( serverErrorMessage + error)
     }
 }
-
 
 
 const logoutUser = (req: Request, res: Response) => {
@@ -82,6 +84,18 @@ const logoutUser = (req: Request, res: Response) => {
         res.redirect('/')
     })
     
+}
+
+const userIsLogged: any = (req: Request  & { session: CustomSession }, res: Response) => {
+    try {
+        if(req.session.username) {
+            return res.json({ valid: true, username: req.session.username })
+        } else {
+            return res.json({ valid: false })
+        }
+    } catch (error: unknown) {
+        return res.status(500).send( serverErrorMessage + error)
+    }
 }
 
 const updateUser = async(req: Request, res: Response) => {
@@ -117,5 +131,6 @@ export {
     deleteUser,
     createUser,
     loginUser,
-    logoutUser
+    logoutUser,
+    userIsLogged
 }

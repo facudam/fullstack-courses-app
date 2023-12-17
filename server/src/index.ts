@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors'
 import session from 'express-session'
+import cookieParser from 'cookie-parser'
+import bodyParser from 'body-parser';
 import crypto from 'crypto'
 import authorRoutes from './routes/authors.routes'
 import courseLanguages from './routes/course_languages.routes'
@@ -17,11 +19,17 @@ import { PORT } from './config';
 const app = express()
 app.use(express.json()) //Transformamos la req.body en json
 
+app.use(cookieParser())
+app.use(bodyParser.json())
 const secret = crypto.randomBytes(64).toString('hex');
 app.use(session({
     secret: secret,
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: false,
+        maxAge: 1000 * 60 * 60 * 24
+    }
 }))
 
 app.use(cors({
