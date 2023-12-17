@@ -20,7 +20,7 @@ export const Signup = () => {
         axios.post('http://localhost:4000/api/users', { name, email, password } )
             .then(res => console.log(res))
             .catch(err => console.log(err))
-        navigate('/')
+        navigate('/login')
         
     }
 
