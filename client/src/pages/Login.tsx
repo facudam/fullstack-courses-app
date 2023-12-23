@@ -36,12 +36,10 @@ export const Login = () => {
         if (res.data.login) {
           setIsDataInvalid(false);
           navigate('/')
-        } else {
-          setIsDataInvalid(true);
         }
-        
       })
       .catch((err) => {
+        setIsDataInvalid(true);
         console.log("Hubo un error: " + err);
       });
   };

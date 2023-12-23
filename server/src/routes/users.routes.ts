@@ -8,7 +8,7 @@ router.post('/api/users', createUser)
 router.get('/api/users/:id', getUserById)
 router.patch('/api/users/:id', updateUser)
 router.delete('/api/users/:id', deleteUser)
-router.get('/logout', logoutUser)
+router.post('/logout', logoutUser)
 router.post('/api/login', loginUser);
 router.get('/api/validation', userIsLogged)
 

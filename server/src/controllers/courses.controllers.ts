@@ -7,9 +7,9 @@ import { Course } from "../types";
 import { serverErrorMessage } from "../error/serverErrorMessage";
 
 
-const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', 'svg'];
+const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', 'svg', '.AVIF'];
 
-// Configuración de multer para manejar la carga de archivos
+// Configuración de multer para manejar la carga de archivos:
 const storage = multer.diskStorage({
   destination: function (_req, _file, cb) {
     cb(null, 'uploads');  // La carpeta donde se guardarán las imágenes

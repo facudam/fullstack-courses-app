@@ -10,6 +10,13 @@ const Home = () => {
 
     axios.defaults.withCredentials = true
 
+    const handleLogout =  () => {
+        axios.post('http://localhost:4000/logout')
+            .then(() => navigate('/login'))
+            .catch((error) => {console.log(error)})
+    }
+    
+
     useEffect(() => {
         axios.get('http://localhost:4000/api/validation')
             .then(res => {
@@ -25,7 +32,11 @@ const Home = () => {
     })
 
   return (
-    <div>Hola { name }</div>
+    <div>
+        <p>Hola { name }</p>
+        <button onClick={handleLogout}>Logout</button>
+    </div>
+    
   )
 }
 

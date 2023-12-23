@@ -5,6 +5,7 @@ import { ResultSetHeader} from "mysql2";
 import bcryptjs from "bcryptjs"
 import { Session } from 'express-session';
 
+
 interface CustomSession extends Session {
     username: string;
 }
@@ -15,8 +16,6 @@ interface UserReq extends ResultSetHeader {
     user_email: string,
     user_password: string
 }
-
-// type MyRequestHandler = (req: Request & { session: CustomSession }, res: Response) => Promise<Response<any, Record<string, any>>>;
 
 const getUsers = async(_req: Request, res: Response) => {
     try {
@@ -31,7 +30,7 @@ const getUserById = async(req: Request, res: Response) => {
     try {
         const { id } = req.params
         const [ result ] = await pool.query<ResultSetHeader[]>('SELECT * FROM user WHERE user_id = ?', [ id ])
-        if (result.length <= 0) return res.status(404).json({message: 'User not found'})
+        if (result.length <= 0) return res.status(404).json({ message: 'User not found' })
         return res.json(result[0])
     } catch (error:unknown) {
         return res.status(500).send(serverErrorMessage + error)
@@ -41,13 +40,18 @@ const getUserById = async(req: Request, res: Response) => {
 const createUser = async(req: Request, res: Response) => {
     try {
         const { name, email, password } = req.body
+        // Verificamos que el email no exista en la base de datos:
+        const [ result ] = await pool.query<UserReq[]>('SELECT * FROM user WHERE user_email = ?', [email]);
+        // Si ya existe retornamos un codigo 409 de conflicto:
+        if (result.length > 0) return res.status(409).json({ message: 'User already exists' })
+
         let encryptedPass = await bcryptjs.hash(password, 8)
 
         await pool.query('INSERT INTO user (user_name, user_email, user_password) VALUES(?,?,?)', [ name, email, encryptedPass ])
-        res.json({ name, email, encryptedPass })
+        return res.json({ name, email, encryptedPass })
 
     } catch (error: unknown) {
-        res.status(500).send(serverErrorMessage + error)
+        return res.status(500).send(serverErrorMessage + error)
     }
 }
 
@@ -55,21 +59,19 @@ const loginUser: any  = async(req: Request  & { session: CustomSession }, res: R
     try {
         const { email, password } = req.body;
         
-        // 1. Obtener el usuario por correo electrónico
-        const [ result ] = await pool.query<UserReq[]>('SELECT user_id, user_email, user_password, user_name FROM user WHERE user_email = ?', [email]);
+        // 1. Obtenemos el usuario por correo electrónico:
+        const [ result ] = await pool.query<UserReq[]>('SELECT * FROM user WHERE user_email = ?', [email]);
 
-        // 2. Verificamos si el usuario existe
+        // 2. Verificamos si el usuario existe:
         if (result.length === 0) return res.status(404).send({ message: 'Invalid email or password', login: false });
         
-        // 3. Verificamos la contraseña utilizando bcryptjs
-        const user= result[0];
+        // 3. Verificamos la contraseña utilizando bcryptjs:
+        const user = result[0];
         const passwordMatch = await bcryptjs.compare(password, user.user_password);
 
-        if (!passwordMatch) return res.status(401).json({ message: 'Invalid email or password', login: false });
-        // if (!passwordMatch) return res.status(401).json({ login: false})
+        if (!passwordMatch) return res.status(401).json({ message: 'Invalid email or password' });
         req.session.username = user.user_name
 
-        // const { user_id, user_name, user_email } = user
         return res.json({ login: true, user });
 
     } catch (error: unknown) {
@@ -79,16 +81,20 @@ const loginUser: any  = async(req: Request  & { session: CustomSession }, res: R
 
 
 const logoutUser = (req: Request, res: Response) => {
-    req.session.destroy((err) => {
-        if (err) return console.log('Error al destruir la sesión: ', err)
-        res.redirect('/')
-    })
+    try {
+        req.session.destroy((err) => {
+            if (err) return console.log('Error al destruir la sesión: ', err)
+        })
+        res.status(200).send('Logout exitoso');
+    } catch (error) {
+        res.status(500).send(serverErrorMessage + error)
+    }
     
 }
 
 const userIsLogged: any = (req: Request  & { session: CustomSession }, res: Response) => {
     try {
-        if(req.session.username) {
+        if (req.session.username) {
             return res.json({ valid: true, username: req.session.username })
         } else {
             return res.json({ valid: false })
