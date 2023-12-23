@@ -24,7 +24,8 @@ interface Course {
     image?: string,
     language_id: number,
     type_id: number,
-    tech_id: number
+    tech_id: number,
+    author_id: number
 }
 
 interface Rating {

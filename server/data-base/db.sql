@@ -37,13 +37,16 @@ CREATE TABLE course (
 	language_id INT NOT NULL,
 	type_id INT NOT NULL,
 	tech_id INT NOT NULL,
+	author_id INT NOT NULL,
 	PRIMARY KEY(course_id),
 	CONSTRAINT fk_language_id FOREIGN KEY(language_id)
 	REFERENCES course_language(language_id),
 	CONSTRAINT fk_type_id FOREIGN KEY(type_id)
 	REFERENCES course_type(type_id),
 	CONSTRAINT fk_tech_id FOREIGN KEY(tech_id)
-	REFERENCES technology(tech_id)
+	REFERENCES technology(tech_id),
+	CONSTRAINT fk_author_id FOREIGN KEY(author_id)
+	REFERENCES author(author_id)
 );
 
 CREATE TABLE star_rating_per_course(
@@ -68,15 +71,6 @@ CREATE TABLE comments(
 	REFERENCES course(course_id),
 	CONSTRAINT fk_comments_user_id FOREIGN KEY(user_id)
 	REFERENCES user(user_id)
-);
-
-CREATE TABLE creado_por (
-	creadoPor_id INT AUTO_INCREMENT,
-    author_id INT,
-    course_id INT,
-    PRIMARY KEY (creadoPor_id),
-    CONSTRAINT fk_creado_por_author_id FOREIGN KEY (author_id) REFERENCES author(author_id),
-    CONSTRAINT fk_creado_por_course_id FOREIGN KEY (course_id) REFERENCES course(course_id)
 );
 
 CREATE TABLE user (
