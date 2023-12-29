@@ -1,11 +1,11 @@
 import Router from 'express'
-import { createCourse, deleteCourse, getCourseById, getCourses, updateCourse, upload } from '../controllers/courses.controllers';
+import { createCourse, deleteCourse, getCourseById, getCourses, updateCourse } from '../controllers/courses.controllers';
 
 const router = Router()
 
 router.get('/api/courses', getCourses)
-router.post('/api/courses', upload.single('image'), createCourse)
-router.patch('/api/courses/:id', upload.single('image'),  updateCourse)
+router.post('/api/courses', createCourse)
+router.patch('/api/courses/:id', updateCourse)
 router.get('/api/courses/:id', getCourseById)
 router.delete('/api/courses/:id', deleteCourse)
 

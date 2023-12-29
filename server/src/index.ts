@@ -13,7 +13,8 @@ import ratingRoutes from './routes/rating.routes'
 import commentsRoutes from './routes/comments.routes'
 import creadoPorRoutes from './routes/creadoPor.routes'
 import usersRoutes from './routes/users.routes'
-import { PORT } from './config';
+import { PORT } from './config'
+import fileUpload from 'express-fileupload'
 
 
 const app = express()
@@ -21,6 +22,7 @@ app.use(express.json()) //Transformamos la req.body en json
 
 app.use(cookieParser())
 app.use(bodyParser.json())
+app.use(fileUpload())
 const secret = crypto.randomBytes(64).toString('hex');
 app.use(session({
     secret: secret,
