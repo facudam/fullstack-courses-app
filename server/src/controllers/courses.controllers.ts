@@ -1,11 +1,9 @@
 import { Request, Response } from "express"
-import fs from 'fs';
 import { pool } from "../../data-base/connection_db"
 import { ResultSetHeader } from "mysql2";
 import { Course } from "../types";
 import { serverErrorMessage } from "../error/serverErrorMessage";
-import axios from 'axios';
-import { IMGUR_CLIENTID } from "../config";
+import { uploadAndGetUrlImage } from "./helpers/uploadImg";
 
 const SqlQuery = `
     SELECT
@@ -69,36 +67,8 @@ const createCourse = async (req: Request, res: Response) => {
       if (!req.files || Object.keys(req.files).length === 0) return res.status(400).send('No files were uploaded');
 
       const sampleFile: any = req.files.sampleFile;
-      const uploadPath = __dirname + '/uploads/' + sampleFile.name;
-
-      // Utilizamos una promesa para envolver la operación asíncrona
-      const moveFilePromise = new Promise<void>((resolve, reject) => {
-          sampleFile.mv(uploadPath, (err: unknown) => {
-              if (err) {
-                  reject(err);
-              } else {
-                  resolve();
-              }
-          });
-      });
-
-      await moveFilePromise; 
-
-      const imgurResponse = await axios.post(
-          'https://api.imgur.com/3/image',
-          {
-              image: fs.readFileSync(uploadPath, 'base64'),
-          },
-          {
-              headers: {
-                  Authorization: `Client-ID ${ IMGUR_CLIENTID }`,
-                  'Content-Type': 'application/json',
-              },
-          }
-      );
-
-      fs.unlinkSync(uploadPath); // Eliminamos el archivo temporal después de subirlo a Imgur
-      const imageUrl = imgurResponse.data.data.link;
+    
+      const imageUrl = await uploadAndGetUrlImage(sampleFile)
 
       await pool.query(
           'INSERT INTO course (title, is_free, resource_link, description, image, language_id, type_id, tech_id, author_id) VALUES (?,?,?,?,?,?,?,?,?)',
@@ -126,7 +96,8 @@ const updateCourse = async(req: Request, res: Response) => {
           author_id
         }: Course = req.body;
 
-        const imageUrl = null;
+        const sampleFile: any = req.files?.sampleFile;
+        const imageUrl = req.files ? await uploadAndGetUrlImage(sampleFile) : null;
       
         const [ result ] = await pool.query<ResultSetHeader>('UPDATE course SET title = IFNULL(?, title), is_free = IFNULL(?, is_free), resource_link = IFNULL(?, resource_link), description = IFNULL(?, description), image = IFNULL(?, image), language_id = IFNULL(?, language_id), type_id = IFNULL(?, type_id), tech_id = IFNULL(?, tech_id), author_id = IFNULL(?, author_id)  WHERE course_id = ?', [title, is_free, resource_link, description, imageUrl, language_id, type_id, tech_id, author_id, id])
 
