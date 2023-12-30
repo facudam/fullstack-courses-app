@@ -7,7 +7,8 @@ const PORT = process.env.PORT || 4000 ,
     DB_PORT = process.env.DB_PORT || 3306,
     DB_USER = process.env.DB_USER || 'root',
     DB_PASS = process.env.DB_PASS || 'root',
-    DB_HOST = process.env.DB_HOST || 'localhost';
+    DB_HOST = process.env.DB_HOST || 'localhost',
+    IMGUR_CLIENTID = process.env.IMGUR_CLIENTID;
 
 export {
     PORT,
@@ -15,5 +16,6 @@ export {
     DB_NAME,
     DB_PASS,
     DB_PORT,
-    DB_USER
+    DB_USER,
+    IMGUR_CLIENTID
 }

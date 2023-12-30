@@ -5,6 +5,7 @@ import { ResultSetHeader } from "mysql2";
 import { Course } from "../types";
 import { serverErrorMessage } from "../error/serverErrorMessage";
 import axios from 'axios';
+import { IMGUR_CLIENTID } from "../config";
 
 const SqlQuery = `
     SELECT
@@ -83,8 +84,6 @@ const createCourse = async (req: Request, res: Response) => {
 
       await moveFilePromise; 
 
-      const imgurClientId = '0f4617c70cba570';
-
       const imgurResponse = await axios.post(
           'https://api.imgur.com/3/image',
           {
@@ -92,7 +91,7 @@ const createCourse = async (req: Request, res: Response) => {
           },
           {
               headers: {
-                  Authorization: `Client-ID ${imgurClientId}`,
+                  Authorization: `Client-ID ${ IMGUR_CLIENTID }`,
                   'Content-Type': 'application/json',
               },
           }
@@ -127,7 +126,7 @@ const updateCourse = async(req: Request, res: Response) => {
           author_id
         }: Course = req.body;
 
-        const imageUrl = ''
+        const imageUrl = null;
       
         const [ result ] = await pool.query<ResultSetHeader>('UPDATE course SET title = IFNULL(?, title), is_free = IFNULL(?, is_free), resource_link = IFNULL(?, resource_link), description = IFNULL(?, description), image = IFNULL(?, image), language_id = IFNULL(?, language_id), type_id = IFNULL(?, type_id), tech_id = IFNULL(?, tech_id), author_id = IFNULL(?, author_id)  WHERE course_id = ?', [title, is_free, resource_link, description, imageUrl, language_id, type_id, tech_id, author_id, id])
 
