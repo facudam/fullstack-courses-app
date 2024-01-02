@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axios from 'axios'
+import apiBaseUrl from "../services/api/endpoints/apiBaseUrl"
 
 
 export const Signup = () => {
@@ -17,7 +18,7 @@ export const Signup = () => {
 
     const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault()
-        axios.post('http://localhost:4000/api/users', { name, email, password } )
+        axios.post(`${ apiBaseUrl }/api/users`, { name, email, password } )
             .then(res => console.log(res))
             .catch(err => console.log(err))
         navigate('/login')

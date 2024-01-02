@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DB_USER = exports.DB_PORT = exports.DB_PASS = exports.DB_NAME = exports.DB_HOST = exports.PORT = void 0;
+exports.IMGUR_CLIENTID = exports.DB_USER = exports.DB_PORT = exports.DB_PASS = exports.DB_NAME = exports.DB_HOST = exports.PORT = void 0;
 const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
-const PORT = process.env.PORT || 4000, DB_NAME = process.env.DB_NAME || 'courses_data-base', DB_PORT = process.env.DB_PORT || 3306, DB_USER = process.env.DB_USER || 'root', DB_PASS = process.env.DB_PASS || 'root', DB_HOST = process.env.DB_HOST || 'localhost';
+const PORT = process.env.PORT || 4000, DB_NAME = process.env.DB_NAME || 'courses_data-base', DB_PORT = process.env.DB_PORT || 3306, DB_USER = process.env.DB_USER || 'root', DB_PASS = process.env.DB_PASS || 'root', DB_HOST = process.env.DB_HOST || 'localhost', IMGUR_CLIENTID = process.env.IMGUR_CLIENTID;
 exports.PORT = PORT;
 exports.DB_NAME = DB_NAME;
 exports.DB_PORT = DB_PORT;
 exports.DB_USER = DB_USER;
 exports.DB_PASS = DB_PASS;
 exports.DB_HOST = DB_HOST;
+exports.IMGUR_CLIENTID = IMGUR_CLIENTID;

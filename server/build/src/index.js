@@ -19,10 +19,12 @@ const comments_routes_1 = __importDefault(require("./routes/comments.routes"));
 const creadoPor_routes_1 = __importDefault(require("./routes/creadoPor.routes"));
 const users_routes_1 = __importDefault(require("./routes/users.routes"));
 const config_1 = require("./config");
+const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json()); //Transformamos la req.body en json
 app.use((0, cookie_parser_1.default)());
 app.use(body_parser_1.default.json());
+app.use((0, express_fileupload_1.default)());
 const secret = crypto_1.default.randomBytes(64).toString('hex');
 app.use((0, express_session_1.default)({
     secret: secret,

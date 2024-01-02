@@ -8,39 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.upload = exports.getCourseById = exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getCourses = void 0;
-const multer_1 = __importDefault(require("multer"));
-const path_1 = __importDefault(require("path"));
+exports.getCourseById = exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getCourses = void 0;
 const connection_db_1 = require("../../data-base/connection_db");
 const serverErrorMessage_1 = require("../error/serverErrorMessage");
-const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', 'svg', '.AVIF'];
-// Configuración de multer para manejar la carga de archivos:
-const storage = multer_1.default.diskStorage({
-    destination: function (_req, _file, cb) {
-        cb(null, 'uploads'); // La carpeta donde se guardarán las imágenes
-    },
-    filename: function (_req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path_1.default.extname(file.originalname));
-    }
-});
-const fileFilter = function (_req, file, cb) {
-    const extname = path_1.default.extname(file.originalname).toLowerCase();
-    if (imageExtensions.includes(extname)) {
-        cb(null, true);
-    }
-    else {
-        cb(new Error('Solo se permiten archivos de imagen.'));
-    }
-};
-const upload = (0, multer_1.default)({
-    storage: storage,
-    fileFilter: fileFilter
-});
-exports.upload = upload;
+const uploadImg_1 = require("./helpers/uploadImg");
 const SqlQuery = `
     SELECT
       c.course_id,
@@ -89,34 +61,26 @@ exports.getCourseById = getCourseById;
 const createCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { title, is_free, resource_link, description, language_id, type_id, tech_id, author_id } = req.body;
-        // Obtenemos la ruta de la imagen cargada:
-        const image = req.file ? req.file.path : null;
-        // Este sería la url de la imagen para la api si estuviera alojada en mi sitio web personal:
-        // const image = req.file ? `https://facundocaceres.dev/${ req.file.filename }` : null;
-        connection_db_1.pool.query('INSERT INTO course (title, is_free, resource_link, description, image, language_id, type_id, tech_id, author_id) VALUES (?,?,?,?,?,?,?,?,?)', [title, is_free, resource_link, description, image, language_id, type_id, tech_id, author_id]);
-        res.json({
-            title,
-            is_free,
-            resource_link,
-            description,
-            image,
-            language_id,
-            type_id,
-            tech_id,
-            author_id
-        });
+        if (!req.files || Object.keys(req.files).length === 0)
+            return res.status(400).send('No files were uploaded');
+        const sampleFile = req.files.sampleFile;
+        const imageUrl = yield (0, uploadImg_1.uploadAndGetUrlImage)(sampleFile);
+        yield connection_db_1.pool.query('INSERT INTO course (title, is_free, resource_link, description, image, language_id, type_id, tech_id, author_id) VALUES (?,?,?,?,?,?,?,?,?)', [title, is_free, resource_link, description, imageUrl, language_id, type_id, tech_id, author_id]);
+        return res.json({ message: 'Course created successfully' });
     }
     catch (error) {
-        res.status(500).send(serverErrorMessage_1.serverErrorMessage + error);
+        return res.status(500).send(serverErrorMessage_1.serverErrorMessage + error);
     }
 });
 exports.createCourse = createCourse;
 const updateCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
         const { id } = req.params;
         const { title, is_free, resource_link, description, language_id, type_id, tech_id, author_id } = req.body;
-        const image = req.file ? req.file.path : null;
-        const [result] = yield connection_db_1.pool.query('UPDATE course SET title = IFNULL(?, title), is_free = IFNULL(?, is_free), resource_link = IFNULL(?, resource_link), description = IFNULL(?, description), image = IFNULL(?, image), language_id = IFNULL(?, language_id), type_id = IFNULL(?, type_id), tech_id = IFNULL(?, tech_id), author_id = IFNULL(?, author_id)  WHERE course_id = ?', [title, is_free, resource_link, description, image, language_id, type_id, tech_id, author_id, id]);
+        const sampleFile = (_a = req.files) === null || _a === void 0 ? void 0 : _a.sampleFile;
+        const imageUrl = req.files ? yield (0, uploadImg_1.uploadAndGetUrlImage)(sampleFile) : null;
+        const [result] = yield connection_db_1.pool.query('UPDATE course SET title = IFNULL(?, title), is_free = IFNULL(?, is_free), resource_link = IFNULL(?, resource_link), description = IFNULL(?, description), image = IFNULL(?, image), language_id = IFNULL(?, language_id), type_id = IFNULL(?, type_id), tech_id = IFNULL(?, tech_id), author_id = IFNULL(?, author_id)  WHERE course_id = ?', [title, is_free, resource_link, description, imageUrl, language_id, type_id, tech_id, author_id, id]);
         if (result.affectedRows <= 0)
             return res.status(404).json({ 'message': 'Course not found' });
         return res.send('Course successfully updated');

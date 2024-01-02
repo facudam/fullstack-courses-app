@@ -1,12 +1,13 @@
 import axios from "axios";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import apiBaseUrl from "../services/api/endpoints/apiBaseUrl";
 
 export const Login = () => {
 
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [isDataInvalid, setIsDataInvalid] = useState<boolean>(false);
+  const [ email, setEmail ] = useState<string>("");
+  const [ password, setPassword ] = useState<string>("");
+  const [ isDataInvalid, setIsDataInvalid ] = useState<boolean>(false);
 
   const handleEmail = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
   const handlePassword = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
@@ -15,7 +16,7 @@ export const Login = () => {
   axios.defaults.withCredentials = true
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/validation')
+    axios.get(`${ apiBaseUrl }/api/validation`)
         .then(res => {
             if(res.data.valid) navigate('/') 
         })
@@ -28,7 +29,7 @@ export const Login = () => {
     e.preventDefault();
     axios
       .post(
-        "http://localhost:4000/api/login",
+        `${ apiBaseUrl }/api/login`,
         { email, password },
         { withCredentials: true }
       )
@@ -46,11 +47,11 @@ export const Login = () => {
 
   return (
     <div>
-      <form action="" onSubmit={handleSubmit}>
+      <form action="" onSubmit={  handleSubmit}>
         <div>
           <label htmlFor="email">Email</label>
           <input
-            onChange={handleEmail}
+            onChange={  handleEmail}
             type="email"
             name="email"
             placeholder="Enter Email"
@@ -60,11 +61,11 @@ export const Login = () => {
         <div>
           <label htmlFor="password">Password</label>
           <input
-            onChange={handlePassword}
+            onChange={ handlePassword }
             type="password"
             name="password"
             placeholder="Enter password"
-            value={password}
+            value={ password }
           />
         </div>
         <button type="submit">Log in</button>
