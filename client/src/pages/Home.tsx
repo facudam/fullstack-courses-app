@@ -1,33 +1,25 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import apiBaseUrl from "../services/api/endpoints/apiBaseUrl";
 import { Curso } from "../interfaces/models";
 import getCourses from "../services/api/endpoints/courses/getCourses";
-import { Link } from "react-router-dom";
+import MainLayout from "../layouts/MainLayout";
 
 
-const Home = () => {
+const Home: FC = () => {
 
-    const [ name, setName ] = useState<string>('')
     const [ cursos, setCursos ] = useState<Curso[]>([])
     const [ isAuthenticate, setIsAuthenticate ] = useState<boolean>()
     const [ isLoading, setIsLoading ] = useState<boolean>(true)
 
     axios.defaults.withCredentials = true
 
-    const handleLogout =  () => {
-        axios.post(`${ apiBaseUrl }/logout`)
-            .then(() => setIsAuthenticate(false))
-            .catch((error) => { console.log(error) })
-    }
-    
-
     useEffect(() => {
         axios.get(`${ apiBaseUrl }/api/validation`)
             .then(res => {
                 if(res.data.valid) {
                   setIsAuthenticate(true)
-                  setName(res.data.username)
+                  console.log(isAuthenticate)
                 } else {
                     setIsAuthenticate(false)
                 }
@@ -35,7 +27,7 @@ const Home = () => {
             .catch(err => {
                 console.log(`Ups, ha ocurrido un error: ${ err }`)
             })
-    }, [])
+    }, [isAuthenticate])
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -52,22 +44,9 @@ const Home = () => {
       }, []);
 
   return (
-    <div>
-        {
-          isAuthenticate
-            ? <>
-                <p>Hola { name }</p>
-                <button onClick={handleLogout}>Logout</button>
-              </>
-            : <>
-                <Link to='/login'>Log in</Link>
-                <Link to='/signup'>Sign up</Link>
-              </>
-        }
-        
+    <MainLayout>
         <main>
-            <h1>Lista de cursos:</h1> 
-            
+            <h1>Lista de cursos:</h1>        
             {
               isLoading 
                 ? <p>Cargando...</p>
@@ -80,8 +59,7 @@ const Home = () => {
                 ))
             }
         </main>
-    </div>
-    
+    </MainLayout>
   )
 }
 

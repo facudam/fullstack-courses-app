@@ -12,4 +12,9 @@ interface Curso {
     tech_id: number
 }
 
-export type { Curso }
+interface NavProps {
+    isAuthenticate: boolean | undefined,
+    handleLogout: () => void
+}
+
+export type { Curso, NavProps }
