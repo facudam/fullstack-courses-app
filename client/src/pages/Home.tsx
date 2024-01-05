@@ -1,15 +1,16 @@
 import axios from "axios";
-import { FC, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import apiBaseUrl from "../services/api/endpoints/apiBaseUrl";
 import { Curso } from "../interfaces/models";
 import getCourses from "../services/api/endpoints/courses/getCourses";
 import MainLayout from "../layouts/MainLayout";
+import { CoursesContext } from "../context/CoursesContext";
 
 
 const Home: FC = () => {
 
     const [ cursos, setCursos ] = useState<Curso[]>([])
-    const [ isAuthenticate, setIsAuthenticate ] = useState<boolean>()
+    const { isAuthenticate, setIsAuthenticate }   = useContext(CoursesContext)
     const [ isLoading, setIsLoading ] = useState<boolean>(true)
 
     axios.defaults.withCredentials = true
@@ -27,7 +28,7 @@ const Home: FC = () => {
             .catch(err => {
                 console.log(`Ups, ha ocurrido un error: ${ err }`)
             })
-    }, [isAuthenticate])
+    })
 
     useEffect(() => {
         const fetchCourses = async () => {
