@@ -1,20 +1,30 @@
-import { FC } from "react"
+import { FC, useContext } from "react"
 import { Link } from "react-router-dom"
 import { NavProps } from "../../interfaces/models"
+import { CoursesContext } from "../../context/CoursesContext"
 
 
-const Nav: FC<NavProps> = ({ isAuthenticate, handleLogout }) => {
+const Nav: FC<NavProps> = ({ handleLogout }) => {
+
+    const { isAuthenticate, userName } = useContext(CoursesContext)
+
     return(
         <nav>
-            <div>IT COURSES</div>
-            {
-                isAuthenticate
-                    ? <button onClick={ handleLogout }>Logout</button>
-                    : <div>
-                        <Link to='/login'>LogIn</Link>
-                        <Link to='/signup'>SignUp</Link>
-                        </div>    
-            }
+            <div>
+                <div>IT COURSES</div>
+                {
+                    isAuthenticate
+                        ? 
+                            <div>
+                                <p>Bienvenido { userName }</p>
+                                <button onClick={ handleLogout }>Logout</button>
+                            </div>
+                        : <div>
+                            <Link to='/login'>LogIn</Link>
+                            <Link to='/signup'>SignUp</Link>
+                            </div>    
+                }
+            </div>
         </nav>
     )
 }

@@ -5,12 +5,13 @@ import { Curso } from "../interfaces/models";
 import getCourses from "../services/api/endpoints/courses/getCourses";
 import MainLayout from "../layouts/MainLayout";
 import { CoursesContext } from "../context/CoursesContext";
+import { Header } from "../components/header/Header";
 
 
 const Home: FC = () => {
 
+    const { setIsAuthenticate, setUserName }   = useContext(CoursesContext)
     const [ cursos, setCursos ] = useState<Curso[]>([])
-    const { isAuthenticate, setIsAuthenticate }   = useContext(CoursesContext)
     const [ isLoading, setIsLoading ] = useState<boolean>(true)
 
     axios.defaults.withCredentials = true
@@ -20,7 +21,7 @@ const Home: FC = () => {
             .then(res => {
                 if(res.data.valid) {
                   setIsAuthenticate(true)
-                  console.log(isAuthenticate)
+                  setUserName(res.data.username)
                 } else {
                     setIsAuthenticate(false)
                 }
@@ -46,8 +47,9 @@ const Home: FC = () => {
 
   return (
     <MainLayout>
+        <Header />
         <main>
-            <h1>Lista de cursos:</h1>        
+            <h2>Lista de cursos:</h2>        
             {
               isLoading 
                 ? <p>Cargando...</p>

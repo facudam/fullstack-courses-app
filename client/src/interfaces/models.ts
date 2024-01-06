@@ -13,8 +13,7 @@ interface Curso {
 }
 
 interface NavProps {
-    isAuthenticate: boolean | undefined,
-    handleLogout: () => void
+    handleLogout: () => void,
 }
 
 export type { Curso, NavProps }
