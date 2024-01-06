@@ -1,0 +1,24 @@
+.nav {
+    display: flex;
+    justify-content: center;
+    background: rgb(248,250,252);
+    background: linear-gradient(90deg, rgba(248,250,252,1) 0%, rgba(82,145,220,0.22452731092436973) 49%, rgba(248,250,252,1) 100%);
+}
+
+.nav-ctn {
+    width: 100%;
+    max-width: var(--max-width);
+    padding: var(--general-padding);
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-ctn_navigation {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-ctn_navigation > p {
+    text-transform: capitalize;
+}

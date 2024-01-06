@@ -20,7 +20,8 @@ export const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
                     userName,
                     setUserName
                 }   
-            }>
+            }
+        >
             { children }
         </CoursesContext.Provider>
     )
