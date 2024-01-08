@@ -12,7 +12,7 @@ const Nav: FC<NavProps> = ({ handleLogout }) => {
     return(
         <nav className={ styles.nav }>
             <div className={ styles['nav-ctn'] }>
-                <div>IT COURSES</div>
+                <div>CoursesLibra</div>
                 {
                     isAuthenticate
                         ? 
