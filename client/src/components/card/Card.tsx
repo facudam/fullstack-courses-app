@@ -3,7 +3,7 @@ import { CardProps } from "../../interfaces/models";
 import styles from './Card.module.css'
 
 
-const Card: FC<CardProps> = ({ title, author, image, is_free, technology}) => {
+const Card: FC<CardProps> = ({ title, author, image, is_free, technology }) => {
     return(
         <div className={ styles.card }>
             <div className={ styles['image-ctn'] }>

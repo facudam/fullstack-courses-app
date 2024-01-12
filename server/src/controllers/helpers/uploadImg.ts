@@ -4,6 +4,7 @@ import { IMGUR_CLIENTID } from '../../config';
 
 // Esta función maneja la carga de la imagen y devuelve la URL de la imagen en Imgur
 export const uploadAndGetUrlImage = async (sampleFile: any): Promise<string> => {
+    console.log('sampleFile:', sampleFile);
     const uploadPath = __dirname + '/uploads/' + sampleFile.name;
     
     // Utilizamos una promesa para envolver la operación asíncrona

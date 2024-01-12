@@ -31,9 +31,9 @@ const CoursesSection: FC = () => {
         <section className={ styles.section }>
             <div className={ styles['filters-ctn'] }>
                 <div className={ styles['btn-ctn'] }>
-                    <button className={ styles['is-active']}>Front-End</button>
+                    <button className={ styles['is-active'] }>Front-End</button>
                     <button>Back-End</button>
-                    <button>Diseño UX UI</button>
+                    <button>Diseño UX/UI</button>
                     <button>Testing</button>
                 </div>
                 <div className={ styles['info-filters-ctn'] }>

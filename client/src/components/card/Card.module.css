@@ -27,7 +27,11 @@
     padding: 10px 0px;
     color: var(--main-black);
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden; 
 }
 
 .full-data-card {

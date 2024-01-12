@@ -22,3 +22,31 @@
 .nav-ctn_navigation > p {
     text-transform: capitalize;
 }
+
+.secondary-nav-relative {
+    position: relative;
+    cursor: pointer;
+}
+
+.secondary-nav-ctn {
+    position: absolute;
+    display: none;
+    top: 38px;
+    right: 200px;
+    animation: aparecer 1s ease;
+    cursor: auto;
+}
+
+.secondary-nav-relative:hover .secondary-nav-ctn {
+    display: block;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+

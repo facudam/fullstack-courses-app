@@ -16,6 +16,11 @@ interface NavProps {
     handleLogout: () => void,
 }
 
+interface AuthNavProps {
+    userName: string,
+    handleLogout: () => void
+}
+
 interface CardProps {
     title: string,
     image: string,
@@ -24,4 +29,4 @@ interface CardProps {
     technology: string
 }
 
-export type { Curso, NavProps, CardProps }
+export type { Curso, NavProps, CardProps, AuthNavProps }

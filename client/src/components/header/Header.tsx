@@ -1,7 +1,7 @@
 import { FC } from "react"
 import styles from '../header/Header.module.css'
-import lupa from '../../images/lupa.svg'
-import rocket from '../../images/rocket.svg'
+import { lupa, rocket } from "../../images/images"
+
 
 export const Header: FC = () => {
     return(
