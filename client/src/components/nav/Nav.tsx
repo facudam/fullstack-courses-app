@@ -10,15 +10,15 @@ import AuthNav from "../authNav/AuthNav"
 
 const Nav: FC<NavProps> = ({ handleLogout }) => {
 
-    const { isAuthenticate, userName } = useContext(CoursesContext)
+    const { isAuthenticated, userName } = useContext(CoursesContext)
     console.log(handleLogout)
 
     return(
         <nav className={ styles.nav }>
             <div className={ styles['nav-ctn'] }>
-                <div>CoursesLibra</div>
+                <span>CoursesLibra</span>
                 {
-                    isAuthenticate
+                    isAuthenticated
                         ? 
                             <div className={ styles['nav-ctn_navigation'] }>
                                 <div className={ styles['secondary-nav-relative']}>

@@ -8,15 +8,15 @@ interface ContextProviderProps {
 
 export const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
     
-    const [ isAuthenticate, setIsAuthenticate ] = useState<boolean>()
+    const [ isAuthenticated, setIsAuthenticated ] = useState<boolean>()
     const [ userName, setUserName ] = useState<string>('')
 
     return(
         <CoursesContext.Provider 
             value={
                 {
-                    isAuthenticate, 
-                    setIsAuthenticate,
+                    isAuthenticated, 
+                    setIsAuthenticated,
                     userName,
                     setUserName
                 }   

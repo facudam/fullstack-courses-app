@@ -10,7 +10,7 @@ import styles from './Home.module.css'
 
 const Home: FC = () => {
 
-    const { setIsAuthenticate, setUserName }   = useContext(CoursesContext)
+    const { setIsAuthenticated, setUserName }   = useContext(CoursesContext)
 
     axios.defaults.withCredentials = true
 
@@ -18,10 +18,10 @@ const Home: FC = () => {
         axios.get(`${ apiBaseUrl }/api/validation`)
             .then(res => {
                 if(res.data.valid) {
-                  setIsAuthenticate(true)
+                  setIsAuthenticated(true)
                   setUserName(res.data.username)
                 } else {
-                    setIsAuthenticate(false)
+                    setIsAuthenticated(false)
                 }
             })
             .catch(err => {

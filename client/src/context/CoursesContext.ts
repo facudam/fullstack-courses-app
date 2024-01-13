@@ -1,15 +1,15 @@
 import { createContext } from 'react';
 
 interface CoursesContext {
-  isAuthenticate: boolean | undefined;
-  setIsAuthenticate: (isAuthenticate: boolean) => void,
+  isAuthenticated: boolean | undefined;
+  setIsAuthenticated: (isAuthenticate: boolean) => void,
   userName: string,
   setUserName: (userName: string) => void
 }
 
 const initialState: CoursesContext = {
-  isAuthenticate: undefined,
-  setIsAuthenticate: (isAuthenticate: boolean) => { isAuthenticate },
+  isAuthenticated: undefined,
+  setIsAuthenticated: (isAuthenticated: boolean) => { isAuthenticated },
   userName: '',
   setUserName: (userName: string) => { userName }
 }

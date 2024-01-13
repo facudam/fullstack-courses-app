@@ -57,7 +57,7 @@
 .input-ctn {
     background-color: var(--light-gray);
     display: flex;
-    width: 100%;
+    width: 95%;
     max-width: 600px;
     padding: 12px;
     margin: 50px;

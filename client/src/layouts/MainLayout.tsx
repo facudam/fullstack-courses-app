@@ -11,12 +11,12 @@ interface MainLayoutProps {
 
 const MainLayout: FC<MainLayoutProps> = ({ children }) => {
 
-    const { setIsAuthenticate, setUserName } = useContext(CoursesContext)
+    const { setIsAuthenticated, setUserName } = useContext(CoursesContext)
 
     const handleLogout =  () => {
         axios.post(`${ apiBaseUrl }/logout`)
             .then(() => {
-                setIsAuthenticate(false)
+                setIsAuthenticated(false)
                 setUserName('')
             } )
             .catch((error) => { console.log(error) })

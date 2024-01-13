@@ -8,9 +8,11 @@
 .nav-ctn {
     width: 100%;
     max-width: var(--max-width);
+    min-height: 60px;
     padding: var(--general-padding);
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .nav-ctn_navigation {
