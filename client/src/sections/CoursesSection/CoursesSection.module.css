@@ -46,20 +46,13 @@
 }
 
 .card-section {
-    display: flex;
-    gap: 25px;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 35px;
 }
 
 @media screen and (max-width: 650px) {
     .filters-ctn {
-        justify-content: center;
-    }
-}
-
-@media screen and (max-width: 720px) {
-    .card-section {
         justify-content: center;
     }
 }
