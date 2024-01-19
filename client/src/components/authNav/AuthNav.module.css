@@ -1,0 +1,36 @@
+.nav {
+    position: absolute;
+    width: 200px;
+    background-color: var(--secondary-black);
+    color: var(--white);
+    padding: 18px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-radius: 6px;
+}
+
+.nav span {
+    width: 100%;
+    text-transform: capitalize;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nav ul li a {
+    text-decoration: none;
+    color: var(--white);
+}
+
+.nav ul li button {
+    font-size: 0.85rem;
+    width: 95px;
+    padding: 3px;
+}

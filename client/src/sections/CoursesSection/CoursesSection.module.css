@@ -1,0 +1,58 @@
+.section {
+    width: 100%;
+    max-width: var(--max-width);
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: var(--general-padding);
+}
+
+.filters-ctn {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-ctn {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-ctn button {
+    border: none;
+    background-color: var(--background);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(21, 109, 187);
+    opacity: .4;
+    transition: all .5s ease;
+}
+
+.btn-ctn button:hover {
+    opacity: 1;
+}
+
+.btn-ctn button.is-active {
+    border-bottom:  2px solid rgb(21, 109, 187);
+    opacity: 1;
+}
+
+.info-filters-ctn {
+    display: flex;
+    gap: 10px;
+}
+
+.card-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 35px;
+}
+
+@media screen and (max-width: 650px) {
+    .filters-ctn {
+        justify-content: center;
+    }
+}

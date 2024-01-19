@@ -3,3 +3,26 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+@font-face {
+  font-family: inter;
+  src: url('./fonts/Inter-Regular.ttf');
+  font-display: swap;
+}
+
+body {
+  font-family: inter;
+  background-color: var(--background);
+}
+
+:root {
+  --max-width: 1216px;
+  --general-padding: 10px;
+  --main-black: #000;
+  --secondary-black: #0f172a;
+  --main-gray: #64748b;
+  --secondary-gray: #f1f5f9;
+  --light-gray: #f8fafc;
+  --white: #fff;
+  --background: #f9f9ff;
+}

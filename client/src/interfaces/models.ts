@@ -3,18 +3,30 @@ interface Curso {
     course_id?: number,
     title: string,
     description: string,
-    is_free: boolean,
+    is_free: number,
     resource_link: string,
     image: string,
-    language_id: number,
-    type_id: number,
-    author_id: number,
-    tech_id: number
+    language: string,
+    type: string,
+    author: string,
+    technology: string
 }
 
 interface NavProps {
-    isAuthenticate: boolean | undefined,
+    handleLogout: () => void,
+}
+
+interface AuthNavProps {
+    userName: string,
     handleLogout: () => void
 }
 
-export type { Curso, NavProps }
+interface CardProps {
+    title: string,
+    image: string,
+    author: string,
+    is_free: number,
+    technology: string
+}
+
+export type { Curso, NavProps, CardProps, AuthNavProps }
