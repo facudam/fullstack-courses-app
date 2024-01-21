@@ -6,7 +6,7 @@ import { CoursesContext } from "../../context/CoursesContext";
 import { Header } from "../../components/header/Header";
 import CoursesSection from "../../sections/CoursesSection/CoursesSection";
 import styles from './Home.module.css'
-
+import CourseModal from "../../modals/courseModal/CourseModal";
 
 const Home: FC = () => {
 
@@ -35,6 +35,7 @@ const Home: FC = () => {
         <main className={ styles.main }>      
             <CoursesSection />
         </main>
+        <CourseModal />
     </MainLayout>
   )
 }

@@ -10,6 +10,7 @@ export const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
     
     const [ isAuthenticated, setIsAuthenticated ] = useState<boolean>()
     const [ userName, setUserName ] = useState<string>('')
+    const [ courseModalIsOpen, setCourseModalIsOpen ] = useState<boolean>(false)
 
     return(
         <CoursesContext.Provider 
@@ -18,7 +19,9 @@ export const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
                     isAuthenticated, 
                     setIsAuthenticated,
                     userName,
-                    setUserName
+                    setUserName,
+                    courseModalIsOpen,
+                    setCourseModalIsOpen
                 }   
             }
         >

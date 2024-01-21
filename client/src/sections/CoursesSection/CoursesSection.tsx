@@ -74,14 +74,14 @@ const CoursesSection: FC = () => {
                 {
                 isLoading 
                     ? <p>Cargando...</p>
-                    : cursos.map((curso) => (
+                    : cursos.map(({ course_id, title, technology, image, author, is_free }) => (
                         <Card  
-                          key={ curso.course_id }
-                          title={ curso.title }
-                          image={ curso.image }
-                          technology={ curso.technology }
-                          author={ curso.author }
-                          is_free={ curso.is_free }
+                          key={ course_id }
+                          title={ title }
+                          image={ image }
+                          technology={ technology }
+                          author={ author }
+                          is_free={ is_free }
                         />
                     ))
                 }

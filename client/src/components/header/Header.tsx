@@ -1,6 +1,6 @@
 import { FC } from "react"
 import styles from '../header/Header.module.css'
-import { lupa, rocket } from "../../images/images"
+import { lupa, rocket } from "../../assets/images/images"
 
 
 export const Header: FC = () => {
