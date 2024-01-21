@@ -11,7 +11,6 @@ import AuthNav from "../authNav/AuthNav"
 const Nav: FC<NavProps> = ({ handleLogout }) => {
 
     const { isAuthenticated, userName } = useContext(CoursesContext)
-    console.log(handleLogout)
 
     return(
         <nav className={ styles.nav }>

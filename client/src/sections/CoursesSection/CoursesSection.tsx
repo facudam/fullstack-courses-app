@@ -76,6 +76,7 @@ const CoursesSection: FC = () => {
                     ? <p>Cargando...</p>
                     : cursos.map(({ course_id, title, technology, image, author, is_free }) => (
                         <Card  
+                          id={ course_id }
                           key={ course_id }
                           title={ title }
                           image={ image }

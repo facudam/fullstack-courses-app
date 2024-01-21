@@ -9,6 +9,7 @@ interface Curso {
     language: string,
     type: string,
     author: string,
+    author_id: number,
     technology: string
 }
 
@@ -22,6 +23,7 @@ interface AuthNavProps {
 }
 
 interface CardProps {
+    id: number | undefined,
     title: string,
     image: string,
     author: string,
@@ -29,4 +31,10 @@ interface CardProps {
     technology: string
 }
 
-export type { Curso, NavProps, CardProps, AuthNavProps }
+interface Author {
+    author_id: number,
+    author_name: string,
+    author_country: string
+}
+
+export type { Curso, NavProps, CardProps, AuthNavProps, Author }

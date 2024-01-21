@@ -10,7 +10,7 @@ import CourseModal from "../../modals/courseModal/CourseModal";
 
 const Home: FC = () => {
 
-    const { setIsAuthenticated, setUserName }   = useContext(CoursesContext)
+    const { setIsAuthenticated, setUserName, courseModalIsOpen }   = useContext(CoursesContext)
 
     axios.defaults.withCredentials = true
 
@@ -35,7 +35,9 @@ const Home: FC = () => {
         <main className={ styles.main }>      
             <CoursesSection />
         </main>
-        <CourseModal />
+        {
+            (courseModalIsOpen) && <CourseModal />
+        }
     </MainLayout>
   )
 }
