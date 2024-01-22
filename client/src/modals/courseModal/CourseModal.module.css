@@ -5,6 +5,7 @@
     right: 0;
     bottom: 0;
     background-color: rgba(20, 92, 118, 0.7);
+    animation: opacityAnimation .3s ease forwards;
 }
 
 .modal {
@@ -19,6 +20,7 @@
     background-color: var(--background);
     padding: 35px;
     border-radius: 4px;
+    animation: opacityAndMovementAnimation .5s ease forwards;
 }
 
 .main {
@@ -107,6 +109,26 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+}
+
+@keyframes opacityAnimation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes opacityAndMovementAnimation {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -80%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
 }
 
 @media screen and (max-width: 800px) {

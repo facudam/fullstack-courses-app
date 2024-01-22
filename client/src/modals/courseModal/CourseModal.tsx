@@ -7,7 +7,6 @@ import getCourseById from '../../services/api/endpoints/courses/getCourseById'
 
 
 const CourseModal: FC = () => {
-
     const {
         setCourseModalIsOpen,
         openCourseId,
@@ -17,6 +16,7 @@ const CourseModal: FC = () => {
         setAuthorInfo,
         courseInfo,
         setCourseInfo,
+        isAuthenticated
     } = useContext(CoursesContext);
 
           useEffect(() => {
@@ -26,7 +26,6 @@ const CourseModal: FC = () => {
                 setAuthorId(curso.author_id);
                 setCourseInfo(curso);
         
-                // Fetch author information only after course information is fetched
                 if (authorId) {
                   const author = await getAuthorById(authorId);
                   setAuthorInfo(author);
@@ -69,14 +68,23 @@ const CourseModal: FC = () => {
                     </div>
                 </main>
                 <div className={ styles.comments }>
-                    <h3>Comentarios:</h3>
+                    <h3>Feedback sobre el curso:</h3>
                     
-                    <p>Juan: This course is very helpful. I learned a lot about React and Redux.</p>
-                    <p>Mariano: This course is very helpful. I learned a lot about React and Redux.</p>
-                    <p>Alan: This course is very helpful. I learned a lot about React and Redux.</p>
-                    <p>Isabel: This course is very helpful. I learned a lot about React and Redux.</p>
-                    <p>Jorge: This course is very helpful. I learned a lot about React and Redux.</p>
-                    <p>Romina: This course is very helpful. I learned a lot about React and Redux.</p>
+                    <p><strong>Juan:</strong> This course is very helpful. I learned a lot about React and Redux.</p>
+                    <p><strong>Mariano:</strong> This course is very helpful. I learned a lot about React and Redux.</p>
+                    <p><strong>Alan:</strong> This course is very helpful. I learned a lot about React and Redux.</p>
+                    <p><strong>Isabel:</strong> This course is very helpful. I learned a lot about React and Redux.</p>
+                    <p><strong>Jorge:</strong> This course is very helpful. I learned a lot about React and Redux.</p>
+                    <p><strong>Romina:</strong> This course is very helpful. I learned a lot about React and Redux.</p>
+                    {
+                        isAuthenticated && 
+                            <>
+                                <h3>¿Hiciste el curso? Comparte tu experiencia con la comunidad</h3>
+                                <input type='text' />
+                                <button>Enviar feedback</button>
+                            </>
+                            
+                    }
                 </div>
             </div>
         </>,
