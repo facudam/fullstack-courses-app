@@ -6,11 +6,11 @@ import { CoursesContext } from "../../context/CoursesContext";
 
 const Card: FC<CardProps> = ({ id,  title, author, image, is_free, technology }) => {
 
-    const { setCourseModalIsOpen, setOpenCourseId } = useContext(CoursesContext)
+    const { setIsCourseModalOpen, setOpenCourseId } = useContext(CoursesContext)
 
-    const openCourse = (id: number) => {
+    const openCourse = (id: number | undefined) => {
         setOpenCourseId(id)
-        setCourseModalIsOpen(true)
+        setIsCourseModalOpen(true)
     }
 
     return (

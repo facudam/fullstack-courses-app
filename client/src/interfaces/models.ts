@@ -37,4 +37,11 @@ interface Author {
     author_country: string
 }
 
-export type { Curso, NavProps, CardProps, AuthNavProps, Author }
+interface Comment {
+    comment_id: number,
+    comment_description: string,
+    course_id: number,
+    user: string
+}
+
+export type { Curso, NavProps, CardProps, AuthNavProps, Author, Comment }

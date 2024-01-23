@@ -4,10 +4,10 @@ import apiBaseUrl from "../apiBaseUrl";
 
 const getCourses = async (): Promise<Curso[]> => {
     try {
-      const response: AxiosResponse<Curso[]> = await axios.get(`${apiBaseUrl}/api/courses`);
-      return response.data;
+        const response: AxiosResponse<Curso[]> = await axios.get(`${apiBaseUrl}/api/courses`);
+        return response.data;
     } catch (error: unknown) {
-      throw new Error(`Ha habido un error al intentar obtener los cursos: ${error}`);
+        throw new Error(`Ha habido un error al intentar obtener los cursos: ${error}`);
     }
 }
 

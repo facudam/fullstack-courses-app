@@ -1,14 +1,16 @@
-import { FC, useContext, useEffect } from 'react'
+import { FC, useContext, useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 import styles from './CourseModal.module.css'
 import { CoursesContext } from '../../context/CoursesContext'
 import getAuthorById from '../../services/api/endpoints/author/getAuthorById'
 import getCourseById from '../../services/api/endpoints/courses/getCourseById'
+import { Comment } from '../../interfaces/models'
+import getCommentsByCourseId from '../../services/api/endpoints/comments/getCommentsByCourseId'
 
 
 const CourseModal: FC = () => {
     const {
-        setCourseModalIsOpen,
+        setIsCourseModalOpen,
         openCourseId,
         authorId,
         setAuthorId,
@@ -19,24 +21,33 @@ const CourseModal: FC = () => {
         isAuthenticated
     } = useContext(CoursesContext);
 
-          useEffect(() => {
-            async function fetchData() {
-              try {
+    const [ comments, setComments ] = useState<Comment[]>()
+
+    const closeModal = () => setIsCourseModalOpen(false);
+    
+    useEffect(() => {
+        async function fetchData() {
+            try {
                 const curso = await getCourseById(openCourseId);
                 setAuthorId(curso.author_id);
                 setCourseInfo(curso);
-        
+
                 if (authorId) {
-                  const author = await getAuthorById(authorId);
-                  setAuthorInfo(author);
+                    const author = await getAuthorById(authorId);
+                    setAuthorInfo(author);
                 }
-              } catch (error) {
+
+                if (curso) {
+                    const courseComments = await getCommentsByCourseId(curso.course_id)
+                    setComments(courseComments)
+                }
+            } catch (error) {
                 throw new Error(`Lo sentimos, ha habido un error: ${error}`);
-              }
             }
-        
-            fetchData();
-          }, [ authorId ])
+        }
+
+        fetchData();
+    }, [ authorId, openCourseId, setAuthorId, setAuthorInfo, setCourseInfo, comments ])
 
     return ReactDOM.createPortal(
         <>
@@ -44,7 +55,7 @@ const CourseModal: FC = () => {
             <div className={ styles.modal }>
                 <main className={ styles.main }>
                     <button 
-                        onClick={ () => setCourseModalIsOpen(false) }
+                        onClick={ closeModal }
                         className={ styles.btn }>
                         x
                     </button>
@@ -69,21 +80,20 @@ const CourseModal: FC = () => {
                 </main>
                 <div className={ styles.comments }>
                     <h3>Feedback sobre el curso:</h3>
-                    
-                    <p><strong>Juan:</strong> This course is very helpful. I learned a lot about React and Redux.</p>
-                    <p><strong>Mariano:</strong> This course is very helpful. I learned a lot about React and Redux.</p>
-                    <p><strong>Alan:</strong> This course is very helpful. I learned a lot about React and Redux.</p>
-                    <p><strong>Isabel:</strong> This course is very helpful. I learned a lot about React and Redux.</p>
-                    <p><strong>Jorge:</strong> This course is very helpful. I learned a lot about React and Redux.</p>
-                    <p><strong>Romina:</strong> This course is very helpful. I learned a lot about React and Redux.</p>
+                    {
+                        (comments && comments?.length > 0)
+                            ? comments.map(comment => (
+                                <p key={ comment.comment_id }><strong>{ comment.user }: </strong> { comment.comment_description }</p>
+                            ))
+                            : <p>Aún no se ha hecho ningún feedback sobre este curso</p>
+                    }
                     {
                         isAuthenticated && 
                             <>
-                                <h3>¿Hiciste el curso? Comparte tu experiencia con la comunidad</h3>
+                                <h3>¿Ya completaste el curso? Comparte tu experiencia con la comunidad</h3>
                                 <input type='text' />
                                 <button>Enviar feedback</button>
-                            </>
-                            
+                            </>   
                     }
                 </div>
             </div>
