@@ -1,17 +1,20 @@
 import { FC, useEffect, useState } from 'react'
+import styles from './CoursesSection.module.css'
 import getCourses from '../../services/api/endpoints/courses/getCourses';
 import { Curso } from '../../interfaces/models';
-import styles from './CoursesSection.module.css'
 import Card from '../../components/card/Card';
+import  useTypes  from '../../hooks/UseTypes';
+import useLanguage from '../../hooks/UseLanguage';
+import useAuthor from '../../hooks/UseAuthor';
 
 const CoursesSection: FC = () => {
 
     const [ cursos, setCursos ] = useState<Curso[]>([])
     const [ isLoading, setIsLoading ] = useState<boolean>(true)
     const [ selectedLanguage, setSelectedLanguage ] = useState<string>('Spanish')
-
-    const idiomas: string[] = ['Spanish', 'English', 'Italian', 'French']
-    const autores: string[] = ['Miguel Angel Duran', 'Gonzalo Pozzo', 'Lucas Dalto', 'Fernando Herrera', 'Fazt']
+    const { types } = useTypes()
+    const { language } = useLanguage()
+    const { authors } = useAuthor()
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -31,21 +34,26 @@ const CoursesSection: FC = () => {
         <section className={ styles.section }>
             <div className={ styles['filters-ctn'] }>
                 <div className={ styles['btn-ctn'] }>
-                    <button className={ styles['is-active'] }>Front-End</button>
-                    <button>Back-End</button>
-                    <button>Diseño UX/UI</button>
-                    <button>Testing</button>
+                    {
+                      types.map((tipo) => (
+                        <button
+                          className={ styles['is-active'] } 
+                          key={ tipo.type_id }>{ tipo.type_name }
+                        </button>
+                      ))
+                    }
                 </div>
                 <div className={ styles['info-filters-ctn'] }>
                     <select
                         value={ selectedLanguage }
                         onChange={(e) => setSelectedLanguage(e.target.value)}>
+                          <option value=''>Idioma</option>
                         {
-                          idiomas.map((idioma, index) => (
+                          language.map((idioma) => (
                             <option
-                              key={ index } 
-                              value={ idioma } 
-                            > { idioma }
+                              key={ idioma.language_id } 
+                              value={ idioma.language_name } 
+                            > { idioma.language_name }
                             </option>
                           ))
                         }
@@ -55,18 +63,19 @@ const CoursesSection: FC = () => {
                         onChange={(e) => console.log(e.target.value)}>
                         <option value="">Autor</option>
                         {
-                          autores.map((autor, index) => (
+                          authors.map((autor) => (
                             <option 
-                              key={ index } 
-                              value={ autor } 
-                            > { autor }
+                              key={ autor.author_id } 
+                              value={ autor.author_name } 
+                            > { autor.author_name }
                             </option>
                           ))
                         }
                     </select>
-                    <select defaultValue='Free' onChange={(e) => console.log(e.target.value)}>
-                      <option>Free</option>
-                      <option>Paid</option>
+                    <select defaultValue='costo' onChange={(e) => console.log(e.target.value)}>
+                      <option value={''}>Costo</option>
+                      <option value={ 1 }>Gratis</option>
+                      <option value={ 0 }>Pago</option>
                     </select>
                 </div>
             </div>

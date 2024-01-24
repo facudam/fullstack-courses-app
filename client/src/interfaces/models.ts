@@ -44,4 +44,24 @@ interface Comment {
     user: string
 }
 
-export type { Curso, NavProps, CardProps, AuthNavProps, Author, Comment }
+interface Types {
+    type_id?: number,
+    type_name: string
+}
+
+interface Language {
+    language_id?: number,
+    language_name: string
+}
+
+export type 
+            { 
+                Curso,
+                NavProps, 
+                CardProps, 
+                AuthNavProps, 
+                Author, 
+                Comment, 
+                Types,
+                Language
+            }

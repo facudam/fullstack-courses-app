@@ -85,7 +85,7 @@ const CourseModal: FC = () => {
                             ? comments.map(comment => (
                                 <p key={ comment.comment_id }><strong>{ comment.user }: </strong> { comment.comment_description }</p>
                             ))
-                            : <p>Aún no se ha hecho ningún feedback sobre este curso</p>
+                            : <p>Aún no se ha dejado ningún feedback sobre este curso</p>
                     }
                     {
                         isAuthenticated && 
