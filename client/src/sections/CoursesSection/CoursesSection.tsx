@@ -1,17 +1,23 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useContext, useEffect, useState } from 'react'
 import styles from './CoursesSection.module.css'
 import getCourses from '../../services/api/endpoints/courses/getCourses';
 import { Curso } from '../../interfaces/models';
 import Card from '../../components/card/Card';
-import  useTypes  from '../../hooks/UseTypes';
-import useLanguage from '../../hooks/UseLanguage';
-import useAuthor from '../../hooks/UseAuthor';
+import { useAuthor, useLanguage, useTypes } from '../../hooks';
+import { filterByAuthor, filterByFree, filterByLanguage, filterByTechnology, filterByType } from '../../helpers/filters';
+import { CoursesContext } from '../../context/CoursesContext';
 
 const CoursesSection: FC = () => {
 
+    const { technology } = useContext(CoursesContext)
+
     const [ cursos, setCursos ] = useState<Curso[]>([])
     const [ isLoading, setIsLoading ] = useState<boolean>(true)
-    const [ selectedLanguage, setSelectedLanguage ] = useState<string>('Spanish')
+    const [ selectedLanguage, setSelectedLanguage ] = useState<string>('')
+    const [ type, setType ] = useState<string>('Front-End')
+    const [ author, setAuthor ] = useState<string>('')
+    const [ costo, setCosto ] = useState<number | string>('')
+
     const { types } = useTypes()
     const { language } = useLanguage()
     const { authors } = useAuthor()
@@ -30,6 +36,16 @@ const CoursesSection: FC = () => {
         fetchCourses();
       }, []);
 
+    const filteredCourses = cursos.filter(curso => {
+      return(
+          filterByType(curso, type) &&
+          filterByAuthor(curso, author) &&
+          filterByLanguage(curso, selectedLanguage) &&
+          filterByFree(curso, costo) &&
+          filterByTechnology(curso, technology)
+      )
+    })
+
     return (
         <section className={ styles.section }>
             <div className={ styles['filters-ctn'] }>
@@ -37,7 +53,8 @@ const CoursesSection: FC = () => {
                     {
                       types.map((tipo) => (
                         <button
-                          className={ styles['is-active'] } 
+                          onClick={ () => setType(tipo.type_name) }
+                          className={ (tipo.type_name === type) ? styles['is-active'] : '' } 
                           key={ tipo.type_id }>{ tipo.type_name }
                         </button>
                       ))
@@ -46,7 +63,7 @@ const CoursesSection: FC = () => {
                 <div className={ styles['info-filters-ctn'] }>
                     <select
                         value={ selectedLanguage }
-                        onChange={(e) => setSelectedLanguage(e.target.value)}>
+                        onChange={ (e) => setSelectedLanguage(e.target.value)} >
                           <option value=''>Idioma</option>
                         {
                           language.map((idioma) => (
@@ -59,8 +76,8 @@ const CoursesSection: FC = () => {
                         }
                     </select>
                     <select 
-                        defaultValue='Autor'
-                        onChange={(e) => console.log(e.target.value)}>
+                        value={ author }
+                        onChange={ (e) => setAuthor(e.target.value)} >
                         <option value="">Autor</option>
                         {
                           authors.map((autor) => (
@@ -72,8 +89,8 @@ const CoursesSection: FC = () => {
                           ))
                         }
                     </select>
-                    <select defaultValue='costo' onChange={(e) => console.log(e.target.value)}>
-                      <option value={''}>Costo</option>
+                    <select value={ costo } onChange={(e) => setCosto(e.target.value)}>
+                      <option value={ "" }>Costo</option>
                       <option value={ 1 }>Gratis</option>
                       <option value={ 0 }>Pago</option>
                     </select>
@@ -83,7 +100,7 @@ const CoursesSection: FC = () => {
                 {
                 isLoading 
                     ? <p>Cargando...</p>
-                    : cursos.map(({ course_id, title, technology, image, author, is_free }) => (
+                    : filteredCourses.map(({ course_id, title, technology, image, author, is_free }) => (
                         <Card  
                           id={ course_id }
                           key={ course_id }

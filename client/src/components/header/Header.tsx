@@ -1,9 +1,13 @@
-import { FC } from "react"
+import { FC, useContext } from "react"
 import styles from '../header/Header.module.css'
 import { lupa, rocket } from "../../assets/images/images"
+import { CoursesContext } from '../../context/CoursesContext';
 
 
 export const Header: FC = () => {
+
+    const { technology ,setTechnology } = useContext(CoursesContext)
+
     return(
         <header className={ styles.header }>
             <div className={ styles['header-ctn'] }>
@@ -20,7 +24,12 @@ export const Header: FC = () => {
             </div>
             <div className={ styles['input-ctn'] }>
                 <img src={ lupa } alt="magnifying glass | lupa" width={15}/>
-                <input type='text' placeholder="Escribe la tecnología" />
+                <input
+                    onChange={(e) => setTechnology(e.target.value)} 
+                    type='text' 
+                    placeholder="Escribe la tecnología" 
+                    value={ technology }
+                />
             </div>
         </header>
     )

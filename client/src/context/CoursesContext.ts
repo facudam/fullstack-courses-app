@@ -15,7 +15,9 @@ interface CoursesContext {
   authorId: number | undefined, 
   setAuthorId: (authorId: number | undefined) => void,
   authorInfo: Author | undefined, 
-  setAuthorInfo: (authorInfo: Author | undefined) => void
+  setAuthorInfo: (authorInfo: Author | undefined) => void,
+  technology: string,
+  setTechnology: (technology: string) => void
 
 }
 
@@ -33,7 +35,9 @@ const initialState: CoursesContext = {
   authorId: undefined, 
   setAuthorId: (authorId: number | undefined) => { authorId },
   authorInfo: undefined, 
-  setAuthorInfo: (authorInfo: Author | undefined) => { authorInfo }
+  setAuthorInfo: (authorInfo: Author | undefined) => { authorInfo },
+  technology: '',
+  setTechnology: (technology: string) => { technology }
 }
 
 export const CoursesContext = createContext<CoursesContext>(initialState);
