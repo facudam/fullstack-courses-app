@@ -4,8 +4,10 @@ import styles from './CourseModal.module.css'
 import { CoursesContext } from '../../context/CoursesContext'
 import getAuthorById from '../../services/api/endpoints/author/getAuthorById'
 import getCourseById from '../../services/api/endpoints/courses/getCourseById'
-import { Comment } from '../../interfaces/models'
 import getCommentsByCourseId from '../../services/api/endpoints/comments/getCommentsByCourseId'
+import addNewComment from '../../services/api/endpoints/comments/addNewComment'
+import { AxiosResponse } from 'axios'
+import { CommentResponse, Comment } from '../../interfaces/models'
 
 
 const CourseModal: FC = () => {
@@ -18,12 +20,35 @@ const CourseModal: FC = () => {
         setAuthorInfo,
         courseInfo,
         setCourseInfo,
-        isAuthenticated
+        isAuthenticated,
+        userId,
+        userName
     } = useContext(CoursesContext);
 
-    const [ comments, setComments ] = useState<Comment[]>()
+    const [ comments, setComments ] = useState<Comment[]>([])
+    const [ newComment, setNewComment ] = useState<string>('')
 
-    const closeModal = () => setIsCourseModalOpen(false);
+    const closeModal = () => {
+        setNewComment('')
+        setIsCourseModalOpen(false)
+    };
+
+    const comentario: CommentResponse = {
+        comment_description: newComment,
+        course_id: courseInfo?.course_id,
+        user_id: userId
+    }
+
+    const handleNewComment = () => {
+        addNewComment(comentario)
+            .then((respuesta: AxiosResponse) => {
+                setComments((prevComments) => [...prevComments, respuesta.data])
+                setNewComment('')
+            })
+            .catch((error) => {
+            console.error('Error al agregar comentario:', error);
+            });
+    }
     
     useEffect(() => {
         async function fetchData() {
@@ -47,11 +72,11 @@ const CourseModal: FC = () => {
         }
 
         fetchData();
-    }, [ authorId, openCourseId, setAuthorId, setAuthorInfo, setCourseInfo, comments ])
+    }, [ authorId, openCourseId, setAuthorId, setAuthorInfo, setCourseInfo ])
 
     return ReactDOM.createPortal(
         <>
-            <div className={ styles['full-screen'] }></div>
+            <div onClick={ closeModal } className={ styles['full-screen'] }></div>
             <div className={ styles.modal }>
                 <main className={ styles.main }>
                     <button 
@@ -82,8 +107,8 @@ const CourseModal: FC = () => {
                     <h3>Feedback sobre el curso:</h3>
                     {
                         (comments && comments?.length > 0)
-                            ? comments.map(comment => (
-                                <p key={ comment.comment_id }><strong>{ comment.user }: </strong> { comment.comment_description }</p>
+                            ? comments.map((comment, index) => (
+                                <p key={ (comment.comment_id) ? comment.comment_id : index }><strong>{ (comment.user) ? comment.user : userName }: </strong> { comment.comment_description }</p>
                             ))
                             : <p>Aún no se ha dejado ningún feedback sobre este curso</p>
                     }
@@ -91,8 +116,8 @@ const CourseModal: FC = () => {
                         isAuthenticated && 
                             <>
                                 <h3>¿Ya completaste el curso? Comparte tu experiencia con la comunidad</h3>
-                                <input type='text' />
-                                <button>Enviar feedback</button>
+                                <input type='text' value={ newComment } onChange={(e) => setNewComment(e.target.value)} />
+                                <button onClick={ handleNewComment }>Enviar feedback</button>
                             </>   
                     }
                 </div>

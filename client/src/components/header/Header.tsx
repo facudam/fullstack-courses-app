@@ -25,7 +25,7 @@ export const Header: FC = () => {
             <div className={ styles['input-ctn'] }>
                 <img src={ lupa } alt="magnifying glass | lupa" width={15}/>
                 <input
-                    onChange={(e) => setTechnology(e.target.value)} 
+                    onChange={ (e) => setTechnology(e.target.value) } 
                     type='text' 
                     placeholder="Escribe la tecnología" 
                     value={ technology }

@@ -1,7 +1,8 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiBaseUrl from "../services/api/endpoints/apiBaseUrl";
+
 
 export const Login = () => {
 
@@ -33,7 +34,7 @@ export const Login = () => {
         { email, password },
         { withCredentials: true }
       )
-      .then((res) => {
+      .then((res: AxiosResponse) => {
         if (res.data.login) {
           setIsDataInvalid(false);
           navigate('/')

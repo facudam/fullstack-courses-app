@@ -11,6 +11,6 @@ const filterByFree = (item: Curso, esGratis: number | string) => {
     return item.is_free === Number(esGratis);
 };
 
-const filterByTechnology = (item: Curso, technology: string) => item.technology.toLowerCase().includes(technology)
+const filterByTechnology = (item: Curso, technology: string) => item.technology.toLowerCase().includes(technology.toLowerCase())
 
 export { filterByAuthor, filterByFree, filterByLanguage, filterByType, filterByTechnology }

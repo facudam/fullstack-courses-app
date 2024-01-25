@@ -38,10 +38,17 @@ interface Author {
 }
 
 interface Comment {
-    comment_id: number,
+    comment_id?: number,
     comment_description: string,
     course_id: number,
     user: string
+}
+
+interface CommentResponse {
+    comment_id?: number,
+    comment_description: string,
+    course_id: number | undefined,
+    user_id: number | undefined
 }
 
 interface Types {
@@ -61,7 +68,8 @@ export type
                 CardProps, 
                 AuthNavProps, 
                 Author, 
-                Comment, 
+                Comment,
+                CommentResponse,
                 Types,
                 Language
             }

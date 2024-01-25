@@ -17,6 +17,7 @@ export const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
     const [ authorId, setAuthorId ] = useState<number>()
     const [ authorInfo, setAuthorInfo ] = useState<Author>()
     const [ technology, setTechnology ] = useState<string>('')
+    const [ userId, setUserId ] = useState<number | undefined>()
 
     return(
         <CoursesContext.Provider 
@@ -29,7 +30,8 @@ export const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
                     courseInfo, setCourseInfo,
                     authorId, setAuthorId,
                     authorInfo, setAuthorInfo,
-                    technology, setTechnology 
+                    technology, setTechnology,
+                    userId, setUserId
                 }   
             }
         >
