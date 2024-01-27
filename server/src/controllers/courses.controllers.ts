@@ -66,6 +66,7 @@ const createCourse = async (req: Request, res: Response) => {
       }: Course = req.body;
 
       if (!req.files || Object.keys(req.files).length === 0) return res.status(400).send('No files were uploaded');
+      if (title.length <= 0 || resource_link.length <= 0 || description.length <= 0) return res.status(400).send({ error: "Incorrect request, please complete the information required for this request."})
 
       const sampleFile: any = req.files.sampleFile;
     

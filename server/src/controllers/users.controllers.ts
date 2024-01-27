@@ -41,6 +41,9 @@ const getUserById = async(req: Request, res: Response) => {
 const createUser = async(req: Request, res: Response) => {
     try {
         const { name, email, password } = req.body
+
+        if (name.length <= 0 || email.length <= 0 || password.length <= 0) return res.status(400).send({ error: "Incorrect request, please complete the information required for this request."})
+
         // Verificamos que el email no exista en la base de datos:
         const [ result ] = await pool.query<UserReq[]>('SELECT * FROM user WHERE user_email = ?', [email]);
         // Si ya existe retornamos un codigo 409 de conflicto:

@@ -40,10 +40,13 @@ const getCommentsByCourseId = async(req: Request, res: Response) => {
 const createComment = async(req: Request, res: Response) => {
     try {
         const { comment_description, course_id, user_id }: Comment = req.body;
+
+        if (comment_description.length <= 0) return res.status(400).send({ error: "Incorrect request, please complete the information required for this request."})
+
         pool.query('INSERT INTO comments (comment_description, course_id, user_id) VALUES (?,?,?)', [ comment_description, course_id, user_id ]);
-        res.json({ comment_description, course_id, user_id})
+        return res.json({ comment_description, course_id, user_id})
     } catch(error: unknown) {
-        res.status(500).send(serverErrorMessage + error)
+        return  res.status(500).send(serverErrorMessage + error)
     }
 }
 

@@ -29,10 +29,13 @@ const getTechnologyById = async(req: Request, res: Response) => {
 const createTechnology = async(req: Request, res: Response) => {
     try {
         const { tech_name }: Technology = req.body;
+
+        if (tech_name.length <= 0) return res.status(400).send({ error: "Incorrect request, please complete the information required for this request."})
+
         pool.query('INSERT INTO technology (tech_name) VALUES (?)', [tech_name]);
-        res.json({ tech_name })
+        return res.json({ tech_name })
     } catch(error: unknown) {
-        res.status(500).send(serverErrorMessage + error)
+        return res.status(500).send(serverErrorMessage + error)
     }
 }
 
