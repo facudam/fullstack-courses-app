@@ -1,5 +1,4 @@
 import { FC, useContext, useEffect, useState } from 'react'
-import ReactDOM from 'react-dom'
 import styles from './CourseModal.module.css'
 import { CoursesContext } from '../../context/CoursesContext'
 import getAuthorById from '../../services/api/endpoints/author/getAuthorById'
@@ -8,6 +7,7 @@ import getCommentsByCourseId from '../../services/api/endpoints/comments/getComm
 import addNewComment from '../../services/api/endpoints/comments/addNewComment'
 import { AxiosResponse } from 'axios'
 import { CommentResponse, Comment } from '../../interfaces/models'
+import ModalLayout from '../ModalLayout/ModalLayout'
 
 
 const CourseModal: FC = () => {
@@ -74,10 +74,9 @@ const CourseModal: FC = () => {
         fetchData();
     }, [ authorId, openCourseId, setAuthorId, setAuthorInfo, setCourseInfo ])
 
-    return ReactDOM.createPortal(
-        <>
-            <div onClick={ closeModal } className={ styles['full-screen'] }></div>
-            <div className={ styles.modal }>
+    return (
+        <ModalLayout closeFn={ closeModal }>
+            <>
                 <main className={ styles.main }>
                     <button 
                         onClick={ closeModal }
@@ -121,9 +120,8 @@ const CourseModal: FC = () => {
                             </>   
                     }
                 </div>
-            </div>
-        </>,
-        document.getElementById('portal') || document.createElement('div')
+            </>
+        </ModalLayout> 
     )
 }
 

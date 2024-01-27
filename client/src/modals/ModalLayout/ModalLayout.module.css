@@ -1,0 +1,51 @@
+.full-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(20, 92, 118, 0.7);
+    animation: opacityAnimation .3s ease forwards;
+    cursor: pointer;
+}
+
+.modal {
+    position: fixed;
+    width: 95%;
+    max-width: 1000px;
+    max-height: 85vh;
+    overflow-y: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--background);
+    padding: 35px;
+    border-radius: 4px;
+    animation: opacityAndMovementAnimation .5s ease forwards;
+}
+
+@keyframes opacityAnimation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes opacityAndMovementAnimation {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -80%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .modal {
+        padding: 25px;
+    }
+}
