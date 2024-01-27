@@ -10,6 +10,12 @@
     box-shadow: 0px 6px 34px rgba(215, 216, 222, 0.41);
     border-radius: 6px;
     padding: 20px;
+    transition: all .3s ease-in;
+}
+
+.card:hover {
+    box-shadow: 0px 6px 34px rgb(208, 208, 209);
+    transform: scale(1.03);
 }
 
 .image-ctn {

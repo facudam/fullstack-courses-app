@@ -16,10 +16,13 @@ const getCourseLanguages = async (_req: Request, res: Response) => {
 const createCourseLanguage =  async (req: Request, res: Response) => {
     try {
         const { language_name }: CourseLanguage = req.body;
+
+        if (language_name.length <= 0) return res.status(400).send({ error: "Incorrect request, please complete the information required for this request."})
+
         pool.query('INSERT INTO course_language (language_name) VALUES (?)', [language_name])
-        res.json({ language_name })
+        return res.json({ language_name })
     } catch (error: unknown) {
-        res.status(500).send(serverErrorMessage + error)
+        return res.status(500).send(serverErrorMessage + error)
     }
 }
 

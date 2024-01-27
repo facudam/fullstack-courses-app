@@ -13,10 +13,11 @@ const SqlQuery = `
       c.resource_link,
       c.description,
       c.image,
+      c.author_id,
+      a.author_name AS author,
       t.tech_name AS technology,
       l.language_name AS language,
-      ty.type_name AS type,
-      a.author_name AS author
+      ty.type_name AS type
     FROM
       course c
     INNER JOIN
@@ -65,6 +66,7 @@ const createCourse = async (req: Request, res: Response) => {
       }: Course = req.body;
 
       if (!req.files || Object.keys(req.files).length === 0) return res.status(400).send('No files were uploaded');
+      if (title.length <= 0 || resource_link.length <= 0 || description.length <= 0) return res.status(400).send({ error: "Incorrect request, please complete the information required for this request."})
 
       const sampleFile: any = req.files.sampleFile;
     

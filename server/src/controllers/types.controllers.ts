@@ -28,10 +28,13 @@ const getTypeById = async(req: Request, res: Response) => {
 const createType = async(req: Request, res: Response) => {
     try {
         const { type_name }: Type = req.body;
+
+        if (type_name.length <= 0) return res.status(400).send({ error: "Incorrect request, please complete the information required for this request."})
+
         pool.query('INSERT INTO course_type (type_name) VALUES (?)', [type_name]);
-        res.json({ type_name })
+        return res.json({ type_name })
     } catch(error: unknown) {
-        res.status(500).send(serverErrorMessage + error)
+        return res.status(500).send(serverErrorMessage + error)
     }
 }
 

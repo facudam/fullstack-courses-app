@@ -28,10 +28,11 @@ const getAuthorById = async(req: Request, res: Response) => {
 const createAuthor = async(req: Request, res: Response) => {
     try {
         const { author_name, author_country }: Author = req.body;
+        if (author_country.length <= 0 || author_name.length <= 0) return res.status(400).send({ error: "Incorrect request, please complete the information required for this request."})
         pool.query('INSERT INTO author (author_name, author_country) VALUES (?,?)', [author_name, author_country]);
-        res.json({ author_name, author_country })
+         return res.json({ author_name, author_country })
     } catch(error: unknown) {
-        res.status(500).send(serverErrorMessage + error)
+        return res.status(500).send(serverErrorMessage + error)
     }
 }
 

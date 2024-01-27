@@ -8,6 +8,7 @@ import { Session } from 'express-session';
 
 interface CustomSession extends Session {
     username: string;
+    user_id: number
 }
 
 interface UserReq extends ResultSetHeader {
@@ -40,6 +41,9 @@ const getUserById = async(req: Request, res: Response) => {
 const createUser = async(req: Request, res: Response) => {
     try {
         const { name, email, password } = req.body
+
+        if (name.length <= 0 || email.length <= 0 || password.length <= 0) return res.status(400).send({ error: "Incorrect request, please complete the information required for this request."})
+
         // Verificamos que el email no exista en la base de datos:
         const [ result ] = await pool.query<UserReq[]>('SELECT * FROM user WHERE user_email = ?', [email]);
         // Si ya existe retornamos un codigo 409 de conflicto:
@@ -70,9 +74,10 @@ const loginUser: any  = async(req: Request  & { session: CustomSession }, res: R
         const passwordMatch = await bcryptjs.compare(password, user.user_password);
 
         if (!passwordMatch) return res.status(401).json({ message: 'Invalid email or password' });
+        req.session.user_id = user.user_id;
         req.session.username = user.user_name
 
-        return res.json({ login: true, user });
+        return res.json({ login: true });
 
     } catch (error: unknown) {
         return res.status(500).send( serverErrorMessage + error)
@@ -95,7 +100,7 @@ const logoutUser = (req: Request, res: Response) => {
 const userIsLogged: any = (req: Request  & { session: CustomSession }, res: Response) => {
     try {
         if (req.session.username) {
-            return res.json({ valid: true, username: req.session.username })
+            return res.json({ valid: true, username: req.session.username, user_id: req.session.user_id })
         } else {
             return res.json({ valid: false })
         }
