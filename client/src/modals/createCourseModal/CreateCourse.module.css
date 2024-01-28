@@ -1,3 +1,26 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.form > button {
+    padding: 8px;
+    color: #fff;
+    background-color: #000;
+    border-radius: 6px;
+}
+
+.space-beetwen {
+    display: flex;
+    justify-content: space-between;
+}
+
+.space-beetwen button {
+    width: 20px;
+    height: 20px;
+}
+
 .grid-form {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
@@ -7,9 +30,30 @@
 .form-group {
     display: flex;
     flex-direction: column;
+    gap: 5px;
 }
 
-.space-beetwen {
-    display: flex;
-    justify-content: space-between;
+.form-group label {
+    font-size: 1.1rem;
+}
+
+.form-group > input, .form-group > textarea, .form-group > select {
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: thin solid #cccbcb;
+    background-color: var(--background);
+}
+
+.form-group textarea {
+    resize: none;
+}
+
+.form-group input[type="file"]::-webkit-file-upload-button {
+    border: none; /* Elimina el borde */
+    background-color: var(--background);
+    height: 14px;
+}
+
+.form-group span {
+    font-size: 12px;
 }

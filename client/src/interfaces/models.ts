@@ -62,6 +62,11 @@ interface Language {
     language_name: string
 }
 
+interface Technology {
+    tech_id: number,
+    tech_name: string
+}
+
 export type 
             { 
                 Curso,
@@ -72,5 +77,6 @@ export type
                 Comment,
                 CommentResponse,
                 Types,
-                Language
+                Language,
+                Technology
             }
