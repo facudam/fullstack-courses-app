@@ -1,0 +1,15 @@
+.grid-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.space-beetwen {
+    display: flex;
+    justify-content: space-between;
+}

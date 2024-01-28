@@ -18,6 +18,7 @@ export const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
     const [ authorInfo, setAuthorInfo ] = useState<Author>()
     const [ technology, setTechnology ] = useState<string>('')
     const [ userId, setUserId ] = useState<number | undefined>()
+    const [ isCreateCourseModalOpen, setIsCreateCourseModalOpen ] = useState<boolean>(false)
 
     return(
         <CoursesContext.Provider 
@@ -31,7 +32,8 @@ export const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
                     authorId, setAuthorId,
                     authorInfo, setAuthorInfo,
                     technology, setTechnology,
-                    userId, setUserId
+                    userId, setUserId,
+                    isCreateCourseModalOpen, setIsCreateCourseModalOpen
                 }   
             }
         >

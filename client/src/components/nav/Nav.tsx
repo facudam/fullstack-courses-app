@@ -10,7 +10,7 @@ import AuthNav from "../authNav/AuthNav"
 
 const Nav: FC<NavProps> = ({ handleLogout }) => {
 
-    const { isAuthenticated, userName } = useContext(CoursesContext)
+    const { isAuthenticated, userName, setIsCreateCourseModalOpen } = useContext(CoursesContext)
 
     return(
         <nav className={ styles.nav }>
@@ -23,7 +23,11 @@ const Nav: FC<NavProps> = ({ handleLogout }) => {
                                 <div className={ styles['secondary-nav-relative']}>
                                     <img src={ profile } alt="" width={35} />
                                     <div className={ styles['secondary-nav-ctn'] }>
-                                        <AuthNav userName={ userName } handleLogout={ handleLogout } />
+                                        <AuthNav 
+                                            userName={ userName } 
+                                            handleLogout={ handleLogout } 
+                                            handleNewCourse={ () => setIsCreateCourseModalOpen(true) } 
+                                        />
                                     </div>
                                 </div>
                             </div>

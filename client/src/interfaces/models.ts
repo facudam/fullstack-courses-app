@@ -19,7 +19,8 @@ interface NavProps {
 
 interface AuthNavProps {
     userName: string,
-    handleLogout: () => void
+    handleLogout: () => void,
+    handleNewCourse: () => void
 }
 
 interface CardProps {

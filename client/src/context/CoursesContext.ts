@@ -19,7 +19,9 @@ interface CoursesContext {
   technology: string,
   setTechnology: (technology: string) => void,
   userId: number | undefined,
-  setUserId: (userId: number | undefined) => void
+  setUserId: (userId: number | undefined) => void,
+  isCreateCourseModalOpen: boolean, 
+  setIsCreateCourseModalOpen: (isCreateCourseModalOpen: boolean) =>void 
 
 }
 
@@ -41,7 +43,9 @@ const initialState: CoursesContext = {
   technology: '',
   setTechnology: (technology: string) => { technology },
   userId: undefined,
-  setUserId: (userId: number | undefined) => { userId }
+  setUserId: (userId: number | undefined) => { userId },
+  isCreateCourseModalOpen: false,
+  setIsCreateCourseModalOpen: (isCreateCourseModalOpen: boolean) => { isCreateCourseModalOpen }
 }
 
 export const CoursesContext = createContext<CoursesContext>(initialState);

@@ -7,7 +7,7 @@ import getCommentsByCourseId from '../../services/api/endpoints/comments/getComm
 import addNewComment from '../../services/api/endpoints/comments/addNewComment'
 import { AxiosResponse } from 'axios'
 import { CommentResponse, Comment } from '../../interfaces/models'
-import ModalLayout from '../ModalLayout/ModalLayout'
+import ModalLayout from '../modalLayout/ModalLayout'
 
 
 const CourseModal: FC = () => {
@@ -76,51 +76,49 @@ const CourseModal: FC = () => {
 
     return (
         <ModalLayout closeFn={ closeModal }>
-            <>
-                <main className={ styles.main }>
-                    <button 
-                        onClick={ closeModal }
-                        className={ styles.btn }>
-                        x
-                    </button>
-                    <div className={ styles['img-ctn'] }>
-                        <img src={ courseInfo?.image } />
-                    </div>
-                    <div className={ styles['info-ctn'] }>
-                        <h2>{ courseInfo?.title }</h2>
-                        <p>{ courseInfo?.description }</p>
-                        
-                        <a href={ courseInfo?.resource_link } target='_blank' rel='noopener noreferrer nofollow'>Acceder al curso</a>
-                        <div className={ styles.types }>
-                            <span>{ (courseInfo?.is_free === 1) ? 'Gratis' : 'Pago' }</span>
-                            <span>{ courseInfo?.technology }</span>
-                            <span>{ courseInfo?.type }</span>
-                            <span>{ courseInfo?.language }</span>
-                        </div>
-                        <p>
-                            <strong>Author:</strong> <span>{ authorInfo?.author_name } - { authorInfo?.author_country }</span>
-                        </p>
-                    </div>
-                </main>
-                <div className={ styles.comments }>
-                    <h3>Feedback sobre el curso:</h3>
-                    {
-                        (comments && comments?.length > 0)
-                            ? comments.map((comment, index) => (
-                                <p key={ (comment.comment_id) ? comment.comment_id : index }><strong>{ (comment.user) ? comment.user : userName }: </strong> { comment.comment_description }</p>
-                            ))
-                            : <p>Aún no se ha dejado ningún feedback sobre este curso</p>
-                    }
-                    {
-                        isAuthenticated && 
-                            <>
-                                <h3>¿Ya completaste el curso? Comparte tu experiencia con la comunidad</h3>
-                                <input type='text' value={ newComment } onChange={(e) => setNewComment(e.target.value)} />
-                                <button onClick={ handleNewComment }>Enviar feedback</button>
-                            </>   
-                    }
+            <main className={ styles.main }>
+                <button 
+                    onClick={ closeModal }
+                    className={ styles.btn }>
+                    x
+                </button>
+                <div className={ styles['img-ctn'] }>
+                    <img src={ courseInfo?.image } />
                 </div>
-            </>
+                <div className={ styles['info-ctn'] }>
+                    <h2>{ courseInfo?.title }</h2>
+                    <p>{ courseInfo?.description }</p>
+                    
+                    <a href={ courseInfo?.resource_link } target='_blank' rel='noopener noreferrer nofollow'>Acceder al curso</a>
+                    <div className={ styles.types }>
+                        <span>{ (courseInfo?.is_free === 1) ? 'Gratis' : 'Pago' }</span>
+                        <span>{ courseInfo?.technology }</span>
+                        <span>{ courseInfo?.type }</span>
+                        <span>{ courseInfo?.language }</span>
+                    </div>
+                    <p>
+                        <strong>Author:</strong> <span>{ authorInfo?.author_name } - { authorInfo?.author_country }</span>
+                    </p>
+                </div>
+            </main>
+            <div className={ styles.comments }>
+                <h3>Feedback sobre el curso:</h3>
+                {
+                    (comments && comments?.length > 0)
+                        ? comments.map((comment, index) => (
+                            <p key={ (comment.comment_id) ? comment.comment_id : index }><strong>{ (comment.user) ? comment.user : userName }: </strong> { comment.comment_description }</p>
+                        ))
+                        : <p>Aún no se ha dejado ningún feedback sobre este curso</p>
+                }
+                {
+                    isAuthenticated && 
+                        <>
+                            <h3>¿Ya completaste el curso? Comparte tu experiencia con la comunidad</h3>
+                            <input type='text' value={ newComment } onChange={(e) => setNewComment(e.target.value)} />
+                            <button onClick={ handleNewComment }>Enviar feedback</button>
+                        </>   
+                }
+            </div>
         </ModalLayout> 
     )
 }
