@@ -21,10 +21,11 @@ const CreateCourse: FC = () => {
     const [ link, setLink ] = useState<string>('')
     const [ courseType, setCourseType ] = useState<string | number>()
     const [ courseCost, setCourseCost ] = useState<string | number>()
+    const [ withCertificate, setWithCertificate ] = useState<number | string>()
 
     const closeModal = () => {
         setIsCreateCourseModalOpen(false)
-        console.log(courseType, courseCost) //Solo para que no arroje un error hasta utilizar ambos estados.
+        console.log(courseType, courseCost, withCertificate) //Solo para que no arroje un error hasta utilizar ambos estados.
     }
 
     return(
@@ -171,6 +172,18 @@ const CreateCourse: FC = () => {
                                     <option key={ idioma.language_id }>{ idioma.language_name }</option>
                                 ))
                             }
+                        </select>
+                    </div>
+                    <div className={ styles['form-group'] }>
+                        <label htmlFor="certificated">Certificación</label>
+                        <select
+                            onChange={(e) => setWithCertificate(e.target.value)} 
+                            id="certificated" 
+                            name="certificated"
+                        >
+                            <option>Elige una opción</option>
+                            <option value={1}>Certificado</option>
+                            <option value={0}>Sin certificación</option>
                         </select>
                     </div>
                 </div>

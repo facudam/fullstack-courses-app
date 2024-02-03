@@ -21,6 +21,7 @@ interface Course {
     resource_link: string,
     rating: number | null,
     description: string,
+    with_certification: number,
     image?: string,
     language_id: number,
     type_id: number,
