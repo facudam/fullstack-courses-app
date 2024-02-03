@@ -4,7 +4,7 @@ import getCourses from '../../services/api/endpoints/courses/getCourses';
 import { Curso } from '../../interfaces/models';
 import Card from '../../components/card/Card';
 import { useAuthor, useLanguage, useTypes } from '../../hooks';
-import { filterByAuthor, filterByFree, filterByLanguage, filterByTechnology, filterByType } from '../../helpers/filters';
+import { filterByAuthor, filterByFree, filterByLanguage, filterByTechnology, filterByType, filterByCertification } from '../../helpers/filters';
 import { CoursesContext } from '../../context/CoursesContext';
 
 const CoursesSection: FC = () => {
@@ -17,6 +17,7 @@ const CoursesSection: FC = () => {
     const [ type, setType ] = useState<string>('Front-End')
     const [ author, setAuthor ] = useState<string>('')
     const [ costo, setCosto ] = useState<number | string>('')
+    const [ withCertification, setWithCertification ] = useState<number | string>('')
 
     const { types } = useTypes()
     const { language } = useLanguage()
@@ -42,7 +43,8 @@ const CoursesSection: FC = () => {
           filterByAuthor(curso, author) &&
           filterByLanguage(curso, selectedLanguage) &&
           filterByFree(curso, costo) &&
-          filterByTechnology(curso, technology)
+          filterByTechnology(curso, technology) &&
+          filterByCertification(curso, withCertification)
       )
     })
 
@@ -61,6 +63,11 @@ const CoursesSection: FC = () => {
                     }
                 </div>
                 <div className={ styles['info-filters-ctn'] }>
+                    <select value={ withCertification } onChange={(e) => setWithCertification(e.target.value)}>
+                        <option value={ "" }>Certificacion</option>
+                        <option value={ 1 }>Con Certificado</option>
+                        <option value={ 0 }>Sin Certificado</option>
+                      </select>
                     <select
                         value={ selectedLanguage }
                         onChange={ (e) => setSelectedLanguage(e.target.value)} >

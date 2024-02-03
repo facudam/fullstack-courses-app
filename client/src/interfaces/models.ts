@@ -10,7 +10,8 @@ interface Curso {
     type: string,
     author: string,
     author_id: number,
-    technology: string
+    technology: string,
+    with_certification: number | string
 }
 
 interface NavProps {
