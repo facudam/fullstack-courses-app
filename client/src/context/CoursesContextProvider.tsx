@@ -14,7 +14,7 @@ export const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
     const [ isCourseModalOpen, setIsCourseModalOpen ] = useState<boolean>(false)
     const [ openCourseId, setOpenCourseId ] = useState<number | undefined | null>()
     const [ courseInfo, setCourseInfo ] = useState<Curso>()
-    const [ authorId, setAuthorId ] = useState<number>()
+    const [ authorId, setAuthorId ] = useState<number | string>('')
     const [ authorInfo, setAuthorInfo ] = useState<Author>()
     const [ technology, setTechnology ] = useState<string>('')
     const [ userId, setUserId ] = useState<number | undefined>()

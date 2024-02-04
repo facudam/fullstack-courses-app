@@ -7,10 +7,10 @@ interface Curso {
     resource_link: string,
     image: string,
     language: string,
-    type: string,
-    author: string,
-    author_id: number,
-    technology: string,
+    type: string | number,
+    author?: string,
+    author_id: number | string,
+    technology: string | number,
     with_certification: number | string
 }
 
@@ -34,8 +34,8 @@ interface CardProps {
 }
 
 interface Author {
-    author_id: number,
-    author_name: string,
+    author_id?: number,
+    author_name: string | number,
     author_country: string
 }
 
@@ -64,8 +64,8 @@ interface Language {
 }
 
 interface Technology {
-    tech_id: number,
-    tech_name: string
+    tech_id?: number,
+    tech_name: string | number
 }
 
 export type 

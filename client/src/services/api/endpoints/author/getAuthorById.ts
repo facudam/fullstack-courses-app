@@ -3,7 +3,7 @@ import { Author } from "../../../../interfaces/models"
 import apiBaseUrl from "../apiBaseUrl"
 
 
-const getAuthorById = async (id: number | undefined): Promise<Author> => {
+const getAuthorById = async (id: number | string): Promise<Author> => {
     try {
         const response: AxiosResponse<Author> = await axios.get(`${apiBaseUrl}/api/authors/${id}`)
         return response.data

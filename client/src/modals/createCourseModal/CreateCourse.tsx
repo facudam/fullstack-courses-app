@@ -1,8 +1,11 @@
-import { FC, useContext, useState } from "react";
+import { FC, FormEvent, useContext, useState } from "react";
 import styles from './CreateCourse.module.css'
 import ModalLayout from "../modalLayout/ModalLayout";
 import { CoursesContext } from "../../context/CoursesContext";
 import { useAuthor, useLanguage, useTechnology, useTypes } from "../../hooks";
+// import { Curso,  } from "../../interfaces/models";
+import addNewCourse from "../../services/api/endpoints/courses/addNewCourse";
+import { AxiosResponse } from "axios";
 
 const CreateCourse: FC = () => {
 
@@ -17,20 +20,58 @@ const CreateCourse: FC = () => {
     const [ authorName, setAuthorName ] = useState<number | string>('')
     const [ courseTitle, setCourseTitle ] = useState<string>('')
     const [ courseDescription, setCourseDescription ] = useState<string>('')
-    const [ sampleFile, setSampleFile ] = useState<string>('')
+    const [ sampleFile, setSampleFile ] = useState<string | File | undefined>('')
     const [ link, setLink ] = useState<string>('')
-    const [ courseType, setCourseType ] = useState<string | number>()
-    const [ courseCost, setCourseCost ] = useState<string | number>()
-    const [ withCertificate, setWithCertificate ] = useState<number | string>()
+    const [ courseType, setCourseType ] = useState<string | number>('')
+    const [ courseCost, setCourseCost ] = useState<string | number>('')
+    const [ withCertificate, setWithCertificate ] = useState<number | string>('')
+    const [ courseLanguage, setCourseLanguage ] = useState<number | string>('')
+    const [ authorCountry, setAuthorCountry ] = useState<string>('')
 
     const closeModal = () => {
         setIsCreateCourseModalOpen(false)
-        console.log(courseType, courseCost, withCertificate) //Solo para que no arroje un error hasta utilizar ambos estados.
+    }
+
+    const newCourse = {
+        title: courseTitle,
+        description: courseDescription,
+        is_free: Number(courseCost),
+        resource_link: link,
+        sampleFile: sampleFile,
+        language_id: Number(courseLanguage),
+        type_id: Number(courseType),
+        author_id: Number(authorName),
+        tech_id: Number(techName),
+        with_certification: Number(withCertificate)
+    }
+
+
+    // const newTechnology: Technology = {
+    //     tech_name: techName
+    // }
+
+    // const newAuthor: Author = {
+    //     author_name: authorName,
+    //     author_country: authorCountry
+    // }
+
+   
+    console.log(newCourse)
+    const handleNewCourse = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        console.log(newCourse)
+        addNewCourse(newCourse)
+            .then((respuesta: AxiosResponse) => {
+                alert(respuesta)
+            })
+            .catch((error) => {
+                alert(`ha habido un error: ${error}`)
+            })
     }
 
     return(
         <ModalLayout closeFn={ closeModal }>
-            <form className={ styles.form }>
+            <form onSubmit={(e) => handleNewCourse(e) } className={ styles.form }>
                 <div className={ styles['space-beetwen']}>
                     <h2>Añade un nuevo curso</h2>
                     <button onClick={ closeModal }>x</button>
@@ -63,12 +104,11 @@ const CreateCourse: FC = () => {
                     <div className={ styles['form-group'] }>
                         <label htmlFor="sampleFile">Imagen <span>*.webp no permitido</span></label>
                         <input
-                            onChange={(e) => setSampleFile(e.target.value)}
+                            onChange={(e) => setSampleFile(e.target.files?.[0])}
                             type="file" 
                             id="sampleFile" 
                             name="sampleFile" 
                             accept="image/jpeg, image/png, image/svg, image/gif"
-                            value={ sampleFile }
                         />
                     </div>
 
@@ -88,6 +128,7 @@ const CreateCourse: FC = () => {
                         <select
                             onChange={(e) => setCourseType(e.target.value)} 
                             id="type" name="type"
+                            value={ courseType }
                         >
                             <option>Elige una opción</option>
                             {
@@ -104,6 +145,7 @@ const CreateCourse: FC = () => {
                             id="technology" 
                             name="technology" 
                             onChange={(e) => setTechname(e.target.value)}
+                            value={ techName }
                         >
                             <option>Elige una opción</option>
                             {
@@ -114,10 +156,15 @@ const CreateCourse: FC = () => {
                             <option value='otro'>Otro</option>
                         </select>
                         {
-                            (techName === 'otro') &&
+                            (typeof techName == 'string' && techName == 'otro') &&
                                 <div style={{border: "1px solid gray",  padding: "10px"}}>
                                     <p>Nueva tecnología:</p>
-                                    <input type="text" placeholder="Ingrese la nueva tecnología" />
+                                    <input
+                                        value={ techName }
+                                        onChange={(e) => setTechname(e.target.value)} 
+                                        type="text" 
+                                        placeholder="Ingrese la nueva tecnología" 
+                                    />
                                     <button>Añadir tecnología</button>
                                 </div> 
                         } 
@@ -143,8 +190,18 @@ const CreateCourse: FC = () => {
                             (authorName === 'otro') && 
                                 <div style={{ border: "1px solid gray", padding: "10px"}}>
                                     <p>Nuevo autor:</p>
-                                    <input type="text" placeholder="Ingrese el nombre del autor" />
-                                    <input type="text" placeholder="Ingrese el país del autor" />
+                                    <input
+                                        value={ authorName }
+                                        onChange={(e) => setAuthorName(e.target.value)} 
+                                        type="text" 
+                                        placeholder="Ingrese el nombre del autor" 
+                                    />
+                                    <input
+                                        value={ authorCountry }
+                                        onChange={(e) => setAuthorCountry(e.target.value)} 
+                                        type="text" 
+                                        placeholder="Ingrese el país del autor" 
+                                    />
                                     <button>Añadir autor</button>
                                 </div> 
                         }
@@ -156,6 +213,7 @@ const CreateCourse: FC = () => {
                             onChange={(e) => setCourseCost(e.target.value)} 
                             id="costo" 
                             name="costo"
+                            value={ courseCost }
                         >
                             <option>Elige una opción</option>
                             <option value={1}>Gratis</option>
@@ -165,11 +223,16 @@ const CreateCourse: FC = () => {
 
                     <div className={ styles['form-group'] }>
                         <label htmlFor="language">Idioma</label>
-                        <select id="language" name="language">
+                        <select
+                            value={courseLanguage}
+                            onChange={(e) => setCourseLanguage(e.target.value)}
+                            id="language" 
+                            name="language"
+                        >
                             <option>Elige una opción</option>
                             {
                                 language.map(idioma => (
-                                    <option key={ idioma.language_id }>{ idioma.language_name }</option>
+                                    <option key={ idioma.language_id } value={ idioma.language_id }>{ idioma.language_name }</option>
                                 ))
                             }
                         </select>
@@ -180,6 +243,7 @@ const CreateCourse: FC = () => {
                             onChange={(e) => setWithCertificate(e.target.value)} 
                             id="certificated" 
                             name="certificated"
+                            value={ withCertificate }
                         >
                             <option>Elige una opción</option>
                             <option value={1}>Certificado</option>
@@ -187,7 +251,7 @@ const CreateCourse: FC = () => {
                         </select>
                     </div>
                 </div>
-                <button>Añadir curso</button>
+                <button type="submit">Añadir curso</button>
             </form>
         </ModalLayout>
     )

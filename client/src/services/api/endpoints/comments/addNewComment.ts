@@ -4,7 +4,7 @@ import { CommentResponse, Comment } from "../../../../interfaces/models";
 
 
 const addNewComment = (comentario: CommentResponse): Promise<AxiosResponse<Comment>> => {
-    return  axios.post(`${apiBaseUrl}/api/comments`, comentario )
+    return axios.post(`${apiBaseUrl}/api/comments`, comentario )
 }
 
 export default addNewComment;
