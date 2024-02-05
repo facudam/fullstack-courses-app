@@ -1,11 +1,10 @@
-import { FC, FormEvent, useContext, useState } from "react";
+import { FC, useContext, useState } from "react";
 import styles from './CreateCourse.module.css'
 import ModalLayout from "../modalLayout/ModalLayout";
 import { CoursesContext } from "../../context/CoursesContext";
 import { useAuthor, useLanguage, useTechnology, useTypes } from "../../hooks";
-// import { Curso,  } from "../../interfaces/models";
-import addNewCourse from "../../services/api/endpoints/courses/addNewCourse";
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
+import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl";
 
 const CreateCourse: FC = () => {
 
@@ -16,62 +15,77 @@ const CreateCourse: FC = () => {
     const { types } = useTypes()
     const { technologies } = useTechnology()
 
-    const [ techName, setTechname ] = useState<number | string>('')
-    const [ authorName, setAuthorName ] = useState<number | string>('')
-    const [ courseTitle, setCourseTitle ] = useState<string>('')
-    const [ courseDescription, setCourseDescription ] = useState<string>('')
-    const [ sampleFile, setSampleFile ] = useState<string | File | undefined>('')
-    const [ link, setLink ] = useState<string>('')
-    const [ courseType, setCourseType ] = useState<string | number>('')
-    const [ courseCost, setCourseCost ] = useState<string | number>('')
-    const [ withCertificate, setWithCertificate ] = useState<number | string>('')
-    const [ courseLanguage, setCourseLanguage ] = useState<number | string>('')
-    const [ authorCountry, setAuthorCountry ] = useState<string>('')
+    interface CourseRequest { 
+        [key: string]: string | number | null | File;
+        title: string,
+        is_free: number | string,
+        resource_link: string,
+        description: string,
+        language_id: number | string,
+        type_id: number | string,
+        tech_id: number | string,
+        author_id: number | string,
+        with_certification: number | string,
+        sampleFile: null | File
+    }
+
+    const [formData, setFormData] = useState<CourseRequest>({
+        title: '',
+        is_free: '',
+        resource_link: '',
+        description: '',
+        language_id: '',
+        type_id: '',
+        tech_id: '',
+        author_id: '',
+        with_certification: '',
+        sampleFile: null
+      });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+      };
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file !== null && file !== undefined) {
+            setFormData({ ...formData, sampleFile: file});
+        }
+    };
 
     const closeModal = () => {
         setIsCreateCourseModalOpen(false)
     }
 
-    const newCourse = {
-        title: courseTitle,
-        description: courseDescription,
-        is_free: Number(courseCost),
-        resource_link: link,
-        sampleFile: sampleFile,
-        language_id: Number(courseLanguage),
-        type_id: Number(courseType),
-        author_id: Number(authorName),
-        tech_id: Number(techName),
-        with_certification: Number(withCertificate)
-    }
 
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const formDataToSend = new FormData();
 
-    // const newTechnology: Technology = {
-    //     tech_name: techName
-    // }
-
-    // const newAuthor: Author = {
-    //     author_name: authorName,
-    //     author_country: authorCountry
-    // }
-
-   
-    console.log(newCourse)
-    const handleNewCourse = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-        console.log(newCourse)
-        addNewCourse(newCourse)
-            .then((respuesta: AxiosResponse) => {
-                alert(respuesta)
-            })
-            .catch((error) => {
-                alert(`ha habido un error: ${error}`)
-            })
-    }
+        for (const key in formData) {
+        const value = formData[key];
+            if (value !== null) {
+                formDataToSend.append(key, value as string | Blob);
+            }
+        }
+        try {
+            const response: AxiosResponse = await axios.post(`${apiBaseUrl}/api/courses`, formDataToSend, {
+                headers: {
+                'Content-Type': 'multipart/form-data'
+                }
+            });
+            console.log(response.data)
+            alert('Curso añadido correctamente')
+        } catch (error) {
+            console.error('Error al enviar el formulario:', error);
+            alert('error al enviar datos')
+        }
+      };
 
     return(
         <ModalLayout closeFn={ closeModal }>
-            <form onSubmit={(e) => handleNewCourse(e) } className={ styles.form }>
+            <form onSubmit={handleSubmit} className={ styles.form }>
                 <div className={ styles['space-beetwen']}>
                     <h2>Añade un nuevo curso</h2>
                     <button onClick={ closeModal }>x</button>
@@ -81,30 +95,30 @@ const CreateCourse: FC = () => {
                     <div className={ styles['form-group'] }>
                         <label htmlFor="title">Título</label>
                         <input
-                            onChange={(e) => setCourseTitle(e.target.value)} 
+                            onChange={handleChange} 
                             id="title" 
                             type="text" 
                             placeholder="Escribe el título del curso" 
-                            name="titulo"
-                            value={ courseTitle } 
+                            name="title"
+                            value={ formData.title } 
                         />
                     </div>
 
                     <div className={ styles['form-group'] }>
                         <label htmlFor="description">Descripción</label>
                         <textarea
-                            onChange={(e) => setCourseDescription(e.target.value)}
+                            onChange={handleChange}
                             id="description" 
                             placeholder="Escribe la descripción del curso" 
-                            name="descripción"
-                            value={ courseDescription }
+                            name="description"
+                            value={ formData.description }
                         />
                     </div>
 
                     <div className={ styles['form-group'] }>
                         <label htmlFor="sampleFile">Imagen <span>*.webp no permitido</span></label>
                         <input
-                            onChange={(e) => setSampleFile(e.target.files?.[0])}
+                            onChange={handleFileChange}
                             type="file" 
                             id="sampleFile" 
                             name="sampleFile" 
@@ -115,20 +129,22 @@ const CreateCourse: FC = () => {
                     <div className={ styles['form-group'] }>
                         <label htmlFor="link">Link</label>
                         <input
-                            onChange={(e) => setLink(e.target.value)} 
+                            onChange={handleChange}
+                            name="resource_link"
                             type="text" 
                             id="link" 
                             placeholder="Ingresa el link del curso"
-                            value={ link }
+                            value={ formData.resource_link }
                         />
                     </div>
 
                     <div className={ styles['form-group'] }>
                         <label htmlFor="type">Tipo</label>
                         <select
-                            onChange={(e) => setCourseType(e.target.value)} 
-                            id="type" name="type"
-                            value={ courseType }
+                            onChange={handleChange}
+                            id="type" 
+                            name="type_id"
+                            value={ formData.type_id }
                         >
                             <option>Elige una opción</option>
                             {
@@ -143,9 +159,9 @@ const CreateCourse: FC = () => {
                         <label htmlFor="technology">Tecnología</label>
                         <select 
                             id="technology" 
-                            name="technology" 
-                            onChange={(e) => setTechname(e.target.value)}
-                            value={ techName }
+                            name="tech_id" 
+                            onChange={handleChange}
+                            value={ formData.tech_id }
                         >
                             <option>Elige una opción</option>
                             {
@@ -155,28 +171,15 @@ const CreateCourse: FC = () => {
                             }
                             <option value='otro'>Otro</option>
                         </select>
-                        {
-                            (typeof techName == 'string' && techName == 'otro') &&
-                                <div style={{border: "1px solid gray",  padding: "10px"}}>
-                                    <p>Nueva tecnología:</p>
-                                    <input
-                                        value={ techName }
-                                        onChange={(e) => setTechname(e.target.value)} 
-                                        type="text" 
-                                        placeholder="Ingrese la nueva tecnología" 
-                                    />
-                                    <button>Añadir tecnología</button>
-                                </div> 
-                        } 
                     </div>
 
                     <div className={ styles['form-group'] }>
                         <label htmlFor="author">Autor</label>
                         <select 
-                            value={ authorName }
+                            value={ formData.author_id}
                             id="author" 
-                            name="author" 
-                            onChange={(e) => setAuthorName(e.target.value)}
+                            name="author_id" 
+                            onChange={handleChange}
                         >
                             <option>Elige una opción</option>
                             {
@@ -186,34 +189,15 @@ const CreateCourse: FC = () => {
                             }
                             <option value='otro'>Otro</option>
                         </select>
-                        {
-                            (authorName === 'otro') && 
-                                <div style={{ border: "1px solid gray", padding: "10px"}}>
-                                    <p>Nuevo autor:</p>
-                                    <input
-                                        value={ authorName }
-                                        onChange={(e) => setAuthorName(e.target.value)} 
-                                        type="text" 
-                                        placeholder="Ingrese el nombre del autor" 
-                                    />
-                                    <input
-                                        value={ authorCountry }
-                                        onChange={(e) => setAuthorCountry(e.target.value)} 
-                                        type="text" 
-                                        placeholder="Ingrese el país del autor" 
-                                    />
-                                    <button>Añadir autor</button>
-                                </div> 
-                        }
                     </div>
 
                     <div className={ styles['form-group'] }>
                         <label htmlFor="costo">Costo</label>
                         <select
-                            onChange={(e) => setCourseCost(e.target.value)} 
+                            onChange={handleChange} 
                             id="costo" 
-                            name="costo"
-                            value={ courseCost }
+                            name="is_free"
+                            value={ formData.is_free }
                         >
                             <option>Elige una opción</option>
                             <option value={1}>Gratis</option>
@@ -224,10 +208,10 @@ const CreateCourse: FC = () => {
                     <div className={ styles['form-group'] }>
                         <label htmlFor="language">Idioma</label>
                         <select
-                            value={courseLanguage}
-                            onChange={(e) => setCourseLanguage(e.target.value)}
+                            value={formData.language_id}
+                            onChange={handleChange}
                             id="language" 
-                            name="language"
+                            name="language_id"
                         >
                             <option>Elige una opción</option>
                             {
@@ -240,10 +224,10 @@ const CreateCourse: FC = () => {
                     <div className={ styles['form-group'] }>
                         <label htmlFor="certificated">Certificación</label>
                         <select
-                            onChange={(e) => setWithCertificate(e.target.value)} 
+                            onChange={handleChange}
                             id="certificated" 
-                            name="certificated"
-                            value={ withCertificate }
+                            name="with_certification"
+                            value={ formData.with_certification }
                         >
                             <option>Elige una opción</option>
                             <option value={1}>Certificado</option>
