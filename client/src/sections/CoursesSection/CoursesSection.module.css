@@ -51,6 +51,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 35px;
+    margin-top: 10px;
 }
 
 @media screen and (max-width: 650px) {

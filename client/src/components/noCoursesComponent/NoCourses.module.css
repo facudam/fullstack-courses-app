@@ -1,0 +1,16 @@
+.message_ctn {
+    width: 100%;
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    padding: 15px 0;
+}
+
+.message_ctn img {
+    width: 100%;
+    max-width: 500px;
+}
+

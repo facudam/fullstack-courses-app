@@ -5,6 +5,7 @@ import { CoursesContext } from "../../context/CoursesContext";
 import { useAuthor, useLanguage, useTechnology, useTypes } from "../../hooks";
 import axios, { AxiosResponse } from "axios";
 import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl";
+import { CourseRequest } from "../../interfaces/models";
 
 const CreateCourse: FC = () => {
 
@@ -14,20 +15,6 @@ const CreateCourse: FC = () => {
     const { language } = useLanguage()
     const { types } = useTypes()
     const { technologies } = useTechnology()
-
-    interface CourseRequest { 
-        [key: string]: string | number | null | File;
-        title: string,
-        is_free: number | string,
-        resource_link: string,
-        description: string,
-        language_id: number | string,
-        type_id: number | string,
-        tech_id: number | string,
-        author_id: number | string,
-        with_certification: number | string,
-        sampleFile: null | File
-    }
 
     const [formData, setFormData] = useState<CourseRequest>({
         title: '',

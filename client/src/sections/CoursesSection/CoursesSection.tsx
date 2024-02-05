@@ -6,6 +6,7 @@ import Card from '../../components/card/Card';
 import { useAuthor, useLanguage, useTypes } from '../../hooks';
 import { filterByAuthor, filterByFree, filterByLanguage, filterByTechnology, filterByType, filterByCertification } from '../../helpers/filters';
 import { CoursesContext } from '../../context/CoursesContext';
+import NoCoursesComponent from '../../components/noCoursesComponent/NoCourses';
 
 const CoursesSection: FC = () => {
 
@@ -105,21 +106,26 @@ const CoursesSection: FC = () => {
             </div>
             <div className={ styles['card-section'] }>
                 {
-                isLoading 
-                    ? <p>Cargando...</p>
-                    : filteredCourses.map(({ course_id, title, technology, image, author, is_free }) => (
-                        <Card  
-                          id={ course_id }
-                          key={ course_id }
-                          title={ title }
-                          image={ image }
-                          technology={ technology }
-                          author={ author }
-                          is_free={ is_free }
-                        />
-                    ))
+                  isLoading 
+                      ? <p>Cargando...</p>
+                      : filteredCourses.map(({ course_id, title, technology, image, author, is_free, with_certification }) => (
+                          <Card  
+                            id={ course_id }
+                            key={ course_id }
+                            title={ title }
+                            image={ image }
+                            technology={ technology }
+                            author={ author }
+                            is_free={ is_free }
+                            with_certification={ with_certification }
+                          />
+                        ))
                 }
             </div>
+            {
+              (filteredCourses.length <= 0)
+                && <NoCoursesComponent />
+            }
         </section>
     )
 }

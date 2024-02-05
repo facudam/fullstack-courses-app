@@ -14,6 +14,20 @@ interface Curso {
     with_certification: number | string
 }
 
+interface CourseRequest { 
+    [key: string]: string | number | null | File;
+    title: string,
+    is_free: number | string,
+    resource_link: string,
+    description: string,
+    language_id: number | string,
+    type_id: number | string,
+    tech_id: number | string,
+    author_id: number | string,
+    with_certification: number | string,
+    sampleFile: null | File
+}
+
 interface NavProps {
     handleLogout: () => void,
 }
@@ -28,9 +42,10 @@ interface CardProps {
     id: number | undefined,
     title: string,
     image: string,
-    author: string,
+    author: string | undefined,
     is_free: number | string,
-    technology: string
+    technology: string | number
+    with_certification: number | string
 }
 
 interface Author {
@@ -71,6 +86,7 @@ interface Technology {
 export type 
             { 
                 Curso,
+                CourseRequest,
                 NavProps, 
                 CardProps, 
                 AuthNavProps, 

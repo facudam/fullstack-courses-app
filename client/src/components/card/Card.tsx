@@ -2,9 +2,10 @@ import { FC, useContext } from "react";
 import { CardProps } from "../../interfaces/models";
 import styles from './Card.module.css'
 import { CoursesContext } from "../../context/CoursesContext";
+import { graduado } from "../../assets/images/images";
 
 
-const Card: FC<CardProps> = ({ id,  title, author, image, is_free, technology }) => {
+const Card: FC<CardProps> = ({ id,  title, author, image, is_free, technology, with_certification }) => {
 
     const { setIsCourseModalOpen, setOpenCourseId } = useContext(CoursesContext)
 
@@ -28,6 +29,13 @@ const Card: FC<CardProps> = ({ id,  title, author, image, is_free, technology })
                 </div>
                 <p><span>Por </span>{ author }</p> 
             </div>
+            {
+                (with_certification === 1) &&
+                    <div className={ styles.graduado }>
+                        <img src={ graduado } />
+                    </div> 
+            }
+            
         </div>
     )
 }
