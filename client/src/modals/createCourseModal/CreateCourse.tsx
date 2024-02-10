@@ -6,6 +6,8 @@ import { useAuthor, useLanguage, useTechnology, useTypes } from "../../hooks";
 import axios, { AxiosResponse } from "axios";
 import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl";
 import { CourseRequest } from "../../interfaces/models";
+import TechForm from "../../components/techForm/TechForm";
+import AuthorForm from "../../components/authorForm/AuthorForm";
 
 const CreateCourse: FC = () => {
 
@@ -32,14 +34,12 @@ const CreateCourse: FC = () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-      };
+    };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        if (file !== null && file !== undefined) {
-            setFormData({ ...formData, sampleFile: file});
-        }
-    };
+        if (file !== null && file !== undefined) setFormData({ ...formData, sampleFile: file });
+    }
 
     const closeModal = () => {
         setIsCreateCourseModalOpen(false)
@@ -156,9 +156,15 @@ const CreateCourse: FC = () => {
                                     <option key={ technology.tech_id } value={ technology.tech_id }>{ technology.tech_name }</option>
                                 ))
                             }
-                            <option value='otro'>Otro</option>
+                            <option value='otro'>Añadir nueva tecnología</option>
                         </select>
+                        {
+                            (formData.tech_id === 'otro') &&
+                                <TechForm />
+                        }
                     </div>
+
+                    
 
                     <div className={ styles['form-group'] }>
                         <label htmlFor="author">Autor</label>
@@ -174,8 +180,12 @@ const CreateCourse: FC = () => {
                                     <option key={ autor.author_id } value={ autor.author_id }>{ autor.author_name }</option>
                                 ))    
                             }
-                            <option value='otro'>Otro</option>
+                            <option value='otro'>Añadir nuevo autor</option>
                         </select>
+                        {
+                            (formData.author_id === 'otro') &&
+                                <AuthorForm />
+                        }
                     </div>
 
                     <div className={ styles['form-group'] }>
