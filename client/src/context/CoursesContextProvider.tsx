@@ -20,6 +20,10 @@ export const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
     const [ userId, setUserId ] = useState<number | undefined>()
     const [ isCreateCourseModalOpen, setIsCreateCourseModalOpen ] = useState<boolean>(false)
 
+    // Estados para renderizar nuevamente la lista de tecnologias y autores al añadirse uno nuevo;
+    const [ toggleTechState, setToggleTechState ] = useState<boolean>(false)
+    const [ toggleAuthorState, setToggleAuthorState ] = useState<boolean>(false)
+
     return(
         <CoursesContext.Provider 
             value={
@@ -33,7 +37,9 @@ export const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
                     authorInfo, setAuthorInfo,
                     technology, setTechnology,
                     userId, setUserId,
-                    isCreateCourseModalOpen, setIsCreateCourseModalOpen
+                    isCreateCourseModalOpen, setIsCreateCourseModalOpen,
+                    toggleTechState, setToggleTechState,
+                    toggleAuthorState, setToggleAuthorState
                 }   
             }
         >

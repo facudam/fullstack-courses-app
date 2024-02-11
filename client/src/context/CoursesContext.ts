@@ -21,7 +21,11 @@ interface CoursesContext {
   userId: number | undefined,
   setUserId: (userId: number | undefined) => void,
   isCreateCourseModalOpen: boolean, 
-  setIsCreateCourseModalOpen: (isCreateCourseModalOpen: boolean) =>void 
+  setIsCreateCourseModalOpen: (isCreateCourseModalOpen: boolean) =>void,
+  toggleTechState: boolean, 
+  setToggleTechState: (toggleTechState: boolean) => void,
+  toggleAuthorState: boolean, 
+  setToggleAuthorState: (toggleTechState: boolean) => void
 
 }
 
@@ -45,7 +49,11 @@ const initialState: CoursesContext = {
   userId: undefined,
   setUserId: (userId: number | undefined) => { userId },
   isCreateCourseModalOpen: false,
-  setIsCreateCourseModalOpen: (isCreateCourseModalOpen: boolean) => { isCreateCourseModalOpen }
+  setIsCreateCourseModalOpen: (isCreateCourseModalOpen: boolean) => { isCreateCourseModalOpen },
+  toggleTechState: false, 
+  setToggleTechState: (toggleTechState: boolean) => { toggleTechState },
+  toggleAuthorState: false, 
+  setToggleAuthorState: (toggleTechState: boolean) => { toggleTechState }
 }
 
 export const CoursesContext = createContext<CoursesContext>(initialState);

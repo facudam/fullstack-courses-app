@@ -1,7 +1,8 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import styles from './Author.module.css'
 import axios from "axios";
 import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl";
+import { CoursesContext } from "../../context/CoursesContext";
 
 const AuthorForm: FC = () => {
 
@@ -9,6 +10,8 @@ const AuthorForm: FC = () => {
         author_name: string,
         author_country: string
     }
+
+    const { setToggleAuthorState, toggleAuthorState } = useContext(CoursesContext)
 
     const [ authorData, setAuthorData ] = useState<AuthorData>({
         author_name: '',
@@ -26,6 +29,7 @@ const AuthorForm: FC = () => {
             });
             alert('¡Se ha añadido un nuevo autor exitosamente!')
             console.log(response.data)
+            setToggleAuthorState(!toggleAuthorState) // Para renderizar nuevamente la lista de autores una vez añadido un nuevo autor (toggleAuthorState es una dependencia en useAuthor)
         } catch (error) {
             alert(`error: ${ error }`)
         }

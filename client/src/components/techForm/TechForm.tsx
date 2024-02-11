@@ -1,10 +1,12 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import styles from './TechForm.module.css'
 import axios from "axios";
 import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl";
+import { CoursesContext } from "../../context/CoursesContext";
 
 const TechForm: FC = () => {
 
+    const { toggleTechState, setToggleTechState } = useContext(CoursesContext)
     const [ technology, setTechnology ] = useState<string>('')
 
     const handleNewTechnology = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -18,6 +20,7 @@ const TechForm: FC = () => {
             });
 
             console.log(response.data)
+            setToggleTechState(!toggleTechState) // Para renderizar nuevamente la lista de tecnologías una vez añadido una nueva a la BD (toggleTechState es una dependencia en useTechnology)
             alert('technologia agregada!')
 
         } catch (error) {
