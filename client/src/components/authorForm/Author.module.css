@@ -5,6 +5,11 @@
     margin: 10px 0;
 }
 
+.spaceBetween {
+    display: flex;
+    justify-content: space-between;
+}
+
 .form label {
     font-size: .9rem;
 }
