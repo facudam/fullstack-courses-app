@@ -8,10 +8,27 @@ const TechForm: FC = () => {
 
     const { toggleTechState, setToggleTechState } = useContext(CoursesContext)
     const [ technology, setTechnology ] = useState<string>('')
+    const [ error, setError ] = useState<string>('')
+
+    const validateForm = () => {
+        const hasError = technology.trim() === ''
+        return !hasError
+    }
 
     const handleNewTechnology = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
         event.stopPropagation()
+
+        const isValid = validateForm()
+
+        if (!isValid) {
+            setError('Por favor, ingrese el nombre de la tecnología')
+            return
+        }
+
+        setError('')
+        setTechnology('')
+
         try {
             const response = await axios.post(`${apiBaseUrl}/api/technologies`, { tech_name: technology }, {
                 headers: {
@@ -32,8 +49,17 @@ const TechForm: FC = () => {
         <div
             className={ styles['tech-send'] }
         >
-            <label>Nombre</label>
-            <input type='text' value={ technology } onChange={ (e) => setTechnology(e.target.value) } />
+            <div className={ styles.spaceBetween }>
+               <label>Nombre</label>
+               <span>{ technology.length }/25</span> 
+            </div>
+            { (error.length !== 0) && <span>{ error }</span> }
+            <input 
+                type='text' 
+                value={ technology } 
+                onChange={ (e) => setTechnology(e.target.value) }
+                maxLength={ 25 } 
+            />
             <button onClick={(event) => handleNewTechnology(event)}>Añadir tecnología</button>
         </div>
     )

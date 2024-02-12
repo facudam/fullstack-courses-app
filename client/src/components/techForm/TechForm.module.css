@@ -5,6 +5,11 @@
     margin: 10px 0;
 }
 
+.spaceBetween {
+    display: flex;
+    justify-content: space-between;
+}
+
 .tech-send input {
     border: 1px solid rgb(196, 191, 191);
     border-radius: 4px;
