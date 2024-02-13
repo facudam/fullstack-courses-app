@@ -67,8 +67,11 @@ const createCourse = async (req: Request, res: Response) => {
           with_certification
       }: Course = req.body;
 
-      if (!req.files || Object.keys(req.files).length === 0) return res.status(400).send('No files were uploaded');
-      if (title.length <= 0 || resource_link.length <= 0 || description.length <= 0) return res.status(400).send({ error: "Incorrect request, please complete the information required for this request."})
+      if (!req.files || Object.keys(req.files).length === 0) return res.status(422).send('No files were uploaded');
+
+      if (title.length <= 0 || title.length > 100 || resource_link.length <= 0 || resource_link.length > 250 || description.length <= 0 || description.length > 600) return res.status(422).send({ error: "Incorrect request, please complete the information required for this request."})
+
+      if (isNaN(Number(language_id)) || isNaN(Number(type_id)) || isNaN(Number(tech_id)) || isNaN(Number(author_id)) || isNaN(Number(with_certification))) return res.status(422).send({ error: 'Please, complete the request with valid information' })
 
       const sampleFile: any = req.files.sampleFile;
     

@@ -38,17 +38,17 @@ export const courseValidationForm = (data: ValidationData): boolean => {
         data.resource_link.trim().length === 0 ||
         data.resource_link.trim().length > 250 ||
 
-        isNaN(Number(data.type_id)) ||
+        (data.type_id === '') ||
 
-        isNaN(Number(data.tech_id)) ||
+        (data.tech_id === '' || data.tech_id === 'otro') ||
 
-        isNaN(Number(data.author_id)) ||
+        (data.author_id === '' || data.author_id === 'otro') ||
 
-        isNaN(Number(data.is_free)) ||
+        (data.is_free === '') ||
 
-        isNaN(Number(data.language_id)) ||
+        (data.language_id === '') ||
 
-        isNaN(Number(data.with_certification));
+        (data.with_certification === '');
 
     return !hasAnyError
 }
