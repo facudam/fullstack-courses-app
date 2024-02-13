@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import styles from './Login.module.css'
-import { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl";
 import Eye from "../../components/eye/Eye";
@@ -13,6 +13,7 @@ export const Login = () => {
   const [ password, setPassword ] = useState<string>("");
   const [ isDataInvalid, setIsDataInvalid ] = useState<boolean>(false);
   const [ isDataEmpty, setIsDataEmpty ] = useState<boolean>(false)
+  const [ showPassword, setShowPassword ] = useState<boolean>(false)
 
   const handleEmail = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
   const handlePassword = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
@@ -57,6 +58,11 @@ export const Login = () => {
       });
   };
 
+  const togglePasswordVisivility = (e: React.MouseEvent<HTMLButtonElement>) => {
+      toggleEye(e)
+      setShowPassword(!showPassword)
+  }
+
   return (
     <div>
       <form action="" onSubmit={  handleSubmit}>
@@ -78,7 +84,7 @@ export const Login = () => {
           <label htmlFor="password">Contraseña: </label>
           <input
             onChange={ handlePassword }
-            type="password"
+            type={ showPassword ? "text" : "password" }
             name="password"
             placeholder="Enter password"
             value={ password }
@@ -88,7 +94,7 @@ export const Login = () => {
               <span>Ingrese su contraseña</span>
           }
           <button
-              onClick={ (e) => toggleEye(e) } 
+              onClick={ (e) => togglePasswordVisivility(e) } 
               className={ styles.button }>
               <Eye />
           </button>

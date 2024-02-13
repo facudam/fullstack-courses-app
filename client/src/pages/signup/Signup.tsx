@@ -14,6 +14,7 @@ export const Signup = () => {
     const [ password, setPassword ] = useState<string>('')
     const [ name, setName ] = useState<string>('')
     const [ hasAnyError, setHasAnyError ] = useState<boolean>(false)
+    const [ showPassword, setShowPassword ] = useState<boolean>(false)
     const navigate = useNavigate()
 
     const handleEmail = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)
@@ -46,6 +47,11 @@ export const Signup = () => {
         })
     }
 
+    const togglePasswordVisivility = (e: React.MouseEvent<HTMLButtonElement>) => {
+        toggleEye(e)
+        setShowPassword(!showPassword)
+    }
+
   return (
     <div>
         <form onSubmit={ handleSubmit }>
@@ -67,13 +73,19 @@ export const Signup = () => {
             </div>
             <div>
                 <label htmlFor="password">Contraseña</label>
-                <input onChange={ handlePassword } type="password" name="password" placeholder="Enter password" value={ password } />
+                <input 
+                    onChange={ handlePassword } 
+                    type={ showPassword ? "text" : "password" }
+                    name="password" 
+                    placeholder="Enter password" 
+                    value={ password } 
+                />
                 {
                     (hasAnyError && !validatePassword(password)) &&
                         <span>La contraseña debe ser de entre 8 y 16 caracteres y debe poseer al menos una mayúscula y un número</span>
                 }
                 <button
-                    onClick={ (e) => toggleEye(e) } 
+                    onClick={ (e) => togglePasswordVisivility(e) } 
                     className={ styles.button }>
                    <Eye />
                 </button>
