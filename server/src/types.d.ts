@@ -26,7 +26,8 @@ interface Course {
     language_id: number,
     type_id: number,
     tech_id: number,
-    author_id: number
+    author_id: number,
+    user_id: number
 }
 
 interface Rating {

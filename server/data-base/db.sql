@@ -39,6 +39,7 @@ CREATE TABLE courses (
 	type_id INT NOT NULL,
 	tech_id INT NOT NULL,
 	author_id INT NOT NULL,
+	user_id INT NOT NULL,
 	PRIMARY KEY(course_id),
 	CONSTRAINT fk_language_id FOREIGN KEY(language_id)
 	REFERENCES course_languages(language_id),
@@ -47,7 +48,9 @@ CREATE TABLE courses (
 	CONSTRAINT fk_tech_id FOREIGN KEY(tech_id)
 	REFERENCES technologies(tech_id),
 	CONSTRAINT fk_author_id FOREIGN KEY(author_id)
-	REFERENCES authors(author_id)
+	REFERENCES authors(author_id),
+	CONSTRAINT fk_user_id FOREIGN KEY(user_id)
+	REFERENCES users(user_id)
 );
 
 CREATE TABLE star_rating_per_courses(

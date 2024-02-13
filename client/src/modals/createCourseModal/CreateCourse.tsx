@@ -12,7 +12,7 @@ import { courseValidationForm, errorMessages } from "./validation";
 
 const CreateCourse: FC = () => {
 
-    const { setIsCreateCourseModalOpen } = useContext(CoursesContext)
+    const { setIsCreateCourseModalOpen, userId } = useContext(CoursesContext)
 
     const { authors } = useAuthor();
     const { language } = useLanguage()
@@ -31,7 +31,8 @@ const CreateCourse: FC = () => {
         tech_id: '',
         author_id: '',
         with_certification: '',
-        sampleFile: null
+        sampleFile: null,
+        user_id: userId
       });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

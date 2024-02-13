@@ -11,11 +11,12 @@ interface Curso {
     author?: string,
     author_id: number | string,
     technology: string | number,
-    with_certification: number | string
+    with_certification: number | string,
+    user_id: number
 }
 
 interface CourseRequest { 
-    [key: string]: string | number | null | File;
+    [key: string]: string | number | null | File | undefined;
     title: string,
     is_free: number | string,
     resource_link: string,
@@ -25,7 +26,8 @@ interface CourseRequest {
     tech_id: number | string,
     author_id: number | string,
     with_certification: number | string,
-    sampleFile: null | File
+    sampleFile: null | File,
+    user_id: number | undefined
 }
 
 interface NavProps {
