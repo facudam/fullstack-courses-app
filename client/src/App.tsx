@@ -1,6 +1,6 @@
-import { Login } from './pages/Login'
+import { Login } from './pages/login/Login'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Signup } from './pages/Signup'
+import { Signup } from './pages/signup/Signup'
 import Home from './pages/home/Home'
 
 function App() {

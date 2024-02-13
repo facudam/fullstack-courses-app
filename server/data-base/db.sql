@@ -80,7 +80,7 @@ CREATE TABLE comments(
 CREATE TABLE users (
 	user_id INT AUTO_INCREMENT,
 	user_name VARCHAR(50),
-	user_email VARCHAR(100) UNIQUE,
+	user_email VARCHAR(50) UNIQUE,
 	user_password VARCHAR(250),
 	PRIMARY KEY (user_id)
 );

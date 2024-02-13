@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import apiBaseUrl from "../services/api/endpoints/apiBaseUrl";
+import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl";
 
 
 export const Login = () => {
