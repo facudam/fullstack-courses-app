@@ -8,7 +8,7 @@ import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl";
 import { CourseRequest } from "../../interfaces/models";
 import TechForm from "../../components/techForm/TechForm";
 import AuthorForm from "../../components/authorForm/AuthorForm";
-import { courseValidationForm } from "./validation";
+import { courseValidationForm, errorMessages } from "./validation";
 
 const CreateCourse: FC = () => {
 
@@ -18,6 +18,8 @@ const CreateCourse: FC = () => {
     const { language } = useLanguage()
     const { types } = useTypes()
     const { technologies } = useTechnology()
+
+    const [ hasAnyError, setHasAnyError ] = useState<boolean>(false)
 
     const [ formData, setFormData ] = useState<CourseRequest>({
         title: '',
@@ -53,7 +55,12 @@ const CreateCourse: FC = () => {
 
         const isValid = courseValidationForm(formData)
 
-        if (!isValid) return
+        if (!isValid) {
+            setHasAnyError(true)
+            return
+        } 
+
+        setHasAnyError(false)
 
         for (const key in formData) {
         const value = formData[key];
@@ -85,7 +92,11 @@ const CreateCourse: FC = () => {
                 
                 <div className={ styles['grid-form'] }>
                     <div className={ styles['form-group'] }>
-                        <label htmlFor="title">Título</label>
+                        <div className={ styles['space-beetwen'] }>
+                            <label htmlFor="title">Título</label>
+                            <span>{ formData.title.length }/100</span>
+                        </div>
+                        
                         <input
                             onChange={handleChange} 
                             id="title" 
@@ -93,18 +104,32 @@ const CreateCourse: FC = () => {
                             placeholder="Escribe el título del curso" 
                             name="title"
                             value={ formData.title } 
+                            maxLength={ 100 }
                         />
+                        {
+                            (hasAnyError && formData.title.trim().length === 0)
+                            && <span>{ errorMessages.title }</span>
+                        }
                     </div>
 
                     <div className={ styles['form-group'] }>
-                        <label htmlFor="description">Descripción</label>
+                        <div className={ styles['space-beetwen'] }>
+                            <label htmlFor="description">Descripción</label>
+                            <span>{ formData.description.length }/600</span>
+                        </div>
+                        
                         <textarea
                             onChange={handleChange}
                             id="description" 
                             placeholder="Escribe la descripción del curso" 
                             name="description"
                             value={ formData.description }
+                            maxLength={ 600 }
                         />
+                        {
+                            (hasAnyError && formData.description.trim().length === 0)
+                            && <span>{ errorMessages.description }</span>
+                        }
                     </div>
 
                     <div className={ styles['form-group'] }>
@@ -116,10 +141,18 @@ const CreateCourse: FC = () => {
                             name="sampleFile" 
                             accept="image/jpeg, image/png, image/svg, image/gif"
                         />
+                        {
+                            (hasAnyError && formData.sampleFile === null)
+                                && <span>{ errorMessages.sampleFile }</span>
+                        }
                     </div>
 
                     <div className={ styles['form-group'] }>
-                        <label htmlFor="link">Link</label>
+                        <div className={ styles['space-beetwen'] }>
+                            <label htmlFor="link">Link</label>
+                            <span>{formData.resource_link.length}/250</span>
+                        </div>
+                        
                         <input
                             onChange={handleChange}
                             name="resource_link"
@@ -127,7 +160,12 @@ const CreateCourse: FC = () => {
                             id="link" 
                             placeholder="Ingresa el link del curso"
                             value={ formData.resource_link }
+                            maxLength={ 250 }
                         />
+                        {
+                            (hasAnyError && formData.resource_link.trim().length === 0)
+                                && <span>{ errorMessages.resource_link }</span>
+                        }
                     </div>
 
                     <div className={ styles['form-group'] }>
@@ -149,6 +187,10 @@ const CreateCourse: FC = () => {
                                 ))
                             }
                         </select>
+                        {
+                            (hasAnyError && formData.type_id === '')
+                                && <span>{ errorMessages.type_id }</span>
+                        }
                     </div>
 
                     <div className={ styles['form-group'] }>
@@ -171,9 +213,11 @@ const CreateCourse: FC = () => {
                             (formData.tech_id === 'otro') &&
                                 <TechForm />
                         }
+                         {
+                            (hasAnyError && (formData.tech_id === '' || formData.tech_id === 'otro'))
+                                && <span>{ errorMessages.tech_id }</span>
+                        }
                     </div>
-
-                    
 
                     <div className={ styles['form-group'] }>
                         <label htmlFor="author">Autor</label>
@@ -195,6 +239,10 @@ const CreateCourse: FC = () => {
                             (formData.author_id === 'otro') &&
                                 <AuthorForm />
                         }
+                         {
+                            (hasAnyError && (formData.author_id === '' || formData.author_id === 'otro'))
+                                && <span>{ errorMessages.author_id }</span>
+                        }
                     </div>
 
                     <div className={ styles['form-group'] }>
@@ -209,6 +257,10 @@ const CreateCourse: FC = () => {
                             <option value={1}>Gratis</option>
                             <option value={0}>Pago</option>
                         </select>
+                        {
+                            (hasAnyError && (formData.is_free === ''))
+                                && <span>{ errorMessages.is_free }</span>
+                        }
                     </div>
 
                     <div className={ styles['form-group'] }>
@@ -226,6 +278,10 @@ const CreateCourse: FC = () => {
                                 ))
                             }
                         </select>
+                        {
+                            (hasAnyError && (formData.language_id === ''))
+                                && <span>{ errorMessages.language_id }</span>
+                        }
                     </div>
                     <div className={ styles['form-group'] }>
                         <label htmlFor="certificated">Certificación</label>
@@ -239,6 +295,10 @@ const CreateCourse: FC = () => {
                             <option value={1}>Certificado</option>
                             <option value={0}>Sin certificación</option>
                         </select>
+                        {
+                            (hasAnyError && (formData.with_certification === ''))
+                                && <span>{ errorMessages.with_certification }</span>
+                        }
                     </div>
                 </div>
                 <button type="submit">Añadir curso</button>
