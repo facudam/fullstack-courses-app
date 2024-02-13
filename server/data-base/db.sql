@@ -4,14 +4,14 @@ USE courses_db;
 
 CREATE TABLE technologies(
 	tech_id INT NOT NULL AUTO_INCREMENT,
-	tech_name VARCHAR(100),
+	tech_name VARCHAR(25),
 	PRIMARY KEY(tech_id)
 );
 
 CREATE TABLE authors(
 	author_id INT NOT NULL AUTO_INCREMENT,
-	author_name VARCHAR(100),
-	author_country VARCHAR(100),
+	author_name VARCHAR(30),
+	author_country VARCHAR(30),
 	PRIMARY KEY (author_id)
 );
 
@@ -31,8 +31,8 @@ CREATE TABLE courses (
 	course_id INT NOT NULL AUTO_INCREMENT,
 	title VARCHAR(100) NOT NULL,
 	is_free BOOLEAN NOT NULL,
-	resource_link VARCHAR(1000) NOT NULL,
-	description VARCHAR(250) NOT NULL,
+	resource_link VARCHAR(250) NOT NULL,
+	description VARCHAR(600) NOT NULL,
 	image VARCHAR(250) NOT NULL,
 	with_certification BOOLEAN DEFAULT 0,
 	language_id INT NOT NULL,

@@ -22,7 +22,7 @@ const TechForm: FC = () => {
         const isValid = validateForm()
 
         if (!isValid) {
-            setError('Por favor, ingrese el nombre de la tecnología')
+            setError('Por favor, ingrese el nombre de la nueva tecnología')
             return
         }
 

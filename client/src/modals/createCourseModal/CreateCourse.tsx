@@ -8,6 +8,7 @@ import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl";
 import { CourseRequest } from "../../interfaces/models";
 import TechForm from "../../components/techForm/TechForm";
 import AuthorForm from "../../components/authorForm/AuthorForm";
+import { courseValidationForm } from "./validation";
 
 const CreateCourse: FC = () => {
 
@@ -18,7 +19,7 @@ const CreateCourse: FC = () => {
     const { types } = useTypes()
     const { technologies } = useTechnology()
 
-    const [formData, setFormData] = useState<CourseRequest>({
+    const [ formData, setFormData ] = useState<CourseRequest>({
         title: '',
         is_free: '',
         resource_link: '',
@@ -49,6 +50,10 @@ const CreateCourse: FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formDataToSend = new FormData();
+
+        const isValid = courseValidationForm(formData)
+
+        if (!isValid) return
 
         for (const key in formData) {
         const value = formData[key];
@@ -133,10 +138,14 @@ const CreateCourse: FC = () => {
                             name="type_id"
                             value={ formData.type_id }
                         >
-                            <option>Elige una opción</option>
+                            <option value=''>Elige una opción</option>
                             {
                                 types.map(tipo => (
-                                    <option key={ tipo.type_id } value={ tipo.type_id }>{ tipo.type_name }</option>
+                                    <option 
+                                        key={ tipo.type_id } 
+                                        value={ tipo.type_id }
+                                    > { tipo.type_name }
+                                    </option>
                                 ))
                             }
                         </select>
@@ -150,7 +159,7 @@ const CreateCourse: FC = () => {
                             onChange={handleChange}
                             value={ formData.tech_id }
                         >
-                            <option>Elige una opción</option>
+                            <option value=''>Elige una opción</option>
                             {
                                 technologies?.map(technology => (
                                     <option key={ technology.tech_id } value={ technology.tech_id }>{ technology.tech_name }</option>
@@ -174,7 +183,7 @@ const CreateCourse: FC = () => {
                             name="author_id" 
                             onChange={handleChange}
                         >
-                            <option>Elige una opción</option>
+                            <option value=''>Elige una opción</option>
                             {
                                 authors?.map((autor) => (
                                     <option key={ autor.author_id } value={ autor.author_id }>{ autor.author_name }</option>
@@ -196,7 +205,7 @@ const CreateCourse: FC = () => {
                             name="is_free"
                             value={ formData.is_free }
                         >
-                            <option>Elige una opción</option>
+                            <option value=''>Elige una opción</option>
                             <option value={1}>Gratis</option>
                             <option value={0}>Pago</option>
                         </select>
@@ -210,7 +219,7 @@ const CreateCourse: FC = () => {
                             id="language" 
                             name="language_id"
                         >
-                            <option>Elige una opción</option>
+                            <option value=''>Elige una opción</option>
                             {
                                 language.map(idioma => (
                                     <option key={ idioma.language_id } value={ idioma.language_id }>{ idioma.language_name }</option>
@@ -226,7 +235,7 @@ const CreateCourse: FC = () => {
                             name="with_certification"
                             value={ formData.with_certification }
                         >
-                            <option>Elige una opción</option>
+                            <option value=''>Elige una opción</option>
                             <option value={1}>Certificado</option>
                             <option value={0}>Sin certificación</option>
                         </select>
