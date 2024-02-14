@@ -35,7 +35,7 @@ export const Signup = () => {
         axios.post(`${apiBaseUrl}/api/users`, { name, email, password })
         .then(res => {
             console.log(res)
-            navigate('/login')
+            navigate('/iniciar-sesion')
         })
         .catch(err => {
             console.log(err)
@@ -92,7 +92,7 @@ export const Signup = () => {
             </div>
             <button type="submit">Registrarte</button>
             <p>¿Ya tienes una cuenta?</p>
-            <Link to='/login'>Iniciar sesión</Link>
+            <Link to='/iniciar-sesion'>Iniciar sesión</Link>
         </form>
     </div>
   )

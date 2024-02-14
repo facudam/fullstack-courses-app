@@ -32,8 +32,8 @@ const Nav: FC<NavProps> = ({ handleLogout }) => {
                                 </div>
                             </div>
                         :   <div className={ styles['nav-ctn_navigation'] }>
-                                <Link to='/login'>LogIn</Link>
-                                <Link to='/signup'>SignUp</Link>
+                                <Link to='/iniciar-sesion'>Inicia sesión</Link>
+                                <Link to='/registrarse'>Regístrate</Link>
                             </div>    
                 }
             </div>

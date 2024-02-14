@@ -101,7 +101,9 @@ export const Login = () => {
         </div>
         <button type="submit">Inicia sesión</button>
         <p>¿Todavia no estás registrado?</p>
-        <Link to="/signup">Regístrate</Link>
+        <Link to="/registrarse">Regístrate</Link>
+        <p>O sigue sin iniciar sesión</p>
+        <Link to="/">Ir al inicio</Link>
       </form>
       { isDataInvalid && <span>Usuario y/o contraseña inválidos</span> }
     </div>

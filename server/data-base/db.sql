@@ -65,17 +65,18 @@ CREATE TABLE star_rating_per_courses(
 	REFERENCES users(user_id)
 );
 
-CREATE TABLE comments(
-	comment_id INT NOT NULL AUTO_INCREMENT,
-	comment_description VARCHAR(100),
-	course_id INT,
-	user_id INT,
-	PRIMARY KEY(comment_id),
-	CONSTRAINT fk_comments_course_id FOREIGN KEY(course_id)
-	REFERENCES courses(course_id),
-	CONSTRAINT fk_comments_user_id FOREIGN KEY(user_id)
-	REFERENCES users(user_id)
+CREATE TABLE comments (
+    comment_id INT NOT NULL AUTO_INCREMENT,
+    comment_description VARCHAR(100),
+    course_id INT,
+    user_id INT,
+    PRIMARY KEY(comment_id),
+    CONSTRAINT fk_comments_course_id FOREIGN KEY(course_id)
+    REFERENCES course(course_id) ON DELETE CASCADE,
+    CONSTRAINT fk_comments_user_id FOREIGN KEY(user_id)
+    REFERENCES user(user_id) ON DELETE CASCADE
 );
+
 
 CREATE TABLE users (
 	user_id INT AUTO_INCREMENT,
