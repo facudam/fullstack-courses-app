@@ -3,5 +3,6 @@ import rocket from './rocket.svg'
 import profile from './profile.webp'
 import nodata from './nodata.webp'
 import graduado from './graduado.webp'
+import hat from './hat.webp'
 
-export { lupa, rocket, profile, nodata, graduado }
+export { lupa, rocket, profile, nodata, graduado, hat }

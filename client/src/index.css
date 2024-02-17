@@ -5,18 +5,18 @@
 }
 
 @font-face {
-  font-family: inter;
-  src: url('./fonts/Inter-Regular.ttf');
+  font-family: Poppins;
+  src: url('./fonts/Poppins-Regular.ttf');
   font-display: swap;
 }
 
 body {
-  font-family: inter;
+  font-family: Poppins;
   background-color: var(--background);
 }
 
 :root {
-  --max-width: 1216px;
+  --max-width: 1316px;
   --general-padding: 10px;
   --main-black: #000;
   --secondary-black: #0f172a;
@@ -26,4 +26,5 @@ body {
   --white: #fff;
   --background: #f9f9ff;
   --toggle-eye: -1px;
+  --background-gradient: linear-gradient(90deg, rgba(248,250,252,1) 0%, rgba(82,145,220,0.22452731092436973) 49%, rgba(248,250,252,1) 100%);
 }

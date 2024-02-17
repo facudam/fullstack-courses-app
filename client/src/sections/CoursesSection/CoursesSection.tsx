@@ -83,6 +83,13 @@ const CoursesSection: FC = () => {
                           ))
                         }
                     </select>
+            
+                    <select value={ costo } onChange={(e) => setCosto(e.target.value)}>
+                      <option value={ "" }>Costo</option>
+                      <option value={ 1 }>Gratis</option>
+                      <option value={ 0 }>Pago</option>
+                    </select>
+
                     <select 
                         value={ author }
                         onChange={ (e) => setAuthor(e.target.value)} >
@@ -92,15 +99,10 @@ const CoursesSection: FC = () => {
                             <option 
                               key={ autor.author_id } 
                               value={ autor.author_name } 
-                            > { autor.author_name }
+                            >{ autor.author_name }
                             </option>
                           ))
                         }
-                    </select>
-                    <select value={ costo } onChange={(e) => setCosto(e.target.value)}>
-                      <option value={ "" }>Costo</option>
-                      <option value={ 1 }>Gratis</option>
-                      <option value={ 0 }>Pago</option>
                     </select>
                 </div>
             </div>

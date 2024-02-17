@@ -1,8 +1,15 @@
+@font-face {
+    font-family: eina;
+    src: url('../../fonts/eina-03-bold.ttf');
+    font-display: swap;
+}
+
 .nav {
     display: flex;
     justify-content: center;
-    background: rgb(248,250,252);
-    background: linear-gradient(90deg, rgba(248,250,252,1) 0%, rgba(82,145,220,0.22452731092436973) 49%, rgba(248,250,252,1) 100%);
+    z-index: 100;
+    background: #b4c3d2;
+    background: linear-gradient(90deg, rgba(248,250,252,1) 0%, #5291dc39 49%, rgba(248,250,252,1) 100%);
 }
 
 .nav-ctn {
@@ -15,10 +22,37 @@
     align-items: center;
 }
 
+.logo {
+    text-decoration: none;
+    color: #2e416d;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 1px var(--secondary-black);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.logo span {
+    margin-bottom: 2px;
+}
+
+.logo img {
+    width: 36px;
+    filter: drop-shadow(1px 2px 1px var(--secondary-black));
+}
+
 .nav-ctn_navigation {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 25px;
+}
+
+.nav-ctn_navigation a {
+    color: var(--secondary-black);
+    text-decoration: none;
+    font-size: 1rem;
 }
 
 .nav-ctn_navigation > p {

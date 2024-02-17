@@ -24,12 +24,13 @@
     border: 2px solid transparent;
     background-color: var(--background);
     cursor: pointer;
-    font-size: 14px;
+    font-size: .95rem;
     font-weight: 600;
-    color: rgb(21, 109, 187);
+    color: #156dbb;
     opacity: .4;
     padding-bottom: 2px;
     transition: all .2s ease;
+    font-family: Poppins;
 }
 
 .btn-ctn button:hover {
@@ -37,7 +38,7 @@
 }
 
 .btn-ctn button.is-active {
-    border-bottom:  2px solid rgb(21, 109, 187);
+    border-bottom:  2px solid #156dbb;
     opacity: 1;
 }
 
@@ -45,6 +46,16 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+}
+
+.info-filters-ctn select {
+    border: 1.9px solid #d3d3d3;
+    padding: 1px 0 1px 3px;
+    border-radius: 3px;
+    font-family: Poppins;
+    min-width: 120px;
+    overflow: hidden;
+    outline: none;
 }
 
 .card-section {

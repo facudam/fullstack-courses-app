@@ -2,9 +2,10 @@ import { FC, useContext } from "react"
 import { Link } from "react-router-dom"
 import { NavProps } from "../../interfaces/models"
 import { CoursesContext } from "../../context/CoursesContext"
-import { profile } from "../../assets/images/images"
+import { profile, hat} from "../../assets/images/images"
 import styles from '../nav/Nav.module.css'
 import AuthNav from "../authNav/AuthNav"
+
 
 
 
@@ -15,7 +16,10 @@ const Nav: FC<NavProps> = ({ handleLogout }) => {
     return(
         <nav className={ styles.nav }>
             <div className={ styles['nav-ctn'] }>
-                <Link to='/'>CoursesLibra</Link>
+                <Link className={ styles.logo } to='/'>
+                    <img src={hat} />
+                    <span>CoursesLibra</span>
+                </Link>
                 {
                     isAuthenticated
                         ? 
