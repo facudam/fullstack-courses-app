@@ -1,6 +1,6 @@
 .nav {
     width: 250px;
-    background-color: var(--blue-nav);
+    background-color: var(--blue);
     color: var(--white);
     padding: 18px 15px;
     display: flex;
@@ -35,7 +35,7 @@
 .nav ul li button {
     width: 100%;
     padding: 3px 10px;
-    border: 1px solid rgba(255,255,255,.1);
+    border: 1px solid rgba(0,0,0,.1);
     cursor: pointer;
     font-size: 1rem;
     color: #fff;
@@ -45,10 +45,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: background-color .5s ease;
 }
 
 .nav ul li button:hover {
-    background-color: rgba(255,255,255,.1);
+    background-color: rgba(25,255,255,.1);
 }
 
 .nav ul li button img {

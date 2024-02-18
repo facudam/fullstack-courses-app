@@ -41,7 +41,7 @@
 }
 
 .header-ctn__titles p {
-    font-size: clamp(1rem, 1.05rem, 1.1rem);
+    font-size: clamp(1rem, 1rem, 1.1rem);
     line-height: 150%;
     text-align: center;
 }
@@ -67,4 +67,10 @@
 
 .input-ctn input:focus {
     outline: none;
+}
+
+@media screen and (max-width: 520px) {
+    .input-ctn {
+        margin: 20px;
+    }
 }

@@ -31,7 +31,7 @@ const Nav: FC<NavProps> = ({ handleLogout }) => {
             <div className={ styles['nav-ctn'] }>
                 <Link className={ styles.logo } to='/'>
                     <img src={ hat } />
-                    <span>CoursesLibra</span>
+                    <span translate="no">CoursesLibra</span>
                 </Link>
                 {
                     isAuthenticated

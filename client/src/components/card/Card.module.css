@@ -4,8 +4,8 @@
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
-    min-width: 325px;
-    min-height: 315px;
+    min-width: 260px;
+    min-height: 245px;
     cursor: pointer;
     background-color: var(--white);
     box-shadow: 0px 6px 34px rgba(215, 216, 222, 0.41);
