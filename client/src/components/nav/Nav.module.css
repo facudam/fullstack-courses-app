@@ -26,16 +26,11 @@
     text-decoration: none;
     color: var(--secondary-black);
     font-size: 1rem;
-    text-transform: uppercase;
     font-weight: 900;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 4px;
-}
-
-.logo span {
-    margin-bottom: 2px;
 }
 
 .logo img {

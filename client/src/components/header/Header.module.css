@@ -41,9 +41,10 @@
 }
 
 .header-ctn__titles p {
-    font-size: clamp(1rem, 1rem, 1.1rem);
+    font-size: 1.05rem;
     line-height: 150%;
     text-align: center;
+    color: #000;
 }
 
 .input-ctn {
@@ -70,6 +71,9 @@
 }
 
 @media screen and (max-width: 520px) {
+    .header-ctn__titles p {
+        font-size: 1rem;
+    }
     .input-ctn {
         margin: 20px;
     }
