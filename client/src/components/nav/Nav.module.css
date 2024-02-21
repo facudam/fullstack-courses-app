@@ -7,7 +7,6 @@
 .nav {
     display: flex;
     justify-content: center;
-    z-index: 100;
     background: #b4c3d2;
     background: var(--background-gradient)
 }
@@ -108,6 +107,7 @@
 .secondary-nav-relative {
     position: relative;
     cursor: pointer;
+    z-index: 99;
 }
 
 .secondary-nav-ctn {
