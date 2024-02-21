@@ -91,6 +91,7 @@
     gap: 25px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     animation: goingDown .5s ease;
+    z-index: 9;
 }
 
 .nav-ctn_navigation2 a {
@@ -107,7 +108,7 @@
 .secondary-nav-relative {
     position: relative;
     cursor: pointer;
-    z-index: 99;
+    
 }
 
 .secondary-nav-ctn {
@@ -117,6 +118,7 @@
     right: 0;
     cursor: auto;
     animation: goingDown .5s ease;
+    z-index: 99;
 }
 
 .secondary-nav-relative:hover .secondary-nav-ctn {

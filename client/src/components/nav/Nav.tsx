@@ -16,7 +16,7 @@ const Nav: FC<NavProps> = ({ handleLogout }) => {
         buton?.classList.toggle(`${styles['active-hamburger']}`)
         const menuNav = document.querySelector(`.${styles['nav-ctn_navigation2']}`);
 
-        if (isHamburgerBtnPressed && menuNav instanceof HTMLElement) { //
+        if (isHamburgerBtnPressed && menuNav instanceof HTMLElement) {
             setIsHamburgerBtnPressed(false)
             menuNav.style.setProperty('display', 'none');   
         }

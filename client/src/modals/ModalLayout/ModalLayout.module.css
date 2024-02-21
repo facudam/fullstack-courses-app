@@ -4,8 +4,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(21,109,187,0.5970763305322129);
-    animation: opacityAnimation .3s ease forwards;
+    background-color: rgba(0, 128, 255, .6);
+    animation: opacityAnimation .1s ease forwards;
 }
 
 .modal {
