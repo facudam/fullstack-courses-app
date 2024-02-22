@@ -19,6 +19,7 @@ const CoursesSection: FC = () => {
     const [ author, setAuthor ] = useState<string>('')
     const [ costo, setCosto ] = useState<number | string>('')
     const [ withCertification, setWithCertification ] = useState<number | string>('')
+    const [ areTypesButtonsDisabled, setAreTypesButtonsDisabled] = useState<boolean>(false)
 
     const { types } = useTypes()
     const { language } = useLanguage()
@@ -38,16 +39,36 @@ const CoursesSection: FC = () => {
         fetchCourses();
       }, []);
 
+    useEffect(() => {
+      if(technology.trim().length > 0) {
+        setAreTypesButtonsDisabled(true)
+      } else {
+        setAreTypesButtonsDisabled(false)
+      }
+    }, [ technology ])
+
     const filteredCourses = cursos.filter(curso => {
-      return(
+      if (technology.trim().length <= 0) {
+        return(
           filterByType(curso, type) &&
           filterByAuthor(curso, author) &&
           filterByLanguage(curso, selectedLanguage) &&
           filterByFree(curso, costo) &&
-          filterByTechnology(curso, technology) &&
           filterByCertification(curso, withCertification)
+        )} 
+      return(
+        filterByTechnology(curso, technology) &&
+        filterByAuthor(curso, author) &&
+        filterByLanguage(curso, selectedLanguage) &&
+        filterByFree(curso, costo) &&
+        filterByCertification(curso, withCertification)
       )
     })
+
+    const setCourseTypeIfAppropriate = (tipo: string) => {
+      if (!areTypesButtonsDisabled) setType(tipo);
+      return;
+    }
 
     return (
         <section className={ styles.section }>
@@ -56,9 +77,10 @@ const CoursesSection: FC = () => {
                     {
                       types.map((tipo) => (
                         <button
-                          onClick={ () => setType(tipo.type_name) }
-                          className={ (tipo.type_name === type) ? styles['is-active'] : '' } 
-                          key={ tipo.type_id }>{ tipo.type_name }
+                          onClick={ () => setCourseTypeIfAppropriate(tipo.type_name) }
+                          className={ (tipo.type_name === type && !areTypesButtonsDisabled) ? styles['is-active'] : '' } 
+                          key={ tipo.type_id }
+                          >{ tipo.type_name }
                         </button>
                       ))
                     }
