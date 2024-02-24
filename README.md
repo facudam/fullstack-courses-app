@@ -4,5 +4,6 @@ CoursesLibra is a website that offers a wide variety of IT courses from differen
 Its main objective is to facilitate the search for the ideal course through advanced search
 filters. Users have the ability to create accounts, add courses to the platform, share
 feedback, and rate courses already completed.
+Very soon the beta version is going to be online!
 
 ![imagen de portada de CoursesLibra ](https://raw.githubusercontent.com/facudam/fullstack-courses-app/main/client/public/coursesLibraPortada.webp)
