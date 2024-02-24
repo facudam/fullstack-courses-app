@@ -16,7 +16,7 @@ const filterByCertification = (item: Curso, certificated: number | string) => {
     return item.with_certification === Number(certificated);
 }
 
-function filtrarCursosByTech(cursos: Curso[], technology: string) {
+function filteringCoursesByTech(cursos: Curso[], technology: string) {
     const cursosExactos = cursos.filter(curso => 
         (typeof curso.technology === 'string') &&
         curso.technology.toLowerCase() === technology.toLowerCase());
@@ -31,4 +31,4 @@ function filtrarCursosByTech(cursos: Curso[], technology: string) {
     return cursosExactos;
 }
 
-export { filterByAuthor, filterByFree, filterByLanguage, filterByType, filterByCertification, filtrarCursosByTech }
+export { filterByAuthor, filterByFree, filterByLanguage, filterByType, filterByCertification, filteringCoursesByTech }
