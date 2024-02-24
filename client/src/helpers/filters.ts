@@ -16,9 +16,19 @@ const filterByCertification = (item: Curso, certificated: number | string) => {
     return item.with_certification === Number(certificated);
 }
 
-const filterByTechnology = (item: Curso, technology: string) => 
-    (typeof item.technology === 'string') &&
-        item.technology.toLowerCase().includes(technology.toLowerCase())
+function filtrarCursosByTech(cursos: Curso[], technology: string) {
+    const cursosExactos = cursos.filter(curso => 
+        (typeof curso.technology === 'string') &&
+        curso.technology.toLowerCase() === technology.toLowerCase());
+    
+    if (!cursosExactos.length) {
+        const cursosParciales = cursos.filter(curso => 
+            (typeof curso.technology === 'string') &&
+            curso.technology.toLowerCase().includes(technology.toLowerCase()));
+        return cursosParciales;
+    }
+    
+    return cursosExactos;
+}
 
-
-export { filterByAuthor, filterByFree, filterByLanguage, filterByType, filterByTechnology, filterByCertification }
+export { filterByAuthor, filterByFree, filterByLanguage, filterByType, filterByCertification, filtrarCursosByTech }

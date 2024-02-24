@@ -4,7 +4,7 @@ import getCourses from '../../services/api/endpoints/courses/getCourses';
 import { Curso } from '../../interfaces/models';
 import Card from '../../components/card/Card';
 import { useAuthor, useLanguage, useTypes } from '../../hooks';
-import { filterByAuthor, filterByFree, filterByLanguage, filterByTechnology, filterByType, filterByCertification } from '../../helpers/filters';
+import { filterByAuthor, filterByFree, filterByLanguage, filterByType, filterByCertification, filtrarCursosByTech } from '../../helpers/filters';
 import { CoursesContext } from '../../context/CoursesContext';
 import NoCoursesComponent from '../../components/noCoursesComponent/NoCourses';
 
@@ -58,8 +58,9 @@ const CoursesSection: FC = () => {
       });
     }, [ technology, areTypesButtonsDisabled ])
 
+    const coursesList: Curso[] = filtrarCursosByTech(cursos, technology)
 
-    const filteredCourses = cursos.filter(curso => {
+    const filteredCourses = coursesList.filter(curso => {
       if (technology.trim().length <= 0) {
         return(
           filterByType(curso, type) &&
@@ -69,7 +70,6 @@ const CoursesSection: FC = () => {
           filterByCertification(curso, withCertification)
         )} 
       return(
-        filterByTechnology(curso, technology) &&
         filterByAuthor(curso, author) &&
         filterByLanguage(curso, selectedLanguage) &&
         filterByFree(curso, costo) &&
