@@ -7,10 +7,27 @@ interface Curso {
     resource_link: string,
     image: string,
     language: string,
-    type: string,
-    author: string,
-    author_id: number,
-    technology: string
+    type: string | number,
+    author?: string,
+    author_id: number | string,
+    technology: string | number,
+    with_certification: number | string,
+    user_id: number
+}
+
+interface CourseRequest { 
+    [key: string]: string | number | null | File | undefined;
+    title: string,
+    is_free: number | string,
+    resource_link: string,
+    description: string,
+    language_id: number | string,
+    type_id: number | string,
+    tech_id: number | string,
+    author_id: number | string,
+    with_certification: number | string,
+    sampleFile: null | File,
+    user_id: number | undefined
 }
 
 interface NavProps {
@@ -19,21 +36,23 @@ interface NavProps {
 
 interface AuthNavProps {
     userName: string,
-    handleLogout: () => void
+    handleLogout: () => void,
+    handleNewCourse: () => void
 }
 
 interface CardProps {
     id: number | undefined,
     title: string,
     image: string,
-    author: string,
+    author: string | undefined,
     is_free: number | string,
-    technology: string
+    technology: string | number
+    with_certification: number | string
 }
 
 interface Author {
-    author_id: number,
-    author_name: string,
+    author_id?: number,
+    author_name: string | number,
     author_country: string
 }
 
@@ -61,9 +80,15 @@ interface Language {
     language_name: string
 }
 
+interface Technology {
+    tech_id?: number,
+    tech_name: string | number
+}
+
 export type 
             { 
                 Curso,
+                CourseRequest,
                 NavProps, 
                 CardProps, 
                 AuthNavProps, 
@@ -71,5 +96,6 @@ export type
                 Comment,
                 CommentResponse,
                 Types,
-                Language
+                Language,
+                Technology
             }

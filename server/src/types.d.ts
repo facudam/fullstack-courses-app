@@ -21,11 +21,13 @@ interface Course {
     resource_link: string,
     rating: number | null,
     description: string,
+    with_certification: number,
     image?: string,
     language_id: number,
     type_id: number,
     tech_id: number,
-    author_id: number
+    author_id: number,
+    user_id: number
 }
 
 interface Rating {

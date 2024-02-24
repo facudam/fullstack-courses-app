@@ -1,0 +1,22 @@
+.message_ctn {
+    position: relative;
+    width: 100%;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 15px 0;
+}
+
+.message_ctn p {
+    text-align: center;
+    font-weight: 700;
+}
+
+.message_ctn img {
+    width: 100%;
+    max-width: 450px;
+}
+

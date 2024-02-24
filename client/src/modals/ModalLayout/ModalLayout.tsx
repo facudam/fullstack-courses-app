@@ -10,13 +10,9 @@ interface ModalLayoutProps {
 const ModalLayout: FC<ModalLayoutProps> = ({ children, closeFn }) => {
     return ReactDOM.createPortal(
         <>
-            <div
-                onClick={ closeFn }
-                className={ styles['full-screen'] }></div>
+            <div onClick={ closeFn } className={ styles['full-screen'] }></div>
             <div className={ styles.modal }>
-                {
-                    children
-                }
+                { children }
             </div>
         </>,
         document.getElementById('portal') || document.createElement('div')

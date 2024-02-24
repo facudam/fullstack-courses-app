@@ -10,7 +10,7 @@
 
 .filters-ctn {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     gap: 15px;
     flex-wrap: wrap;
 }
@@ -18,18 +18,21 @@
 .btn-ctn {
     display: flex;
     gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .btn-ctn button {
     border: 2px solid transparent;
     background-color: var(--background);
     cursor: pointer;
-    font-size: 14px;
+    font-size: .8rem;
     font-weight: 600;
-    color: rgb(21, 109, 187);
+    color: var(--blue);
     opacity: .4;
     padding-bottom: 2px;
     transition: all .2s ease;
+    font-family: Poppins;
 }
 
 .btn-ctn button:hover {
@@ -37,23 +40,54 @@
 }
 
 .btn-ctn button.is-active {
-    border-bottom:  2px solid rgb(21, 109, 187);
+    border-bottom:  2px solid var(--blue);
     opacity: 1;
 }
 
+
+
 .info-filters-ctn {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
+    justify-content: center;
+}
+
+.info-filters-ctn select {
+    border: 1.9px solid #d3d3d3;
+    padding: 1px 0 1px 3px;
+    border-radius: 3px;
+    font-family: Poppins;
+    min-width: 120px;
+    overflow: hidden;
+    outline: none;
 }
 
 .card-section {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 35px;
+    margin-top: 10px;
 }
 
-@media screen and (max-width: 650px) {
-    .filters-ctn {
-        justify-content: center;
+@media screen and (min-width: 620px) {
+    .card-section {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+    .btn-ctn {
+        justify-content: space-between;
+    }
+    .info-filters-ctn {
+        justify-content: space-between;
+    }
+    .btn-ctn button {
+        font-size: .95rem;
     }
 }
+
+@media screen and (min-width: 1100px) {
+    .filters-ctn {
+        justify-content: space-between;
+    }
+}
+

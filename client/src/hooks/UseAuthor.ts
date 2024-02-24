@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Author } from "../interfaces/models"
 import getAuthors from "../services/api/endpoints/author/getAuthors";
+import { CoursesContext } from "../context/CoursesContext";
 
 const useAuthor = () => {
+    const { toggleAuthorState } = useContext(CoursesContext) //Para volver a renderizar cuando se cree un nuevo autor.
     const [ authors, setAuthors ] = useState<Author[]>([]);
 
     useEffect(() => {
@@ -16,7 +18,7 @@ const useAuthor = () => {
         }
 
         fetchAuthors()
-    }, [])
+    }, [ toggleAuthorState ])
 
     return { authors }
 }

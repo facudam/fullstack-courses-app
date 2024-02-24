@@ -12,14 +12,20 @@ interface CoursesContext {
   setOpenCourseId: (openCourseId: number | undefined | null) => void,
   courseInfo: Curso | undefined, 
   setCourseInfo: (courseInfo: Curso) => void,
-  authorId: number | undefined, 
-  setAuthorId: (authorId: number | undefined) => void,
+  authorId: number | string, 
+  setAuthorId: (authorId: number | string) => void,
   authorInfo: Author | undefined, 
   setAuthorInfo: (authorInfo: Author | undefined) => void,
   technology: string,
   setTechnology: (technology: string) => void,
   userId: number | undefined,
-  setUserId: (userId: number | undefined) => void
+  setUserId: (userId: number | undefined) => void,
+  isCreateCourseModalOpen: boolean, 
+  setIsCreateCourseModalOpen: (isCreateCourseModalOpen: boolean) =>void,
+  toggleTechState: boolean, 
+  setToggleTechState: (toggleTechState: boolean) => void,
+  toggleAuthorState: boolean, 
+  setToggleAuthorState: (toggleTechState: boolean) => void
 
 }
 
@@ -34,14 +40,20 @@ const initialState: CoursesContext = {
   setOpenCourseId: (openCourseId: number | undefined | null) => { openCourseId },
   courseInfo: undefined, 
   setCourseInfo: (courseInfo: Curso | undefined) => { courseInfo },
-  authorId: undefined, 
-  setAuthorId: (authorId: number | undefined) => { authorId },
+  authorId: '', 
+  setAuthorId: (authorId: number | string) => { authorId },
   authorInfo: undefined, 
   setAuthorInfo: (authorInfo: Author | undefined) => { authorInfo },
   technology: '',
   setTechnology: (technology: string) => { technology },
   userId: undefined,
-  setUserId: (userId: number | undefined) => { userId }
+  setUserId: (userId: number | undefined) => { userId },
+  isCreateCourseModalOpen: false,
+  setIsCreateCourseModalOpen: (isCreateCourseModalOpen: boolean) => { isCreateCourseModalOpen },
+  toggleTechState: false, 
+  setToggleTechState: (toggleTechState: boolean) => { toggleTechState },
+  toggleAuthorState: false, 
+  setToggleAuthorState: (toggleTechState: boolean) => { toggleTechState }
 }
 
 export const CoursesContext = createContext<CoursesContext>(initialState);

@@ -1,7 +1,10 @@
 import axios, { AxiosResponse } from "axios";
-import { ChangeEvent, useEffect, useState } from "react";
+import styles from './Login.module.css'
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import apiBaseUrl from "../services/api/endpoints/apiBaseUrl";
+import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl";
+import Eye from "../../components/eye/Eye";
+import { toggleEye } from "../../helpers/toggleEye";
 
 
 export const Login = () => {
@@ -9,6 +12,8 @@ export const Login = () => {
   const [ email, setEmail ] = useState<string>("");
   const [ password, setPassword ] = useState<string>("");
   const [ isDataInvalid, setIsDataInvalid ] = useState<boolean>(false);
+  const [ isDataEmpty, setIsDataEmpty ] = useState<boolean>(false)
+  const [ showPassword, setShowPassword ] = useState<boolean>(false)
 
   const handleEmail = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
   const handlePassword = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
@@ -28,12 +33,19 @@ export const Login = () => {
 
   const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    axios
-      .post(
-        `${ apiBaseUrl }/api/login`,
-        { email, password },
-        { withCredentials: true }
-      )
+
+    const hasEmptyData = 
+      email.trim().length === 0 ||
+      password.trim().length === 0;
+
+    if (hasEmptyData) {
+      setIsDataEmpty(true)
+      return
+    }
+
+    setIsDataEmpty(false)
+
+    axios.post(`${ apiBaseUrl }/api/login`, { email, password }, { withCredentials: true })
       .then((res: AxiosResponse) => {
         if (res.data.login) {
           setIsDataInvalid(false);
@@ -46,11 +58,16 @@ export const Login = () => {
       });
   };
 
+  const togglePasswordVisivility = (e: React.MouseEvent<HTMLButtonElement>) => {
+      toggleEye(e)
+      setShowPassword(!showPassword)
+  }
+
   return (
     <div>
       <form action="" onSubmit={  handleSubmit}>
         <div>
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">Email: </label>
           <input
             onChange={  handleEmail}
             type="email"
@@ -58,20 +75,35 @@ export const Login = () => {
             placeholder="Enter Email"
             value={email}
           />
+          {
+            (isDataEmpty && email.trim().length === 0) &&
+              <span>Ingrese su email</span>
+          }
         </div>
         <div>
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Contraseña: </label>
           <input
             onChange={ handlePassword }
-            type="password"
+            type={ showPassword ? "text" : "password" }
             name="password"
             placeholder="Enter password"
             value={ password }
           />
+          {
+            (isDataEmpty && password.trim().length === 0) &&
+              <span>Ingrese su contraseña</span>
+          }
+          <button
+              onClick={ (e) => togglePasswordVisivility(e) } 
+              className={ styles.button }>
+              <Eye />
+          </button>
         </div>
-        <button type="submit">Log in</button>
-        <p>Don't you have an account already?</p>
-        <Link to="/signup">Create an account</Link>
+        <button type="submit">Inicia sesión</button>
+        <p>¿Todavia no estás registrado?</p>
+        <Link to="/registrarse">Regístrate</Link>
+        <p>O sigue sin iniciar sesión</p>
+        <Link to="/">Ir al inicio</Link>
       </form>
       { isDataInvalid && <span>Usuario y/o contraseña inválidos</span> }
     </div>

@@ -1,10 +1,11 @@
 .card {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
-    min-width: 325px;
-    min-height: 315px;
+    min-width: 260px;
+    min-height: 245px;
     cursor: pointer;
     background-color: var(--white);
     box-shadow: 0px 6px 34px rgba(215, 216, 222, 0.41);
@@ -54,4 +55,19 @@
 .full-data-card p {
     margin-top: 5px;
     font-size: 12px;
+}
+
+.graduado {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgb(255, 255, 255);
+    padding: 8px;
+}
+
+.graduado img {
+    width: 100%;
 }

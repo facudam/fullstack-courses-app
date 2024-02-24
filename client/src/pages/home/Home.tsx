@@ -8,10 +8,17 @@ import CoursesSection from "../../sections/CoursesSection/CoursesSection";
 import styles from './Home.module.css'
 import CourseModal from "../../modals/courseModal/CourseModal";
 import { AxiosResponse } from 'axios';
+import CreateCourse from '../../modals/createCourseModal/CreateCourse';
 
 const Home: FC = () => {
 
-    const { setIsAuthenticated, setUserName, isCourseModalOpen, setUserId }   = useContext(CoursesContext)
+    const { 
+            setIsAuthenticated, 
+            setUserName, 
+            isCourseModalOpen, 
+            setUserId,
+            isCreateCourseModalOpen 
+           }   = useContext(CoursesContext)
 
     axios.defaults.withCredentials = true
 
@@ -39,6 +46,9 @@ const Home: FC = () => {
         </main>
         {
             isCourseModalOpen && <CourseModal />
+        }
+        {
+            isCreateCourseModalOpen && <CreateCourse />
         }
     </MainLayout>
   )

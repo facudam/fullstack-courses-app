@@ -13,6 +13,7 @@ const SqlQuery = `
       c.resource_link,
       c.description,
       c.image,
+      c.with_certification,
       c.author_id,
       a.author_name AS author,
       t.tech_name AS technology,
@@ -62,19 +63,24 @@ const createCourse = async (req: Request, res: Response) => {
           language_id,
           type_id,
           tech_id,
-          author_id
+          author_id,
+          with_certification,
+          user_id
       }: Course = req.body;
 
-      if (!req.files || Object.keys(req.files).length === 0) return res.status(400).send('No files were uploaded');
-      if (title.length <= 0 || resource_link.length <= 0 || description.length <= 0) return res.status(400).send({ error: "Incorrect request, please complete the information required for this request."})
+      if (!req.files || Object.keys(req.files).length === 0) return res.status(422).send('No files were uploaded');
+
+      if (title.length <= 0 || title.length > 100 || resource_link.length <= 0 || resource_link.length > 250 || description.length <= 0 || description.length > 600) return res.status(422).send({ error: "Incorrect request, please complete the information required for this request."})
+
+      if (isNaN(Number(language_id)) || isNaN(Number(type_id)) || isNaN(Number(tech_id)) || isNaN(Number(author_id)) || isNaN(Number(with_certification)) || isNaN(Number(user_id))) return res.status(422).send({ error: 'Please, complete the request with valid information' })
 
       const sampleFile: any = req.files.sampleFile;
     
       const imageUrl = await uploadAndGetUrlImage(sampleFile)
 
       await pool.query(
-          'INSERT INTO course (title, is_free, resource_link, description, image, language_id, type_id, tech_id, author_id) VALUES (?,?,?,?,?,?,?,?,?)',
-          [title, is_free, resource_link, description, imageUrl, language_id, type_id, tech_id, author_id]
+          'INSERT INTO course (title, is_free, resource_link, description, image, language_id, type_id, tech_id, author_id, with_certification, user_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)',
+          [title, is_free, resource_link, description, imageUrl, language_id, type_id, tech_id, author_id, with_certification, user_id]
       );
 
       return res.json({ message: 'Course created successfully' });
@@ -91,7 +97,8 @@ const updateCourse = async(req: Request, res: Response) => {
           title, 
           is_free, 
           resource_link, 
-          description, 
+          description,
+          with_certification,
           language_id, 
           type_id, 
           tech_id,
@@ -101,7 +108,7 @@ const updateCourse = async(req: Request, res: Response) => {
         const sampleFile: any = req.files?.sampleFile;
         const imageUrl = req.files ? await uploadAndGetUrlImage(sampleFile) : null;
       
-        const [ result ] = await pool.query<ResultSetHeader>('UPDATE course SET title = IFNULL(?, title), is_free = IFNULL(?, is_free), resource_link = IFNULL(?, resource_link), description = IFNULL(?, description), image = IFNULL(?, image), language_id = IFNULL(?, language_id), type_id = IFNULL(?, type_id), tech_id = IFNULL(?, tech_id), author_id = IFNULL(?, author_id)  WHERE course_id = ?', [title, is_free, resource_link, description, imageUrl, language_id, type_id, tech_id, author_id, id])
+        const [ result ] = await pool.query<ResultSetHeader>('UPDATE course SET title = IFNULL(?, title), is_free = IFNULL(?, is_free), resource_link = IFNULL(?, resource_link), description = IFNULL(?, description), image = IFNULL(?, image), with_certification = IFNULL(?, with_certification), language_id = IFNULL(?, language_id), type_id = IFNULL(?, type_id), tech_id = IFNULL(?, tech_id), author_id = IFNULL(?, author_id)  WHERE course_id = ?', [ title, is_free, resource_link, description, imageUrl, with_certification, language_id, type_id, tech_id, author_id, id ])
 
         if (result.affectedRows <= 0) return res.status(404).json({ 'message': 'Course not found' })
         return res.send('Course successfully updated')
