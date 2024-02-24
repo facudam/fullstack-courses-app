@@ -1,12 +1,24 @@
-import { FC, useContext } from "react"
+import { FC, useContext, useState, useEffect } from "react"
 import styles from '../header/Header.module.css'
 import { lupa } from "../../assets/images/images"
 import { CoursesContext } from '../../context/CoursesContext';
 
-
 export const Header: FC = () => {
 
-    const { technology ,setTechnology } = useContext(CoursesContext)
+    const { setTechnology } = useContext(CoursesContext)
+    const [ inputValue, setInputValue ] = useState<string>('')
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setTechnology(inputValue);
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, [inputValue, setTechnology]);
+
+    const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue(e.target.value);
+    }
 
     return(
         <header className={ styles.header }>
@@ -24,10 +36,10 @@ export const Header: FC = () => {
             <div className={ styles['input-ctn'] }>
                 <img src={ lupa } alt="magnifying glass | lupa" width={15}/>
                 <input
-                    onChange={ (e) => setTechnology(e.target.value) } 
+                    onChange={ (e) => handleInput(e) } 
                     type='text' 
                     placeholder="Buscar tecnología" 
-                    value={ technology }
+                    value={ inputValue }
                 />
             </div>
         </header>
