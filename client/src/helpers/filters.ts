@@ -16,6 +16,9 @@ const filterByCertification = (item: Curso, certificated: number | string) => {
     return item.with_certification === Number(certificated);
 }
 
-const filterByTechnology = (item: Curso, technology: string) => item.technology.toLowerCase().includes(technology.toLowerCase())
+const filterByTechnology = (item: Curso, technology: string) => 
+    (typeof item.technology === 'string') &&
+        item.technology.toLowerCase().includes(technology.toLowerCase())
+
 
 export { filterByAuthor, filterByFree, filterByLanguage, filterByType, filterByTechnology, filterByCertification }

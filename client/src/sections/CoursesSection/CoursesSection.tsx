@@ -47,6 +47,18 @@ const CoursesSection: FC = () => {
       }
     }, [ technology ])
 
+    useEffect(() => {
+      const typeButtons = document.querySelectorAll('button');
+      typeButtons.forEach(button => {
+        if (technology.length > 0 && areTypesButtonsDisabled) {
+          button.style.pointerEvents = 'none'
+        } else {
+          button.style.pointerEvents = 'auto'
+        }
+      });
+    }, [ technology, areTypesButtonsDisabled ])
+
+
     const filteredCourses = cursos.filter(curso => {
       if (technology.trim().length <= 0) {
         return(
