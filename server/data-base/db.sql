@@ -67,7 +67,7 @@ CREATE TABLE star_rating_per_courses(
 
 CREATE TABLE comments (
     comment_id INT NOT NULL AUTO_INCREMENT,
-    comment_description VARCHAR(100),
+    comment_description VARCHAR(200),
     course_id INT,
     user_id INT,
     PRIMARY KEY(comment_id),

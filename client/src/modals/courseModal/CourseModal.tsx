@@ -8,7 +8,8 @@ import addNewComment from '../../services/api/endpoints/comments/addNewComment'
 import { AxiosResponse } from 'axios'
 import { CommentResponse, Comment } from '../../interfaces/models'
 import ModalLayout from '../modalLayout/ModalLayout'
-import UserComment from '../../components/comment/Comment'
+import UserComment from '../../components/commentComponent/Comment'
+import CommentInput from '../../components/commentInput/CommentInput'
 
 
 const CourseModal: FC = () => {
@@ -133,11 +134,11 @@ const CourseModal: FC = () => {
                 }
                 {
                     isAuthenticated && 
-                        <>
-                            <h3>¿Ya completaste el curso? Comparte tu experiencia con la comunidad</h3>
-                            <input type='text' value={ newComment } onChange={(e) => setNewComment(e.target.value)} />
-                            <button onClick={ handleNewComment }>Enviar feedback</button>
-                        </>   
+                        <CommentInput 
+                            newComment={ newComment }
+                            handleChange={(e) => setNewComment(e.target.value)}
+                            handleNewComment={ handleNewComment }
+                        />  
                 }
             </div>
         </ModalLayout> 
