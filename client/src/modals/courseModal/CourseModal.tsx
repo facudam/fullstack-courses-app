@@ -27,6 +27,7 @@ const CourseModal: FC = () => {
 
     const [ comments, setComments ] = useState<Comment[]>([])
     const [ newComment, setNewComment ] = useState<string>('')
+    const [ showMore, setShowMore ] = useState(false);
 
     const closeModal = () => {
         setNewComment('')
@@ -86,8 +87,20 @@ const CourseModal: FC = () => {
                     <img src={ courseInfo?.image } />
                 </div>
                 <div className={ styles['info-ctn'] }>
-                    <h2>{ courseInfo?.title }</h2>
-                    <p>{ courseInfo?.description }</p>
+                    <h2>{courseInfo?.title}</h2>
+                    <p className={showMore ? '' : styles['truncate']}>
+                        {courseInfo?.description}
+                    </p>
+                    {
+                        (typeof courseInfo?.description === 'string' && courseInfo.description.length > 90) &&
+                        <button className={ styles.showBtn } onClick={() => setShowMore(!showMore)}>
+                            {
+                                showMore
+                                    ? '... leer menos'
+                                    : '... leer más'
+                            }
+                        </button>
+                    }
                     
                     <a href={ courseInfo?.resource_link } target='_blank' rel='noopener noreferrer nofollow'>Acceder al curso</a>
                     <div className={ styles.types }>
@@ -95,8 +108,12 @@ const CourseModal: FC = () => {
                         <span>{ courseInfo?.technology }</span>
                         <span>{ courseInfo?.type }</span>
                         <span>{ courseInfo?.language }</span>
+                        {
+                            (courseInfo?.with_certification == '1') &&
+                                <span>Certificado de finalización</span>
+                        }
                     </div>
-                    <p>
+                    <p className={ styles.author }>
                         <strong>Author:</strong> <span>{ authorInfo?.author_name } - { authorInfo?.author_country }</span>
                     </p>
                 </div>
