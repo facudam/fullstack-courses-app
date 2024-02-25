@@ -1,3 +1,9 @@
-# This is a fullstack project using ReactJS, NodeJS, express and MySQL
+# This is a fullstack Project using ReactJS, TypeScript, NodeJS, express and MySQL as main technologies.
 
-Courses APP is a web application to find TI Courses from different technologies. You can create a user to add new courses, rate, and share your experience with any course you've done!
+CoursesLibra is a website that offers a wide variety of IT courses from different platforms all in one place.
+Its main objective is to facilitate the search for the ideal course through advanced search
+filters. Users have the ability to create accounts, add courses to the platform, share
+feedback, and rate courses already completed.
+#### Very soon the beta version is going to be online!
+
+![imagen de portada de CoursesLibra ](https://raw.githubusercontent.com/facudam/fullstack-courses-app/main/client/public/coursesLibraPortada.webp)
