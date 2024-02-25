@@ -8,6 +8,7 @@ import addNewComment from '../../services/api/endpoints/comments/addNewComment'
 import { AxiosResponse } from 'axios'
 import { CommentResponse, Comment } from '../../interfaces/models'
 import ModalLayout from '../modalLayout/ModalLayout'
+import UserComment from '../../components/comment/Comment'
 
 
 const CourseModal: FC = () => {
@@ -123,7 +124,10 @@ const CourseModal: FC = () => {
                 {
                     (comments && comments?.length > 0)
                         ? comments.map((comment, index) => (
-                            <p key={ (comment.comment_id) ? comment.comment_id : index }><strong>{ (comment.user) ? comment.user : userName }: </strong> { comment.comment_description }</p>
+                            <UserComment key={(comment.comment_id) ? comment.comment_id : index} 
+                                userName={(comment.user) ? comment.user : userName }
+                                comment={ comment.comment_description }
+                            />
                         ))
                         : <p>Aún no se ha dejado ningún feedback sobre este curso</p>
                 }

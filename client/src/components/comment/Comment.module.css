@@ -1,0 +1,15 @@
+.comment-ctn {
+    border: .5px solid #e5e3e3;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.comment-ctn h4 {
+    text-transform: capitalize;
+    font-size: .9rem;
+}
+
+.comment-ctn p {
+    color: var(--main-gray);
+    font-size: .85rem;
+}
