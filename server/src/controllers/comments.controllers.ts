@@ -41,7 +41,7 @@ const createComment = async(req: Request, res: Response) => {
     try {
         const { comment_description, course_id, user_id }: Comment = req.body;
 
-        if (comment_description.length <= 0) return res.status(400).send({ error: "Incorrect request, please complete the information required for this request."})
+        if (comment_description.length <= 0 || comment_description.length > 200) return res.status(422).send({ error: "Invalid request: comment length is incorrect."})
 
         pool.query('INSERT INTO comments (comment_description, course_id, user_id) VALUES (?,?,?)', [ comment_description, course_id, user_id ]);
         return res.json({ comment_description, course_id, user_id})
