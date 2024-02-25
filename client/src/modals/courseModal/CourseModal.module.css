@@ -32,7 +32,7 @@
 }
 
 .info-ctn p {
-    font-size: 1rem;
+    font-size: .90rem;
     color: var(--secondary-black);
 }
 
@@ -53,20 +53,26 @@
     font-family: Poppins;
     color: var(--blue);
     font-weight: 700;
+    font-size: .9rem;
 }
   
 .info-ctn a {
     text-decoration: none;
     padding: 10px;
-    background-color: rgb(22, 129, 171);
+    background: rgb(22, 129, 171);
     color: #fff;
     text-align: center;
     border-radius: 4px;
     font-size: .9rem;
     font-weight: 900;
     text-transform: uppercase;
+    box-shadow: 0px 2px 2px 0px rgba(99, 99, 99, .9);
     text-shadow: 1px 1px 1px black;
-    margin-top: 10px;
+    transition: background .5s ease;
+}
+
+.info-ctn a:hover {
+    background: rgb(20, 148, 198);
 }
 
 .img-ctn {
@@ -80,19 +86,39 @@
 
 .types {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
     margin-top: 15px;
 }
 
 .types span {
-    background-color: var(--main-gray);
     padding: 5px 10px;
     border-radius: 4px;
     color: #fff;
+    text-shadow: 1px 1px 1px #000;
     text-transform: capitalize;
+    box-shadow: 0px 2px 2px 0px rgba(99, 99, 99, .5);
     font-size: .9rem;
+}
+
+.light-blue {
+    background-color: #4bc3e4;
+}
+
+.blue {
+    background-color: var(--blue);
+}
+
+.green {
+    background-color:  #4CAF50;
+}
+
+.pink {
+    background-color: #f43071;
+}
+
+.yellow {
+    background-color: #daa520;
 }
 
 .author {
@@ -115,11 +141,8 @@
     .info-ctn h2 {
         font-size: 1.25rem;
     }
-    .types {
-        justify-content: start;
-    }
     .author {
-        margin-top: 0;
+        margin-top: 10px;
     }
 }
 
@@ -127,7 +150,6 @@
     .main {
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
-
     .img-ctn {
         height: 250px;
     }

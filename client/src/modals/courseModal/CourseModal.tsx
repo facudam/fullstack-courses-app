@@ -104,13 +104,13 @@ const CourseModal: FC = () => {
                     
                     <a href={ courseInfo?.resource_link } target='_blank' rel='noopener noreferrer nofollow'>Acceder al curso</a>
                     <div className={ styles.types }>
-                        <span>{ (courseInfo?.is_free === 1) ? 'Gratis' : 'Pago' }</span>
-                        <span>{ courseInfo?.technology }</span>
-                        <span>{ courseInfo?.type }</span>
-                        <span>{ courseInfo?.language }</span>
+                        <span className={ styles['light-blue'] }>{ (courseInfo?.is_free === 1) ? 'Gratis' : 'Pago' }</span>
+                        <span className={ styles.blue }>{ courseInfo?.technology }</span>
+                        <span className={ styles.green }>{ courseInfo?.type }</span>
+                        <span className={ styles.pink }>{ courseInfo?.language }</span>
                         {
                             (courseInfo?.with_certification == '1') &&
-                                <span>Certificado de finalización</span>
+                                <span className={ styles.yellow }>Certificado de finalización</span>
                         }
                     </div>
                     <p className={ styles.author }>
