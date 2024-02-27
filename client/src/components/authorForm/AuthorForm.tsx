@@ -85,7 +85,7 @@ const AuthorForm: FC = () => {
             </div>
             {
                 (error.error_name.trim() !== '') &&
-                    <span>{ error.error_name }</span>
+                    <span className={ styles['error-message'] }>{ error.error_name }</span>
             }
             <input 
                 onChange={ handleChange }
@@ -102,7 +102,7 @@ const AuthorForm: FC = () => {
             
             {
                 (error.error_country.trim() !== '') &&
-                    <span>{ error.error_country }</span>
+                    <span className={ styles['error-message'] }>{ error.error_country }</span>
             }
             <input
                 onChange={ handleChange }

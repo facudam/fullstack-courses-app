@@ -95,7 +95,7 @@ const CreateCourse: FC = () => {
                     <div className={ styles['form-group'] }>
                         <div className={ styles['space-beetwen'] }>
                             <label htmlFor="title">Título</label>
-                            <span>{ formData.title.length }/100</span>
+                            <span className={ styles.length }>{ formData.title.length }/100</span>
                         </div>
                         
                         <input
@@ -109,14 +109,14 @@ const CreateCourse: FC = () => {
                         />
                         {
                             (hasAnyError && formData.title.trim().length === 0)
-                            && <span>{ errorMessages.title }</span>
+                            && <span className={ styles['error-message'] }>{ errorMessages.title }</span>
                         }
                     </div>
 
                     <div className={ styles['form-group'] }>
                         <div className={ styles['space-beetwen'] }>
                             <label htmlFor="description">Descripción</label>
-                            <span>{ formData.description.length }/600</span>
+                            <span className={ styles.length }>{ formData.description.length }/600</span>
                         </div>
                         
                         <textarea
@@ -129,12 +129,12 @@ const CreateCourse: FC = () => {
                         />
                         {
                             (hasAnyError && formData.description.trim().length === 0)
-                            && <span>{ errorMessages.description }</span>
+                            && <span className={ styles['error-message'] }>{ errorMessages.description }</span>
                         }
                     </div>
 
                     <div className={ styles['form-group'] }>
-                        <label htmlFor="sampleFile">Imagen <span>*.webp no permitido</span></label>
+                        <label htmlFor="sampleFile">Imagen <span className={ styles.length }>*.webp no permitido</span></label>
                         <input
                             onChange={handleFileChange}
                             type="file" 
@@ -144,14 +144,14 @@ const CreateCourse: FC = () => {
                         />
                         {
                             (hasAnyError && formData.sampleFile === null)
-                                && <span>{ errorMessages.sampleFile }</span>
+                                && <span className={ styles['error-message'] }>{ errorMessages.sampleFile }</span>
                         }
                     </div>
 
                     <div className={ styles['form-group'] }>
                         <div className={ styles['space-beetwen'] }>
                             <label htmlFor="link">Link</label>
-                            <span>{formData.resource_link.length}/250</span>
+                            <span className={ styles.length }>{formData.resource_link.length}/250</span>
                         </div>
                         
                         <input
@@ -165,7 +165,7 @@ const CreateCourse: FC = () => {
                         />
                         {
                             (hasAnyError && formData.resource_link.trim().length === 0)
-                                && <span>{ errorMessages.resource_link }</span>
+                                && <span className={ styles['error-message'] }>{ errorMessages.resource_link }</span>
                         }
                     </div>
 
@@ -190,7 +190,7 @@ const CreateCourse: FC = () => {
                         </select>
                         {
                             (hasAnyError && formData.type_id === '')
-                                && <span>{ errorMessages.type_id }</span>
+                                && <span className={ styles['error-message'] }>{ errorMessages.type_id }</span>
                         }
                     </div>
 
@@ -216,7 +216,7 @@ const CreateCourse: FC = () => {
                         }
                          {
                             (hasAnyError && (formData.tech_id === '' || formData.tech_id === 'otro'))
-                                && <span>{ errorMessages.tech_id }</span>
+                                && <span className={ styles['error-message'] }>{ errorMessages.tech_id }</span>
                         }
                     </div>
 
@@ -242,7 +242,7 @@ const CreateCourse: FC = () => {
                         }
                          {
                             (hasAnyError && (formData.author_id === '' || formData.author_id === 'otro'))
-                                && <span>{ errorMessages.author_id }</span>
+                                && <span className={ styles['error-message'] }>{ errorMessages.author_id }</span>
                         }
                     </div>
 
@@ -260,7 +260,7 @@ const CreateCourse: FC = () => {
                         </select>
                         {
                             (hasAnyError && (formData.is_free === ''))
-                                && <span>{ errorMessages.is_free }</span>
+                                && <span className={ styles['error-message'] }>{ errorMessages.is_free }</span>
                         }
                     </div>
 
@@ -281,7 +281,7 @@ const CreateCourse: FC = () => {
                         </select>
                         {
                             (hasAnyError && (formData.language_id === ''))
-                                && <span>{ errorMessages.language_id }</span>
+                                && <span className={ styles['error-message'] }>{ errorMessages.language_id }</span>
                         }
                     </div>
                     <div className={ styles['form-group'] }>
@@ -298,7 +298,7 @@ const CreateCourse: FC = () => {
                         </select>
                         {
                             (hasAnyError && (formData.with_certification === ''))
-                                && <span>{ errorMessages.with_certification }</span>
+                                && <span className={ styles['error-message'] }>{ errorMessages.with_certification }</span>
                         }
                     </div>
                 </div>
