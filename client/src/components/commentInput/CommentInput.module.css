@@ -37,4 +37,10 @@
     display: block;
     border-radius: 6px;
     font-family: Poppins;
+    cursor: pointer;
+    transition: background .5s ease;
+}
+
+.comment-section button:hover {
+    background: #1062aa;
 }

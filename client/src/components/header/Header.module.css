@@ -11,7 +11,7 @@
     align-items: center;
     background: rgb(248,250,252);
     background: var(--background-gradient);
-    min-height: 70vh;
+    min-height: 65vh;
     overflow: hidden;
 }
 

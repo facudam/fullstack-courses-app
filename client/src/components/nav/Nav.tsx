@@ -24,6 +24,7 @@ const Nav: FC<NavProps> = ({ handleLogout }) => {
                 <div className={ styles.logo }>
                     <img src={ hat } />
                     <span translate="no">CoursesLibra</span>
+                    <span>Beta</span>
                 </div>
                 {
                     isAuthenticated

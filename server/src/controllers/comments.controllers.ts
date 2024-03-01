@@ -54,6 +54,9 @@ const updateComment = async(req: Request, res: Response) => {
     try {
         const { id } = req.params;
         const { comment_description, course_id, user_id }: Comment = req.body;
+
+        if (comment_description.length <= 0 || comment_description.length > 200) return res.status(422).send({ error: "Invalid request: comment length is incorrect."})
+
         const [ result ] = await pool.query<ResultSetHeader>('UPDATE comments SET comment_description = IFNULL(?, comment_description), course_id = IFNULL(?, course_id), user_id = IFNULL(?, user_id) WHERE comment_id = ?', [ comment_description, course_id, user_id, id ])
 
         if (result.affectedRows <= 0) return res.status(404).json({ 'message': 'Comment not found' })

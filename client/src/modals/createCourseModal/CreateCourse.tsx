@@ -86,11 +86,10 @@ const CreateCourse: FC = () => {
     return(
         <ModalLayout closeFn={ closeModal }>
             <form onSubmit={handleSubmit} className={ styles.form }>
-                <div className={ styles['space-beetwen']}>
+                <div className={`${styles.header} ${styles['space-beetwen']}`}>
                     <h2>Añade un nuevo curso</h2>
                     <button onClick={ closeModal }>x</button>
                 </div>
-                
                 <div className={ styles['grid-form'] }>
                     <div className={ styles['form-group'] }>
                         <div className={ styles['space-beetwen'] }>

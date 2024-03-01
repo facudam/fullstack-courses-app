@@ -126,12 +126,13 @@
 }
 
 .comments {
-    border-top: 1px solid var(--main-gray);
+    border-top: 1px solid var(--blue);
     padding-top: 35px;
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
+
 
 .comments h3 {
     font-size: 1.05rem;
