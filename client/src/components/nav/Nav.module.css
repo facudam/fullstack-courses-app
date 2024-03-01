@@ -94,6 +94,10 @@
     z-index: 9;
 }
 
+.nav-ctn_navigation2.show-visibility {
+    display: flex;
+}
+
 .nav-ctn_navigation2 a {
     color: #fff;
     text-shadow: 1px 1px 1px #000000;
