@@ -10,8 +10,47 @@
     justify-content: space-between;
 }
 
+.spaceBetween label {
+    font-size: .8rem;
+}
+
+.spaceBetween span {
+    font-size: .6rem;
+}
+
+.mini-text {
+    font-size: .75rem;
+    color: var(--green);
+}
+
 .tech-send input {
-    border: 1px solid rgb(196, 191, 191);
+    border: none;
+    outline: 1px solid rgb(196, 191, 191);
     border-radius: 4px;
-    padding: 5px;
+    padding: 8px 10px;
+    background-color: var(--background);
+    font-family: Poppins;
+}
+
+.tech-send input:focus {
+    outline: 1px solid var(--green);
+}
+
+.tech-send input::placeholder {
+    color: #000;
+}
+
+.tech-send button {
+    background: var(--green);
+    color: #fff;
+    padding: 8px;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.16);
+    cursor: pointer;
+    transition: background .5s ease;
+}
+
+.tech-send button:hover {
+    background: var(--green-hover);
 }

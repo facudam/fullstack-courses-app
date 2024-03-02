@@ -44,7 +44,8 @@
 .form-group > input, .form-group > textarea, .form-group > select {
     padding: 8px 10px;
     border-radius: 6px;
-    border: 1px solid #d3d3d3;
+    border: none;
+    outline: 1px solid #d3d3d3;
     background-color: var(--background);
     font-family: Poppins;
 }
@@ -54,7 +55,6 @@
 }
 
 .form-group > input:focus, .form-group > textarea:focus, .form-group > select:focus {
-    border-color: transparent;
     outline: 1px solid var(--blue);
 }
 
@@ -75,7 +75,7 @@
     border-radius: 6px;
     font-family: Poppins;
     border: none;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    box-shadow: 0px 1px 4pxrgba(0, 0, 0, 0.16);
     font-size: .9rem;
     transition: background .5s ease;
     cursor: pointer;

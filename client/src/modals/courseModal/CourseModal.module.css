@@ -59,7 +59,7 @@
 .info-ctn a {
     text-decoration: none;
     padding: 10px;
-    background: rgb(22, 129, 171);
+    background: var(--green);
     color: #fff;
     text-align: center;
     border-radius: 4px;
@@ -72,7 +72,7 @@
 }
 
 .info-ctn a:hover {
-    background: rgb(20, 148, 198);
+    background: var(--green-hover);
 }
 
 .img-ctn {
@@ -126,7 +126,7 @@
 }
 
 .comments {
-    border-top: 1px solid var(--blue);
+    border-top: 1px solid #e5e3e3;
     padding-top: 35px;
     display: flex;
     flex-direction: column;
