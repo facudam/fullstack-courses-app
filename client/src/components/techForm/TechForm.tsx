@@ -51,7 +51,7 @@ const TechForm: FC = () => {
                <label>Nombre</label>
                <span>{ technology.length }/25</span> 
             </div>
-            { (technology.length === 0) && <span className={ styles['mini-text'] }>{ error }</span> }
+            { (error.length !== 0 && technology.length === 0) && <span className={ styles['mini-text'] }>{ error }</span> }
             <input 
                 type='text' 
                 value={ technology } 
