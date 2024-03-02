@@ -5,13 +5,17 @@
 }
 
 .header {
-    padding-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 .space-beetwen {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.space-beetwen h2 {
+    font-size: 1.2rem;
 }
 
 .space-beetwen button {
@@ -92,4 +96,30 @@
 
 .length {
     font-size: 10px;
+}
+
+@media screen and (max-width: 400px) {
+    .grid-form {
+        grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+    }
+    .header {
+        margin-bottom: 0;
+    }
+    .space-beetwen h2 {
+        font-size: .9rem;
+    }
+    .space-beetwen button {
+        font-size: .9rem;
+        margin-right: -15px;
+    }
+    .form-group label {
+        font-size: .8rem;
+    }
+    .form-group > input, .form-group > textarea, .form-group > select {
+        font-size: .8rem;
+    }
+    .form-group > input[type=file] {
+        display: flex;
+        flex-direction: column;
+    }
 }
