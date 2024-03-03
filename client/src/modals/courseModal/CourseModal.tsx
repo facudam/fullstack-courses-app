@@ -8,6 +8,8 @@ import addNewComment from '../../services/api/endpoints/comments/addNewComment'
 import { AxiosResponse } from 'axios'
 import { CommentResponse, Comment } from '../../interfaces/models'
 import ModalLayout from '../modalLayout/ModalLayout'
+import UserComment from '../../components/commentComponent/Comment'
+import CommentInput from '../../components/commentInput/CommentInput'
 
 
 const CourseModal: FC = () => {
@@ -27,6 +29,7 @@ const CourseModal: FC = () => {
 
     const [ comments, setComments ] = useState<Comment[]>([])
     const [ newComment, setNewComment ] = useState<string>('')
+    const [ showMore, setShowMore ] = useState(false);
 
     const closeModal = () => {
         setNewComment('')
@@ -86,17 +89,33 @@ const CourseModal: FC = () => {
                     <img src={ courseInfo?.image } />
                 </div>
                 <div className={ styles['info-ctn'] }>
-                    <h2>{ courseInfo?.title }</h2>
-                    <p>{ courseInfo?.description }</p>
+                    <h2>{courseInfo?.title}</h2>
+                    <p className={showMore ? '' : styles['truncate']}>
+                        {courseInfo?.description}
+                    </p>
+                    {
+                        (typeof courseInfo?.description === 'string' && courseInfo.description.length > 90) &&
+                        <button className={ styles.showBtn } onClick={() => setShowMore(!showMore)}>
+                            {
+                                showMore
+                                    ? '... leer menos'
+                                    : '... leer más'
+                            }
+                        </button>
+                    }
                     
                     <a href={ courseInfo?.resource_link } target='_blank' rel='noopener noreferrer nofollow'>Acceder al curso</a>
                     <div className={ styles.types }>
-                        <span>{ (courseInfo?.is_free === 1) ? 'Gratis' : 'Pago' }</span>
-                        <span>{ courseInfo?.technology }</span>
-                        <span>{ courseInfo?.type }</span>
-                        <span>{ courseInfo?.language }</span>
+                        <span className={ styles['light-blue'] }>{ (courseInfo?.is_free === 1) ? 'Gratis' : 'Pago' }</span>
+                        <span className={ styles.blue }>{ courseInfo?.technology }</span>
+                        <span className={ styles.green }>{ courseInfo?.type }</span>
+                        <span className={ styles.pink }>{ courseInfo?.language }</span>
+                        {
+                            (courseInfo?.with_certification == '1') &&
+                                <span className={ styles.yellow }>Certificado de finalización</span>
+                        }
                     </div>
-                    <p>
+                    <p className={ styles.author }>
                         <strong>Author:</strong> <span>{ authorInfo?.author_name } - { authorInfo?.author_country }</span>
                     </p>
                 </div>
@@ -106,17 +125,20 @@ const CourseModal: FC = () => {
                 {
                     (comments && comments?.length > 0)
                         ? comments.map((comment, index) => (
-                            <p key={ (comment.comment_id) ? comment.comment_id : index }><strong>{ (comment.user) ? comment.user : userName }: </strong> { comment.comment_description }</p>
+                            <UserComment key={(comment.comment_id) ? comment.comment_id : index} 
+                                userName={(comment.user) ? comment.user : userName }
+                                comment={ comment.comment_description }
+                            />
                         ))
                         : <p>Aún no se ha dejado ningún feedback sobre este curso</p>
                 }
                 {
                     isAuthenticated && 
-                        <>
-                            <h3>¿Ya completaste el curso? Comparte tu experiencia con la comunidad</h3>
-                            <input type='text' value={ newComment } onChange={(e) => setNewComment(e.target.value)} />
-                            <button onClick={ handleNewComment }>Enviar feedback</button>
-                        </>   
+                        <CommentInput 
+                            newComment={ newComment }
+                            handleChange={(e) => setNewComment(e.target.value)}
+                            handleNewComment={ handleNewComment }
+                        />  
                 }
             </div>
         </ModalLayout> 

@@ -8,14 +8,50 @@
 .spaceBetween {
     display: flex;
     justify-content: space-between;
+    margin-top: 5px;
+}
+
+.spaceBetween span {
+    font-size: .6rem;
 }
 
 .form label {
-    font-size: .9rem;
+    font-size: .8rem;
 }
 
 .form input {
-    border: 1px solid rgb(196, 191, 191);
+    border: none;
+    outline: 1px solid rgb(196, 191, 191);
+    background: var(--background);
     border-radius: 4px;
     padding: 5px;
+    font-family: Poppins;
+}
+
+.form input:focus {
+    outline: 1px solid var(--green);
+}
+
+.form input::placeholder {
+    color: #000;
+}
+
+.form button {
+    background: var(--green);
+    color: #fff;
+    padding: 8px;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.16);
+    cursor: pointer;
+    transition: background .5s ease;
+}
+
+.form button:hover {
+    background: var(--green-hover);
+}
+
+.error-message {
+    font-size: 12px;
+    color: var(--green);
 }

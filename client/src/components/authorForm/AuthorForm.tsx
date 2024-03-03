@@ -84,8 +84,8 @@ const AuthorForm: FC = () => {
                 <span>{ authorData.author_name.length }/30</span>
             </div>
             {
-                (error.error_name.trim() !== '') &&
-                    <span>{ error.error_name }</span>
+                (error.error_name.trim() !== '' && authorData.author_name === '') &&
+                    <span className={ styles['error-message'] }>{ error.error_name }</span>
             }
             <input 
                 onChange={ handleChange }
@@ -93,6 +93,7 @@ const AuthorForm: FC = () => {
                 name="author_name" 
                 value={ authorData.author_name }
                 maxLength={ 30 }
+                placeholder="Ingresa el nombre del autor"
             />
 
             <div className={ styles.spaceBetween }>
@@ -101,15 +102,16 @@ const AuthorForm: FC = () => {
             </div>
             
             {
-                (error.error_country.trim() !== '') &&
-                    <span>{ error.error_country }</span>
+                (error.error_country.trim() !== '' && authorData.author_country === '') &&
+                    <span className={ styles['error-message'] }>{ error.error_country }</span>
             }
             <input
                 onChange={ handleChange }
                 type="text" 
                 name="author_country" 
                 value={ authorData.author_country }
-                maxLength={ 30 } 
+                maxLength={ 30 }
+                placeholder="Ingresa el país de origen"
             />
             <button onClick={(e) => handleSubmit(e)}>Añadir nuevo autor</button>
         </div>

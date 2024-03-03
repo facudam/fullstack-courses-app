@@ -46,19 +46,18 @@ const TechForm: FC = () => {
     }
 
     return (
-        <div
-            className={ styles['tech-send'] }
-        >
+        <div className={ styles['tech-send'] }>
             <div className={ styles.spaceBetween }>
                <label>Nombre</label>
                <span>{ technology.length }/25</span> 
             </div>
-            { (error.length !== 0) && <span>{ error }</span> }
+            { (error.length !== 0 && technology.length === 0) && <span className={ styles['mini-text'] }>{ error }</span> }
             <input 
                 type='text' 
                 value={ technology } 
                 onChange={ (e) => setTechnology(e.target.value) }
-                maxLength={ 25 } 
+                maxLength={ 25 }
+                placeholder="Ingresa la nueva tecnología"
             />
             <button onClick={(event) => handleNewTechnology(event)}>Añadir tecnología</button>
         </div>

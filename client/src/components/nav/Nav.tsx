@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from "react"
+import { FC, useContext } from "react"
 import { Link } from "react-router-dom"
 import { NavProps } from "../../interfaces/models"
 import { CoursesContext } from "../../context/CoursesContext"
@@ -9,30 +9,23 @@ import AuthNav from "../authNav/AuthNav"
 const Nav: FC<NavProps> = ({ handleLogout }) => {
 
     const { isAuthenticated, userName, setIsCreateCourseModalOpen } = useContext(CoursesContext);
-    const [ isHamburgerBtnPressed, setIsHamburgerBtnPressed ] = useState<boolean>(false)
 
     const pressHamburgerBtn = () => {
         const buton = document.querySelector(`.${styles['hamburger-menu']}`)
         buton?.classList.toggle(`${styles['active-hamburger']}`)
-        const menuNav = document.querySelector(`.${styles['nav-ctn_navigation2']}`);
 
-        if (isHamburgerBtnPressed && menuNav instanceof HTMLElement) {
-            setIsHamburgerBtnPressed(false)
-            menuNav.style.setProperty('display', 'none');   
-        }
-        if (!isHamburgerBtnPressed && menuNav instanceof HTMLElement) {
-            setIsHamburgerBtnPressed(true)
-            menuNav.style.setProperty('display', 'flex'); 
-        }
+        const menuNav = document.querySelector(`.${styles['nav-ctn_navigation2']}`);
+        menuNav?.classList.toggle(`${styles['show-visibility']}`)
     }
 
     return(
         <nav className={ styles.nav }>
             <div className={ styles['nav-ctn'] }>
-                <Link className={ styles.logo } to='/'>
+                <div className={ styles.logo }>
                     <img src={ hat } />
                     <span translate="no">CoursesLibra</span>
-                </Link>
+                    <span>Beta</span>
+                </div>
                 {
                     isAuthenticated
                         ? 
@@ -57,7 +50,7 @@ const Nav: FC<NavProps> = ({ handleLogout }) => {
                                     <span></span>
                                 </div>
                                 <div className={ styles['nav-ctn_navigation2'] }>
-                                    <Link to='/iniciar-sesion'>Inicia sesión</Link>
+                                    <Link to='/iniciar-sesion'>Iniciar sesión</Link>
                                     <Link to='/registrarse'>Regístrate</Link>
                                 </div> 
                             </>   

@@ -4,21 +4,29 @@
     gap: 30px;
 }
 
-.form > button {
-    padding: 8px;
-    color: #fff;
-    background-color: #000;
-    border-radius: 6px;
+.header {
+    margin-bottom: 15px;
 }
 
 .space-beetwen {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.space-beetwen h2 {
+    font-size: 1.2rem;
 }
 
 .space-beetwen button {
     width: 20px;
     height: 20px;
+    border: none;
+    background-color: transparent;
+    font-size: 1.1rem;
+    color: var(--blue);
+    font-weight: 700;
+    cursor: pointer;
 }
 
 .grid-form {
@@ -34,14 +42,24 @@
 }
 
 .form-group label {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
 }
 
 .form-group > input, .form-group > textarea, .form-group > select {
     padding: 8px 10px;
     border-radius: 6px;
-    border: thin solid #cccbcb;
+    border: none;
+    outline: 1px solid #d3d3d3;
     background-color: var(--background);
+    font-family: Poppins;
+}
+
+.form-group > input::placeholder, .form-group > textarea::placeholder {
+    color: #000;
+}
+
+.form-group > input:focus, .form-group > textarea:focus, .form-group > select:focus {
+    outline: 1px solid var(--blue);
 }
 
 .form-group textarea {
@@ -49,11 +67,59 @@
 }
 
 .form-group input[type="file"]::-webkit-file-upload-button {
-    border: none; /* Elimina el borde */
+    border: none;
     background-color: var(--background);
     height: 14px;
 }
 
-.form-group span {
+.form > button {
+    padding: 8px;
+    color: #fff;
+    background-color: var(--blue);
+    border-radius: 6px;
+    font-family: Poppins;
+    border: none;
+    box-shadow: 0px 1px 4pxrgba(0, 0, 0, 0.16);
+    font-size: .9rem;
+    transition: background .5s ease;
+    cursor: pointer;
+}
+
+.form > button:hover {
+    background: #1062aa;
+}
+
+.error-message {
     font-size: 12px;
+    color: var(--blue);
+}
+
+.length {
+    font-size: 10px;
+}
+
+@media screen and (max-width: 400px) {
+    .grid-form {
+        grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+    }
+    .header {
+        margin-bottom: 0;
+    }
+    .space-beetwen h2 {
+        font-size: .9rem;
+    }
+    .space-beetwen button {
+        font-size: .9rem;
+        margin-right: -15px;
+    }
+    .form-group label {
+        font-size: .8rem;
+    }
+    .form-group > input, .form-group > textarea, .form-group > select {
+        font-size: .8rem;
+    }
+    .form-group > input[type=file] {
+        display: flex;
+        flex-direction: column;
+    }
 }

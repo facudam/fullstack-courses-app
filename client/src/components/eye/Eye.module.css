@@ -1,9 +1,21 @@
+.line {
+    position: absolute;
+    content: '';
+    width: 19px;
+    height: 1px;
+    background-color: #3f3e3e;
+    z-index: 9;
+    transform: rotate(140deg);
+    opacity: var(--opacity);
+    transition: opacity .3s ease-in-out;
+}
+
 .eye {
     width: 20px;
     height: 10px;
     border-radius: 85%;
     border: 1px solid;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid #3f3e3e;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -16,7 +28,7 @@
     content: '';
     width: 20px;
     height: 12px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #3f3e3e;
     background-color: rgb(255, 255, 255);
     top: 0x;
     left: 0;
@@ -27,7 +39,8 @@
 .eye-iris {
     width: 8px;
     height: 8px;
-    border: 1px solid #000;
+    border: 1px solid #3f3e3e;
+    background-color: var(--blue-hover);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -37,6 +50,8 @@
 .eye-pupil {
     width: 3px;
     height: 3px;
-    background-color: #000000;
+    background-color: #3f3e3e;
     border-radius: 50%;
 }
+
+
