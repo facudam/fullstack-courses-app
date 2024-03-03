@@ -27,7 +27,9 @@ body {
   --background: #f9f9ff;
   --toggle-eye: -1px;
   --blue: #156dbb;
+  --blue-hover: #0a89f7;
   --green: #1681ab;
   --green-hover: rgb(20, 148, 198);
   --background-gradient: linear-gradient(90deg, rgb(236, 239, 241) 0%, rgb(187, 216, 250),rgb(236, 239, 241)  100%);
+  --opacity: 1;
 }

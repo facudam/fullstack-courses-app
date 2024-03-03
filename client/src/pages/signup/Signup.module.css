@@ -1,11 +1,11 @@
-.button {
-    width: 25px;
-    height: 15px;
-    border: none;
-    background-color: transparent;
-    margin-left: 10px;
-    cursor: pointer;
+.eye-btn-ctn {
     display: flex;
-    justify-content: center;
     align-items: center;
+}
+.check-box {
+    position: absolute;
+    left: 4px;
+    cursor: pointer;
+    opacity: 0;
+    z-index: 1;
 }

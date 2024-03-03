@@ -47,8 +47,8 @@ export const Signup = () => {
         })
     }
 
-    const togglePasswordVisivility = (e: React.MouseEvent<HTMLButtonElement>) => {
-        toggleEye(e)
+    const togglePasswordVisivility = () => {
+        toggleEye()
         setShowPassword(!showPassword)
     }
 
@@ -84,11 +84,13 @@ export const Signup = () => {
                     (hasAnyError && !validatePassword(password)) &&
                         <span>La contraseña debe ser de entre 8 y 16 caracteres y debe poseer al menos una mayúscula y un número</span>
                 }
-                <button
-                    onClick={ (e) => togglePasswordVisivility(e) } 
-                    className={ styles.button }>
-                   <Eye />
-                </button>
+                <div className={ styles['eye-btn-ctn'] }>
+                    <input type="checkbox"
+                        onChange={ togglePasswordVisivility } 
+                        className={ styles['check-box'] }>
+                    </input>
+                    <Eye />
+                </div>
             </div>
             <button type="submit">Registrarte</button>
             <p>¿Ya tienes una cuenta?</p>
