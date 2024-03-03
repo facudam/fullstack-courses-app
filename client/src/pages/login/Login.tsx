@@ -117,9 +117,8 @@ export const Login = () => {
               (isDataEmpty && password.trim().length === 0) &&
                 <span className={ styles['error-message'] }>Por favor, ingrese su contraseña</span>
             }
-            
           </div>
-          <button type="submit">Iniciar sesión</button>
+          <button className={ styles.button } type="submit">Iniciar sesión</button>
           <Link className={ styles.link } to="/">O continua sin iniciar sesión</Link>
         </form>
       </main>

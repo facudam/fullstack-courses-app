@@ -40,7 +40,7 @@
     width: 8px;
     height: 8px;
     border: 1px solid #3f3e3e;
-    background-color: #cb9274;
+    background-color: var(--blue-hover);
     border-radius: 50%;
     display: flex;
     justify-content: center;

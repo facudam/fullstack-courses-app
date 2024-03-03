@@ -117,14 +117,14 @@
     opacity: 0;
     z-index: 1;
 }
-button {
+.button {
     margin-top: 10px;
     background: var(--blue);
     color: #fff;
     font-size: .9rem;
     transition: background .5s ease;
 }
-button:hover {
+.button:hover {
     cursor: pointer;
     background: var(--blue-hover);
 }
@@ -154,6 +154,9 @@ button:hover {
     }
     .main {
         padding-top: 60px;
+    }
+    .form-ctn {
+        gap: 18px;
     }
     .form-ctn h1 {
         font-size: 1.3rem;

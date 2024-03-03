@@ -5,6 +5,7 @@ import axios from 'axios'
 import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl"
 import Eye from "../../components/eye/Eye"
 import { toggleEye } from '../../helpers/toggleEye'
+import { hat } from "../../assets/images/images"
 import { signUpValidation, validateEmail, validatePassword } from '../validations/signUpValidation'
 
 
@@ -53,49 +54,66 @@ export const Signup = () => {
     }
 
   return (
-    <div>
-        <form onSubmit={ handleSubmit }>
-            <div>
+    <div className={ styles['main-ctn'] }>
+        <nav className={ styles.nav }>
+        <div className={ styles.logo }>
+            <img src={ hat } />
+            <span translate="no">CoursesLibra</span>
+            <span>Beta</span>
+        </div>
+        <div className={ styles['nav-link-ctn'] }>
+            <span>¿Ya estás registrado?</span>
+            <Link to="/iniciar-sesion">Inicia sesión</Link>
+        </div>
+      </nav>
+      <main className={ styles.main }>
+        <form className={ styles['form-ctn'] } onSubmit={ handleSubmit }>
+            <h1>Crea una cuenta</h1>
+            <div className={ styles['input-ctn'] }>
                 <label htmlFor="name">Nombre:</label>
                 <input onChange={ handleName } type="text" name="name" placeholder="Enter name" value={ name } />
                 { 
                     (hasAnyError && name.trim() === '') &&
-                        <span>Por favor, ingresa tu nombre</span>  
+                        <span className={ styles['error-message'] }>Por favor, ingresa tu nombre</span>  
                 }
             </div>
-            <div>
+            <div className={ styles['input-ctn'] }>
                 <label htmlFor="email">Email:</label>
                 <input onChange={ handleEmail } type="email" name="email" placeholder="Enter Email" value={ email } />
                 {
                     (hasAnyError && !validateEmail(email)) &&
-                        <span>Por favor, ingrese un email válido</span>
+                        <span className={ styles['error-message'] }>Por favor, ingrese un email válido</span>
                 }
             </div>
-            <div>
+            <div className={ styles['input-ctn'] }>
                 <label htmlFor="password">Contraseña</label>
-                <input 
-                    onChange={ handlePassword } 
-                    type={ showPassword ? "text" : "password" }
-                    name="password" 
-                    placeholder="Enter password" 
-                    value={ password } 
-                />
+                <div className={ styles['input-eye-ctn'] }>
+                    <input 
+                        onChange={ handlePassword } 
+                        type={ showPassword ? "text" : "password" }
+                        name="password" 
+                        placeholder="Enter password" 
+                        value={ password } 
+                    />
+                    
+                    <div className={ styles['eye-btn-ctn'] }>
+                        <input type="checkbox"
+                            onChange={ togglePasswordVisivility } 
+                            className={ styles['check-box'] }>
+                        </input>
+                        <Eye />
+                    </div>
+                </div>
                 {
                     (hasAnyError && !validatePassword(password)) &&
-                        <span>La contraseña debe ser de entre 8 y 16 caracteres y debe poseer al menos una mayúscula y un número</span>
+                        <span className={ styles['error-message'] }>La contraseña debe ser de entre 8 y 16 caracteres y debe poseer al menos una mayúscula y un número</span>
                 }
-                <div className={ styles['eye-btn-ctn'] }>
-                    <input type="checkbox"
-                        onChange={ togglePasswordVisivility } 
-                        className={ styles['check-box'] }>
-                    </input>
-                    <Eye />
-                </div>
             </div>
-            <button type="submit">Registrarte</button>
-            <p>¿Ya tienes una cuenta?</p>
-            <Link to='/iniciar-sesion'>Iniciar sesión</Link>
+            <button className={ styles.button } type="submit">Registrarte</button>
+            <Link className={ styles.link } to="/">O continua sin registrarte</Link>
         </form>
+      </main>
+        
     </div>
   )
 }
