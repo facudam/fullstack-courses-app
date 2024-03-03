@@ -26,7 +26,7 @@
 
 .header-ctn h1 {
     font-family: eina;
-    font-size: clamp(1rem, 10vw, 4.3rem);
+    font-size: clamp(1rem, 10vw, 4rem);
     color: var(--main-black);
     text-shadow: 1px 1px 1px rgb(255, 255, 255);
     text-align: center;
