@@ -181,6 +181,10 @@
     .nav-ctn_navigation2 a {
         color: var(--secondary-black);
         text-shadow: none;
+        transition: color .5s ease;
+    }
+    .nav-ctn_navigation2 a:hover {
+        color: var(--blue-hover);
     }
 }
 

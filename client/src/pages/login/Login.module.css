@@ -58,7 +58,7 @@
     padding: 10px;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
 }
 .form-ctn h1 {
     margin-bottom: 15px;
@@ -75,18 +75,17 @@
     font-size: 1.05rem;
 }
 
-.input-ctn input, button {
+.input-ctn input, .button {
     padding: 7px 10px;
     font-family: Poppins;
     border: thin solid #cfcaca;
     border-radius: 5px;
     background: var(--background);
 }
-.input-ctn input:focus, button:focus {
+.input-ctn input:focus, .button:focus {
     outline: none;
     border-color: var(--blue);
 }
-
 .input-eye-ctn {
     display: flex;
     border: thin solid #cfcaca;
