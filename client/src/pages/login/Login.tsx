@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl";
 import Eye from "../../components/eye/Eye";
 import { toggleEye } from "../../helpers/toggleEye";
-import { hat } from "../../assets/images/images"
+import { hat, courses } from "../../assets/images/images"
 
 
 export const Login = () => {
@@ -79,7 +79,11 @@ export const Login = () => {
       </nav>
       <main className={ styles.main }>
         <form className={ styles['form-ctn'] } onSubmit={ handleSubmit }>
-          <h1>Bienvenido de nuevo</h1>
+          <div>
+            <h1>Inicia sesión</h1>
+            <p>Loguéate para acceder a tu cuenta y continuar explorando nuestra plataforma.</p>
+          </div>
+          
           <div className={ styles['input-ctn'] }>
             <label htmlFor="email">Email: </label>
             <input
@@ -120,9 +124,11 @@ export const Login = () => {
           </div>
           <button className={ styles.button } type="submit">Iniciar sesión</button>
           <Link className={ styles.link } to="/">O continua sin iniciar sesión</Link>
+          { isDataInvalid && <span style={{"textAlign": "center"}}><strong>Usuario y/o contraseña inválidos</strong></span> }
         </form>
+        <img src={ courses } alt="courses" width={500} />
       </main>
-      { isDataInvalid && <span><strong>Usuario y/o contraseña inválidos</strong></span> }
+      
     </div>
   );
 };

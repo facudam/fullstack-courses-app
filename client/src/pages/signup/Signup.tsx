@@ -5,7 +5,7 @@ import axios from 'axios'
 import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl"
 import Eye from "../../components/eye/Eye"
 import { toggleEye } from '../../helpers/toggleEye'
-import { hat } from "../../assets/images/images"
+import { hat, courses } from "../../assets/images/images"
 import { signUpValidation, validateEmail, validatePassword } from '../validations/signUpValidation'
 
 
@@ -68,7 +68,11 @@ export const Signup = () => {
       </nav>
       <main className={ styles.main }>
         <form className={ styles['form-ctn'] } onSubmit={ handleSubmit }>
-            <h1>Crea una cuenta</h1>
+            <div>
+                <h1>Regístrate</h1>
+                <p>Crea una cuenta para añadir cursos y compartir feedback con la comunidad.</p> 
+            </div>
+            
             <div className={ styles['input-ctn'] }>
                 <label htmlFor="name">Nombre:</label>
                 <input onChange={ handleName } type="text" name="name" placeholder="Enter name" value={ name } />
@@ -112,6 +116,7 @@ export const Signup = () => {
             <button className={ styles.button } type="submit">Registrarte</button>
             <Link className={ styles.link } to="/">O continua sin registrarte</Link>
         </form>
+        <img src={ courses } alt="courses" width={500} />
       </main>
         
     </div>
