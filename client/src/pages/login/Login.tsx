@@ -67,11 +67,11 @@ export const Login = () => {
   return (
     <div className={ styles['main-ctn'] }>
       <nav className={ styles.nav }>
-        <div className={ styles.logo }>
+        <Link to="/" className={ styles.logo }>
             <img src={ hat } />
             <span translate="no">CoursesLibra</span>
             <span>Beta</span>
-        </div>
+        </Link>
         <div className={ styles['nav-link-ctn'] }>
             <span>¿Todavia no estás registrado?</span>
             <Link to="/registrarse">Regístrate</Link>
@@ -81,7 +81,7 @@ export const Login = () => {
         <form className={ styles['form-ctn'] } onSubmit={ handleSubmit }>
           <div>
             <h1>Inicia sesión</h1>
-            <p>Loguéate para acceder a tu cuenta y continuar explorando nuestra plataforma.</p>
+            <p>Loguéate para acceder a tu cuenta y continuar explorando en la plataforma.</p>
           </div>
           
           <div className={ styles['input-ctn'] }>
@@ -124,7 +124,7 @@ export const Login = () => {
           </div>
           <button className={ styles.button } type="submit">Iniciar sesión</button>
           <Link className={ styles.link } to="/">O continua sin iniciar sesión</Link>
-          { isDataInvalid && <span style={{"textAlign": "center"}}><strong>Usuario y/o contraseña inválidos</strong></span> }
+          { isDataInvalid && <span style={{ "textAlign": "center" }}><strong>Usuario y/o contraseña inválidos</strong></span> }
         </form>
         <img src={ courses } alt="courses" width={500} />
       </main>

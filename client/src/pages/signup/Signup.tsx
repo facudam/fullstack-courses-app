@@ -56,11 +56,11 @@ export const Signup = () => {
   return (
     <div className={ styles['main-ctn'] }>
         <nav className={ styles.nav }>
-        <div className={ styles.logo }>
+        <Link to="/" className={ styles.logo }>
             <img src={ hat } />
             <span translate="no">CoursesLibra</span>
             <span>Beta</span>
-        </div>
+        </Link>
         <div className={ styles['nav-link-ctn'] }>
             <span>¿Ya estás registrado?</span>
             <Link to="/iniciar-sesion">Inicia sesión</Link>
@@ -75,7 +75,7 @@ export const Signup = () => {
             
             <div className={ styles['input-ctn'] }>
                 <label htmlFor="name">Nombre:</label>
-                <input onChange={ handleName } type="text" name="name" placeholder="Enter name" value={ name } />
+                <input onChange={ handleName } type="text" name="name" placeholder="Escribe tu nombre" value={ name } />
                 { 
                     (hasAnyError && name.trim() === '') &&
                         <span className={ styles['error-message'] }>Por favor, ingresa tu nombre</span>  
@@ -83,7 +83,7 @@ export const Signup = () => {
             </div>
             <div className={ styles['input-ctn'] }>
                 <label htmlFor="email">Email:</label>
-                <input onChange={ handleEmail } type="email" name="email" placeholder="Enter Email" value={ email } />
+                <input onChange={ handleEmail } type="email" name="email" placeholder="Ingresa tu email" value={ email } />
                 {
                     (hasAnyError && !validateEmail(email)) &&
                         <span className={ styles['error-message'] }>Por favor, ingrese un email válido</span>
@@ -96,7 +96,7 @@ export const Signup = () => {
                         onChange={ handlePassword } 
                         type={ showPassword ? "text" : "password" }
                         name="password" 
-                        placeholder="Enter password" 
+                        placeholder="Ingresa tu contraseña" 
                         value={ password } 
                     />
                     
