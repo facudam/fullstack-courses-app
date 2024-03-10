@@ -69,6 +69,7 @@
 }
 
 .header-ctn__titles p {
+    padding: 0 50px;
     font-size: 1.05rem;
     line-height: 150%;
     text-align: center;
@@ -111,6 +112,7 @@
     }
     .header-ctn__titles p {
         font-size: 1rem;
+        padding: 0;
     }
     .input-ctn {
         margin: 20px;

@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import styles from './Login.module.css'
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl";
 import Eye from "../../components/eye/Eye";
 import { toggleEye } from "../../helpers/toggleEye";
-import { hat } from "../../assets/images/images"
+import { hat, courses } from "../../assets/images/images"
 
 
 export const Login = () => {
@@ -21,16 +21,6 @@ export const Login = () => {
   const navigate = useNavigate()
 
   axios.defaults.withCredentials = true
-
-  useEffect(() => {
-    axios.get(`${ apiBaseUrl }/api/validation`)
-        .then(res => {
-            if(res.data.valid) navigate('/') 
-        })
-        .catch(err => {
-            console.log(err)
-        })
-})
 
   const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -67,11 +57,11 @@ export const Login = () => {
   return (
     <div className={ styles['main-ctn'] }>
       <nav className={ styles.nav }>
-        <div className={ styles.logo }>
+        <Link to="/" className={ styles.logo }>
             <img src={ hat } />
             <span translate="no">CoursesLibra</span>
             <span>Beta</span>
-        </div>
+        </Link>
         <div className={ styles['nav-link-ctn'] }>
             <span>¿Todavia no estás registrado?</span>
             <Link to="/registrarse">Regístrate</Link>
@@ -79,7 +69,11 @@ export const Login = () => {
       </nav>
       <main className={ styles.main }>
         <form className={ styles['form-ctn'] } onSubmit={ handleSubmit }>
-          <h1>Bienvenido de nuevo</h1>
+          <div>
+            <h1>Inicia sesión</h1>
+            <p>Loguéate para acceder a tu cuenta y continuar explorando en la plataforma.</p>
+          </div>
+          
           <div className={ styles['input-ctn'] }>
             <label htmlFor="email">Email: </label>
             <input
@@ -120,9 +114,11 @@ export const Login = () => {
           </div>
           <button className={ styles.button } type="submit">Iniciar sesión</button>
           <Link className={ styles.link } to="/">O continua sin iniciar sesión</Link>
+          { isDataInvalid && <span style={{ "textAlign": "center" }}><strong>Usuario y/o contraseña inválidos</strong></span> }
         </form>
+        <img src={ courses } alt="courses" width={500} />
       </main>
-      { isDataInvalid && <span><strong>Usuario y/o contraseña inválidos</strong></span> }
+      
     </div>
   );
 };

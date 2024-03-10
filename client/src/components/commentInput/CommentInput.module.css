@@ -42,5 +42,5 @@
 }
 
 .comment-section button:hover {
-    background: #1062aa;
+    background: var(--blue-hover);
 }

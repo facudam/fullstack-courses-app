@@ -12,7 +12,8 @@ import CreateCourse from '../../modals/createCourseModal/CreateCourse';
 
 const Home: FC = () => {
 
-    const { 
+    const {
+            isAuthenticated,
             setIsAuthenticated, 
             setUserName, 
             isCourseModalOpen, 
@@ -27,16 +28,18 @@ const Home: FC = () => {
             .then((res: AxiosResponse) => {
                 if(res.data.valid) {
                   setIsAuthenticated(true)
+                  localStorage.setItem('isUserAuthenticated', 'true')
                   setUserId(res.data.user_id)
                   setUserName(res.data.username)
                 } else {
                     setIsAuthenticated(false)
+                    localStorage.setItem('isUserAuthenticated', 'false')
                 }
             })
             .catch(err => {
                 console.log(`Ups, ha ocurrido un error: ${ err }`)
             })
-    })
+    }, [ isAuthenticated, setIsAuthenticated, setUserId, setUserName ])
 
   return (
     <MainLayout>

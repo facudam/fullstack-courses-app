@@ -14,6 +14,7 @@
 }
 .logo {
     color: var(--secondary-black);
+    text-decoration: none;
     font-size: 1.2rem;
     font-weight: 900;
     display: flex;
@@ -46,10 +47,21 @@
 }
 .main {
     width: 100%;
-    height: 100%;
+    max-width: 1100px;
+    align-self: center;
+    min-height: 70vh;
     display: flex;
-    justify-content: center;
-    padding-top: 100px;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 25px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.main > img {
+    background-color: rgb(242, 243, 244);
+    background-color: rgb(242, 243, 244);
+    border-radius: 50px;
 }
 .form-ctn {
     width: 100%;
@@ -58,12 +70,13 @@
     padding: 10px;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
+    
 }
 .form-ctn h1 {
     margin-bottom: 15px;
-    text-align: center;
-    font-size: 2rem;
+    font-size: 2.4rem;
+    color: var(--blue);
 }
 .input-ctn {
     display: flex;
@@ -75,21 +88,20 @@
     font-size: 1.05rem;
 }
 
-.input-ctn input, button {
-    padding: 7px 10px;
+.input-ctn input, .button {
+    padding: 9px 10px;
     font-family: Poppins;
-    border: thin solid #cfcaca;
+    border: thin solid #8c8b8b;
     border-radius: 5px;
     background: var(--background);
 }
-.input-ctn input:focus, button:focus {
+.input-ctn input:focus, .button:focus {
     outline: none;
     border-color: var(--blue);
 }
-
 .input-eye-ctn {
     display: flex;
-    border: thin solid #cfcaca;
+    border: thin solid #8c8b8b;
     border-radius: 5px;
 }
 .input-eye-ctn:focus-within {
@@ -153,7 +165,11 @@
         font-size: .9rem;
     }
     .main {
-        padding-top: 60px;
+        margin-top: 50px;
+        min-height: auto;
+    }
+    .main > img {
+        display: none;
     }
     .form-ctn {
         gap: 18px;
@@ -161,6 +177,9 @@
     .form-ctn h1 {
         font-size: 1.3rem;
         margin-bottom: 0;
+    }
+    .form-ctn p {
+        font-size: .85rem;
     }
     .input-ctn label {
         font-size: .85rem;
