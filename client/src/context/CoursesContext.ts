@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import { Author, Curso } from '../interfaces/models';
 
 interface CoursesContext {
-  isAuthenticated: boolean | undefined;
+  isAuthenticated: boolean;
   setIsAuthenticated: (isAuthenticated: boolean) => void,
   userName: string,
   setUserName: (userName: string) => void,
@@ -30,7 +30,7 @@ interface CoursesContext {
 }
 
 const initialState: CoursesContext = {
-  isAuthenticated: undefined,
+  isAuthenticated: false,
   setIsAuthenticated: (isAuthenticated: boolean) => { isAuthenticated },
   userName: '',
   setUserName: (userName: string) => { userName },

@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import styles from './Login.module.css'
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl";
 import Eye from "../../components/eye/Eye";
@@ -21,16 +21,6 @@ export const Login = () => {
   const navigate = useNavigate()
 
   axios.defaults.withCredentials = true
-
-  useEffect(() => {
-    axios.get(`${ apiBaseUrl }/api/validation`)
-        .then(res => {
-            if(res.data.valid) navigate('/') 
-        })
-        .catch(err => {
-            console.log(err)
-        })
-})
 
   const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
