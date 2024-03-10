@@ -20,15 +20,15 @@ const SqlQuery = `
       l.language_name AS language,
       ty.type_name AS type
     FROM
-      course c
+      courses c
     INNER JOIN
-      technology t ON c.tech_id = t.tech_id
+      technologies t ON c.tech_id = t.tech_id
     INNER JOIN
-      course_language l ON c.language_id = l.language_id
+      course_languages l ON c.language_id = l.language_id
     INNER JOIN 
-      course_type ty ON c.type_id = ty.type_id
+      course_types ty ON c.type_id = ty.type_id
     INNER JOIN
-      author a ON c.author_id = a.author_id
+      authors a ON c.author_id = a.author_id
   `;
 
 const getCourses = async(_req: Request, res: Response) => {
@@ -79,7 +79,7 @@ const createCourse = async (req: Request, res: Response) => {
       const imageUrl = await uploadAndGetUrlImage(sampleFile)
 
       await pool.query(
-          'INSERT INTO course (title, is_free, resource_link, description, image, language_id, type_id, tech_id, author_id, with_certification, user_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)',
+          'INSERT INTO courses (title, is_free, resource_link, description, image, language_id, type_id, tech_id, author_id, with_certification, user_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)',
           [title, is_free, resource_link, description, imageUrl, language_id, type_id, tech_id, author_id, with_certification, user_id]
       );
 
@@ -108,7 +108,7 @@ const updateCourse = async(req: Request, res: Response) => {
         const sampleFile: any = req.files?.sampleFile;
         const imageUrl = req.files ? await uploadAndGetUrlImage(sampleFile) : null;
       
-        const [ result ] = await pool.query<ResultSetHeader>('UPDATE course SET title = IFNULL(?, title), is_free = IFNULL(?, is_free), resource_link = IFNULL(?, resource_link), description = IFNULL(?, description), image = IFNULL(?, image), with_certification = IFNULL(?, with_certification), language_id = IFNULL(?, language_id), type_id = IFNULL(?, type_id), tech_id = IFNULL(?, tech_id), author_id = IFNULL(?, author_id)  WHERE course_id = ?', [ title, is_free, resource_link, description, imageUrl, with_certification, language_id, type_id, tech_id, author_id, id ])
+        const [ result ] = await pool.query<ResultSetHeader>('UPDATE courses SET title = IFNULL(?, title), is_free = IFNULL(?, is_free), resource_link = IFNULL(?, resource_link), description = IFNULL(?, description), image = IFNULL(?, image), with_certification = IFNULL(?, with_certification), language_id = IFNULL(?, language_id), type_id = IFNULL(?, type_id), tech_id = IFNULL(?, tech_id), author_id = IFNULL(?, author_id)  WHERE course_id = ?', [ title, is_free, resource_link, description, imageUrl, with_certification, language_id, type_id, tech_id, author_id, id ])
 
         if (result.affectedRows <= 0) return res.status(404).json({ 'message': 'Course not found' })
         return res.send('Course successfully updated')
@@ -120,7 +120,7 @@ const updateCourse = async(req: Request, res: Response) => {
 const deleteCourse = async(req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const [ result ] = await pool.query<ResultSetHeader>('DELETE FROM course WHERE course_id = ?', [ id ]);
+        const [ result ] = await pool.query<ResultSetHeader>('DELETE FROM courses WHERE course_id = ?', [ id ]);
         if (result.affectedRows <= 0) return res.status(404).json({ message: 'Course not found' })
        
         return res.sendStatus(204)

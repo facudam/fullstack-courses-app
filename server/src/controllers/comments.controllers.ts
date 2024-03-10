@@ -13,7 +13,7 @@ const commentsByCourseIdQuery = `
     FROM 
         comments c
     INNER JOIN
-        user u ON c.user_id = u.user_id
+        users u ON c.user_id = u.user_id
     WHERE 
         c.course_id = ?
 `;
