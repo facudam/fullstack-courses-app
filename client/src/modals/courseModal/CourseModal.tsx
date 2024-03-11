@@ -7,7 +7,7 @@ import getCommentsByCourseId from '../../services/api/endpoints/comments/getComm
 import addNewComment from '../../services/api/endpoints/comments/addNewComment'
 import { AxiosResponse } from 'axios'
 import { CommentResponse, Comment } from '../../interfaces/models'
-import ModalLayout from '../modalLayout/ModalLayout'
+import ModalLayout from '../modalLayout/ModalLayout.tsx'
 import UserComment from '../../components/commentComponent/Comment'
 import CommentInput from '../../components/commentInput/CommentInput'
 

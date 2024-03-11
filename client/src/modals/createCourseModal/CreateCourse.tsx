@@ -1,6 +1,6 @@
 import { FC, useContext, useState } from "react";
 import styles from './CreateCourse.module.css'
-import ModalLayout from "../modalLayout/ModalLayout";
+import ModalLayout from "../modalLayout/ModalLayout.tsx";
 import { CoursesContext } from "../../context/CoursesContext";
 import { useAuthor, useLanguage, useTechnology, useTypes } from "../../hooks";
 import axios, { AxiosResponse } from "axios";
