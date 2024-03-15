@@ -5,7 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl";
 import Eye from "../../components/eye/Eye";
 import { toggleEye } from "../../helpers/toggleEye";
-import { hat, courses } from "../../assets/images/images"
+import { courses } from "../../assets/images/images"
+import SecondaryNav from "../../components/secondaryNav/SecondaryNav";
 
 
 export const Login = () => {
@@ -56,17 +57,7 @@ export const Login = () => {
 
   return (
     <div className={ styles['main-ctn'] }>
-      <nav className={ styles.nav }>
-        <Link to="/" className={ styles.logo }>
-            <img src={ hat } />
-            <span translate="no">CoursesLibra</span>
-            <span>Beta</span>
-        </Link>
-        <div className={ styles['nav-link-ctn'] }>
-            <span>¿Todavia no estás registrado?</span>
-            <Link to="/registrarse">Regístrate</Link>
-        </div>
-      </nav>
+      <SecondaryNav question="¿Todavia no estás registrado?" href="/registrarse" linkText="Regístrate" />
       <main className={ styles.main }>
         <form className={ styles['form-ctn'] } onSubmit={ handleSubmit }>
           <div>

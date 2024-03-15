@@ -5,8 +5,9 @@ import axios from 'axios'
 import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl"
 import Eye from "../../components/eye/Eye"
 import { toggleEye } from '../../helpers/toggleEye'
-import { hat, courses } from "../../assets/images/images"
+import { courses } from "../../assets/images/images"
 import { signUpValidation, validateEmail, validatePassword } from '../validations/signUpValidation'
+import SecondaryNav from '../../components/secondaryNav/SecondaryNav'
 
 
 export const Signup = () => {
@@ -55,17 +56,7 @@ export const Signup = () => {
 
   return (
     <div className={ styles['main-ctn'] }>
-        <nav className={ styles.nav }>
-        <Link to="/" className={ styles.logo }>
-            <img src={ hat } />
-            <span translate="no">CoursesLibra</span>
-            <span>Beta</span>
-        </Link>
-        <div className={ styles['nav-link-ctn'] }>
-            <span>¿Ya estás registrado?</span>
-            <Link to="/iniciar-sesion">Inicia sesión</Link>
-        </div>
-      </nav>
+      <SecondaryNav question='¿Ya estás registrado?' href='/iniciar-sesion' linkText='Inicia sesión' />
       <main className={ styles.main }>
         <form className={ styles['form-ctn'] } onSubmit={ handleSubmit }>
             <div>
