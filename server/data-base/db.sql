@@ -23,8 +23,17 @@ CREATE TABLE course_languages(
 
 CREATE TABLE course_types(
 	type_id INT NOT NULL AUTO_INCREMENT,
-	type_name VARCHAR(100),
+	type_name VARCHAR(50),
 	PRIMARY KEY(type_id)
+);
+
+CREATE TABLE users (
+	user_id INT AUTO_INCREMENT,
+	user_name VARCHAR(50),
+	user_email VARCHAR(60) UNIQUE,
+	user_password VARCHAR(250),
+	is_confirmed BOOLEAN DEFAULT 0,
+	PRIMARY KEY (user_id)
 );
 
 CREATE TABLE courses (
@@ -42,15 +51,15 @@ CREATE TABLE courses (
 	user_id INT NOT NULL,
 	PRIMARY KEY(course_id),
 	CONSTRAINT fk_language_id FOREIGN KEY(language_id)
-	REFERENCES course_languages(language_id),
+	REFERENCES course_languages(language_id) ON DELETE CASCADE,
 	CONSTRAINT fk_type_id FOREIGN KEY(type_id)
-	REFERENCES course_types(type_id),
+	REFERENCES course_types(type_id) ON DELETE CASCADE,
 	CONSTRAINT fk_tech_id FOREIGN KEY(tech_id)
-	REFERENCES technologies(tech_id),
+	REFERENCES technologies(tech_id) ON DELETE CASCADE,
 	CONSTRAINT fk_author_id FOREIGN KEY(author_id)
-	REFERENCES authors(author_id),
+	REFERENCES authors(author_id) ON DELETE CASCADE,
 	CONSTRAINT fk_user_id FOREIGN KEY(user_id)
-	REFERENCES users(user_id)
+	REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE star_rating_per_courses(
@@ -72,18 +81,9 @@ CREATE TABLE comments (
     user_id INT,
     PRIMARY KEY(comment_id),
     CONSTRAINT fk_comments_course_id FOREIGN KEY(course_id)
-    REFERENCES course(course_id) ON DELETE CASCADE,
+    REFERENCES courses(course_id) ON DELETE CASCADE,
     CONSTRAINT fk_comments_user_id FOREIGN KEY(user_id)
-    REFERENCES user(user_id) ON DELETE CASCADE
-);
-
-
-CREATE TABLE users (
-	user_id INT AUTO_INCREMENT,
-	user_name VARCHAR(50),
-	user_email VARCHAR(50) UNIQUE,
-	user_password VARCHAR(250),
-	PRIMARY KEY (user_id)
+    REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 
