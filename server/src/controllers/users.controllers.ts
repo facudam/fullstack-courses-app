@@ -80,7 +80,7 @@ const loginUser: any  = async(req: Request  & { session: CustomSession }, res: R
         return res.json({ login: true });
 
     } catch (error: unknown) {
-        return res.status(500).send( serverErrorMessage + error)
+        return res.status(500).send(serverErrorMessage + error)
     }
 }
 
