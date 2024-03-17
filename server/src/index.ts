@@ -13,7 +13,7 @@ import ratingRoutes from './routes/rating.routes'
 import commentsRoutes from './routes/comments.routes'
 import creadoPorRoutes from './routes/creadoPor.routes'
 import usersRoutes from './routes/users.routes'
-import { PORT } from './config'
+import { PORT, URL_FOR_CORS } from './config'
 import fileUpload from 'express-fileupload'
 
 
@@ -35,7 +35,7 @@ app.use(session({
 }))
 
 app.use(cors({
-    origin: 'https://courseslibra.vercel.app',
+    origin: URL_FOR_CORS,
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
     credentials: true,
 }))

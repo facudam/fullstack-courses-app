@@ -8,7 +8,8 @@ const PORT = process.env.PORT,
     DB_USER = process.env.DB_USER,
     DB_PASS = process.env.DB_PASS,
     DB_HOST = process.env.DB_HOST,
-    IMGUR_CLIENTID = process.env.IMGUR_CLIENTID;
+    IMGUR_CLIENTID = process.env.IMGUR_CLIENTID,
+    URL_FOR_CORS = process.env.URL_FOR_CORS;
 
 export {
     PORT,
@@ -17,5 +18,6 @@ export {
     DB_PASS,
     DB_PORT,
     DB_USER,
-    IMGUR_CLIENTID
+    IMGUR_CLIENTID,
+    URL_FOR_CORS
 }
