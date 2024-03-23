@@ -1,15 +1,11 @@
 import { Request, Response } from "express";
+import jwt from 'jsonwebtoken';
 import { pool } from "../../data-base/connection_db";
 import { serverErrorMessage } from "../error/serverErrorMessage";
 import { ResultSetHeader} from "mysql2";
 import bcryptjs from "bcryptjs"
-import { Session } from 'express-session';
+import { SECRET } from "../config";
 
-
-interface CustomSession extends Session {
-    username: string;
-    user_id: number
-}
 
 interface UserReq extends ResultSetHeader {
     user_id: number
@@ -59,7 +55,8 @@ const createUser = async(req: Request, res: Response) => {
     }
 }
 
-const loginUser: any  = async(req: Request  & { session: CustomSession }, res: Response) => {
+
+const loginUser: any  = async(req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
         
@@ -74,40 +71,61 @@ const loginUser: any  = async(req: Request  & { session: CustomSession }, res: R
         const passwordMatch = await bcryptjs.compare(password, user.user_password);
 
         if (!passwordMatch) return res.status(401).json({ message: 'Invalid email or password' });
-        req.session.user_id = user.user_id;
-        req.session.username = user.user_name
 
-        return res.json({ login: true });
+        const userSessionData = { valid: true, username: user.user_name, userId: user.user_id  }
+
+        const secretKey: string | undefined = SECRET;
+
+        if (!secretKey) {
+            throw new Error("SECRET_KEY is not defined");
+          }
+
+        const token = jwt.sign(userSessionData, secretKey, { expiresIn: 60 * 60 * 24 * 7 })
+
+        return res.json({ login: true, user: userSessionData, token: token });
 
     } catch (error: unknown) {
         return res.status(500).send(serverErrorMessage + error)
     }
 }
 
-
-const logoutUser = (req: Request, res: Response) => {
-    try {
-        req.session.destroy((err) => {
-            if (err) return console.log('Error al destruir la sesión: ', err)
-        })
-        res.status(200).send('Logout exitoso');
-    } catch (error) {
-        res.status(500).send(serverErrorMessage + error)
-    }
+const verification = (req: Request, res: Response) => {
+    let token = req.headers['x-acces-token'] || req.headers['authorization']
     
-}
+    if(!token) {
+        res.status(401).send({ message : "Invalid or non-existent token" })
+    }
+    if (token !== undefined && typeof token === 'string') {
+        token = token.split(' ')[1]
 
-const userIsLogged: any = (req: Request  & { session: CustomSession }, res: Response) => {
-    try {
-        if (req.session.username) {
-            return res.json({ valid: true, username: req.session.username, user_id: req.session.user_id })
-        } else {
-            return res.json({ valid: false })
-        }
-    } catch (error: unknown) {
-        return res.status(500).send( serverErrorMessage + error)
+        const secretKey: string | undefined = SECRET;
+
+        if (!secretKey) {
+            throw new Error("SECRET_KEY is not defined");
+          }
+
+        jwt.verify(token, secretKey, (err, data) => {
+            if (err) {
+                res.status(403).send({ valid: false, Message: "invalid or non-existent token"})
+            } else {
+                res.json({ data })
+            }
+        })
     }
 }
+
+
+// const logoutUser = (req: Request, res: Response) => {
+//     try {
+//         req.session.destroy((err) => {
+//             if (err) return console.log('Error al destruir la sesión: ', err)
+//         })
+//         res.status(200).send('Logout exitoso');
+//     } catch (error) {
+//         res.status(500).send(serverErrorMessage + error)
+//     }
+    
+// }
 
 const updateUser = async(req: Request, res: Response) => {
     try {
@@ -142,6 +160,5 @@ export {
     deleteUser,
     createUser,
     loginUser,
-    logoutUser,
-    userIsLogged
+    verification
 }

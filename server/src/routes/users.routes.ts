@@ -1,5 +1,5 @@
 import Router from 'express'
-import { createUser, deleteUser, getUserById, getUsers, updateUser, loginUser, logoutUser, userIsLogged } from '../controllers/users.controllers';
+import { createUser, deleteUser, getUserById, getUsers, updateUser, loginUser, verification } from '../controllers/users.controllers';
 
 const router = Router()
 
@@ -8,8 +8,8 @@ router.post('/api/users', createUser)
 router.get('/api/users/:id', getUserById)
 router.patch('/api/users/:id', updateUser)
 router.delete('/api/users/:id', deleteUser)
-router.post('/logout', logoutUser)
+// router.post('/logout', logoutUser)
 router.post('/api/login', loginUser);
-router.get('/api/validation', userIsLogged)
+router.get('/api/validation', verification)
 
 export default router;

@@ -15,6 +15,7 @@ import fileUpload from 'express-fileupload'
 
 
 const app = express()
+app.use(express.urlencoded({extended: false}));
 app.use(express.json()) //Transformamos la req.body en json
 app.use(fileUpload())
 // const secret = crypto.randomBytes(64).toString('hex');

@@ -27,13 +27,11 @@ const Home: FC = () => {
         axios.get(`${ apiBaseUrl }/api/validation`)
             .then((res: AxiosResponse) => {
                 if(res.data.valid) {
-                  alert(res.data.valid)
                   setIsAuthenticated(true)
                   localStorage.setItem('isUserAuthenticated', 'true')
-                  setUserId(res.data.user_id)
+                  setUserId(res.data.userId)
                   setUserName(res.data.username)
                 } else {
-                    console.log(res.data.username)
                     setIsAuthenticated(false)
                     localStorage.setItem('isUserAuthenticated', 'false')
                 }
