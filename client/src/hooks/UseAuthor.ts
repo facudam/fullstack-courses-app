@@ -13,10 +13,9 @@ const useAuthor = () => {
                 const autores = await getAuthors()
                 setAuthors(autores)
             } catch (error) {
-                throw new Error(`Lo sentimos, ha habido un error: ${ error }`)
+                throw new Error(`Lo sentimos, ha habido un error al intentar obtener la lista de autores: ${ error }`)
             }
         }
-
         fetchAuthors()
     }, [ toggleAuthorState ])
 

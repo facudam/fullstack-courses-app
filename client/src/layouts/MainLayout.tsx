@@ -1,6 +1,4 @@
 import { FC, useContext } from "react"
-import axios from 'axios'
-import apiBaseUrl from "../services/api/endpoints/apiBaseUrl";
 import Footer from "../components/footer/Footer"
 import Nav from "../components/nav/Nav"
 import { CoursesContext } from "../context/CoursesContext";
@@ -11,17 +9,16 @@ interface MainLayoutProps {
 
 const MainLayout: FC<MainLayoutProps> = ({ children }) => {
 
-    const { setIsAuthenticated, setUserName, setUserId, setIsCreateCourseModalOpen } = useContext(CoursesContext)
+    const { setIsAuthenticated, setUserName, setUserId, setIsCreateCourseModalOpen, setToken } = useContext(CoursesContext)
 
     const handleLogout =  () => {
-        axios.post(`${ apiBaseUrl }/logout`)
-            .then(() => {
-                setIsCreateCourseModalOpen(false)
-                setUserId(undefined)
-                setIsAuthenticated(false)
-                setUserName('')
-            } )
-            .catch((error) => { console.log(error) })
+        setIsCreateCourseModalOpen(false)
+        setUserId(undefined)
+        localStorage.setItem('token', '')
+        localStorage.setItem('isUserAuthenticated', 'false')
+        setToken('')
+        setIsAuthenticated(false)
+        setUserName('')
     }
     return(
         <>

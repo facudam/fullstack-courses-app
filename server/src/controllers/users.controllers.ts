@@ -82,7 +82,7 @@ const loginUser: any  = async(req: Request, res: Response) => {
 
         const token = jwt.sign(userSessionData, secretKey, { expiresIn: 60 * 60 * 24 * 7 })
 
-        return res.json({ login: true, user: userSessionData, token: token });
+        return res.header('authorization', token).json({ login: true, user: userSessionData, token: token });
 
     } catch (error: unknown) {
         return res.status(500).send(serverErrorMessage + error)
@@ -93,7 +93,7 @@ const verification = (req: Request, res: Response) => {
     let token = req.headers['x-acces-token'] || req.headers['authorization']
     
     if(!token) {
-        res.status(401).send({ message : "Invalid or non-existent token" })
+        res.status(401).send({ valid: false, message: "Invalid or non-existent token" })
     }
     if (token !== undefined && typeof token === 'string') {
         token = token.split(' ')[1]
@@ -113,19 +113,6 @@ const verification = (req: Request, res: Response) => {
         })
     }
 }
-
-
-// const logoutUser = (req: Request, res: Response) => {
-//     try {
-//         req.session.destroy((err) => {
-//             if (err) return console.log('Error al destruir la sesión: ', err)
-//         })
-//         res.status(200).send('Logout exitoso');
-//     } catch (error) {
-//         res.status(500).send(serverErrorMessage + error)
-//     }
-    
-// }
 
 const updateUser = async(req: Request, res: Response) => {
     try {

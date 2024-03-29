@@ -25,7 +25,9 @@ interface CoursesContext {
   toggleTechState: boolean, 
   setToggleTechState: (toggleTechState: boolean) => void,
   toggleAuthorState: boolean, 
-  setToggleAuthorState: (toggleTechState: boolean) => void
+  setToggleAuthorState: (toggleTechState: boolean) => void,
+  token: string,
+  setToken: (token: string) => void
 
 }
 
@@ -53,7 +55,9 @@ const initialState: CoursesContext = {
   toggleTechState: false, 
   setToggleTechState: (toggleTechState: boolean) => { toggleTechState },
   toggleAuthorState: false, 
-  setToggleAuthorState: (toggleTechState: boolean) => { toggleTechState }
+  setToggleAuthorState: (toggleTechState: boolean) => { toggleTechState },
+  token: '',
+  setToken: (token: string) => { token }
 }
 
 export const CoursesContext = createContext<CoursesContext>(initialState);

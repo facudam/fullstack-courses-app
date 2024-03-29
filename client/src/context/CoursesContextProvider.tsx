@@ -10,6 +10,7 @@ interface ContextProviderProps {
 export const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
     
     const [ isAuthenticated, setIsAuthenticated ] = useState<boolean | undefined>()
+    const [ token, setToken ] = useState<string>('')
     const [ userName, setUserName ] = useState<string>('')
     const [ isCourseModalOpen, setIsCourseModalOpen ] = useState<boolean>(false)
     const [ openCourseId, setOpenCourseId ] = useState<number | undefined | null>()
@@ -29,6 +30,7 @@ export const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
             value={
                 {
                     isAuthenticated, setIsAuthenticated,
+                    token, setToken,
                     userName, setUserName,
                     isCourseModalOpen, setIsCourseModalOpen,
                     openCourseId, setOpenCourseId,

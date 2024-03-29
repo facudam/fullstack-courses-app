@@ -1,37 +1,33 @@
-import axios from 'axios';
+import { API_KEY, API_SECRET, CLOUD_NAME } from '../../config';
+import {v2 as cloudinary} from 'cloudinary';
 import fs from 'fs';
-import { IMGUR_CLIENTID } from '../../config';
+          
+cloudinary.config({ 
+  cloud_name: CLOUD_NAME, 
+  api_key: API_KEY, 
+  api_secret: API_SECRET 
+});
 
-// Esta función maneja la carga de la imagen y devuelve la URL de la imagen en Imgur
-export const uploadAndGetUrlImage = async (sampleFile: any): Promise<string> => {
-    const uploadPath = __dirname + '/uploads/' + sampleFile.name;
+export const uploadAndGetUrlImage = async (sampleFile: any) => {
+  const uploadPath = __dirname + '/uploads/' + sampleFile.name;
     
-    // Utilizamos una promesa para envolver la operación asíncrona
-    const moveFilePromise = new Promise<void>((resolve, reject) => {
-        sampleFile.mv(uploadPath, (err: unknown) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        });
-    });
-
-    await moveFilePromise;
-
-    const imgurResponse = await axios.post(
-        'https://api.imgur.com/3/image',
-        {
-            image: fs.readFileSync(uploadPath, 'base64'),
-        },
-        {
-            headers: {
-                Authorization: `Client-ID ${IMGUR_CLIENTID}`,
-                'Content-Type': 'application/json',
-            },
+  const moveFilePromise = new Promise<void>((resolve, reject) => {
+    sampleFile.mv(uploadPath, (err: unknown) => {
+        if (err) {
+            reject(err);
+        } else {
+            resolve();
         }
-    );
+    });
+  });
 
-    fs.unlinkSync(uploadPath); // Eliminamos el archivo temporal después de subirlo a Imgur
-    return imgurResponse.data.data.link;
+  await moveFilePromise;
+
+  try {
+    const cloudinaryResult = await cloudinary.uploader.upload(uploadPath);
+    fs.unlinkSync(uploadPath);
+    return cloudinaryResult.secure_url
+  } catch (error) {
+    throw new Error('Ha habido un error con cloudinary: ' + error)
+  }
 };

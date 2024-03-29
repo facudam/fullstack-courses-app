@@ -7,39 +7,48 @@ import { Header } from "../../components/header/Header";
 import CoursesSection from "../../sections/CoursesSection/CoursesSection";
 import styles from './Home.module.css'
 import CourseModal from "../../modals/courseModal/CourseModal";
-import { AxiosResponse } from 'axios';
 import CreateCourse from '../../modals/createCourseModal/CreateCourse';
 
 const Home: FC = () => {
 
     const {
-            isAuthenticated,
             setIsAuthenticated, 
             setUserName, 
             isCourseModalOpen, 
             setUserId,
-            isCreateCourseModalOpen 
+            isCreateCourseModalOpen,
+            token
            }   = useContext(CoursesContext)
 
-    axios.defaults.withCredentials = true
 
-    useEffect(() => {
-        axios.get(`${ apiBaseUrl }/api/validation`)
-            .then((res: AxiosResponse) => {
-                if(res.data.valid) {
-                  setIsAuthenticated(true)
-                  localStorage.setItem('isUserAuthenticated', 'true')
-                  setUserId(res.data.userId)
-                  setUserName(res.data.username)
+        useEffect(() => {
+            const fetchData = async () => {
+              const storageToken = localStorage.getItem('token');
+              if (!token && storageToken !== null && storageToken.length <= 0) return;
+
+              try {
+                const { data } = await axios.get(`${apiBaseUrl}/api/validation`, {
+                  headers: {
+                    Authorization: `Bearer ${(token) ? token : localStorage.getItem('token')}`
+                  }
+                });
+          
+                if (data.data.valid) {
+                  setIsAuthenticated(true);
+                  localStorage.setItem('isUserAuthenticated', 'true');
+                  setUserId(data.data.userId);
+                  setUserName(data.data.username);
                 } else {
-                    setIsAuthenticated(false)
-                    localStorage.setItem('isUserAuthenticated', 'false')
+                  setIsAuthenticated(false);
+                  localStorage.setItem('isUserAuthenticated', 'false');
                 }
-            })
-            .catch(err => {
-                console.log(`Ups, ha ocurrido un error: ${ err }`)
-            })
-    }, [ isAuthenticated, setIsAuthenticated, setUserId, setUserName ])
+              } catch (error) {
+                setIsAuthenticated(false);
+                console.log(`Ups, ha ocurrido un error al intentar realizar la validación: ${error}`);
+              }
+            };
+            fetchData();
+          }, []);
 
   return (
     <MainLayout>

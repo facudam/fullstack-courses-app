@@ -1,15 +1,18 @@
 import axios, { AxiosResponse } from "axios";
 import styles from './Login.module.css'
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl";
 import Eye from "../../components/eye/Eye";
 import { toggleEye } from "../../helpers/toggleEye";
 import { courses } from "../../assets/images/images"
 import SecondaryNav from "../../components/secondaryNav/SecondaryNav";
+import { CoursesContext } from "../../context/CoursesContext";
 
 
 export const Login = () => {
+
+  const { setToken } = useContext(CoursesContext);
 
   const [ email, setEmail ] = useState<string>("");
   const [ password, setPassword ] = useState<string>("");
@@ -20,8 +23,6 @@ export const Login = () => {
   const handleEmail = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
   const handlePassword = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
   const navigate = useNavigate()
-
-  axios.defaults.withCredentials = true
 
   const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,9 +38,11 @@ export const Login = () => {
 
     setIsDataEmpty(false)
 
-    axios.post(`${ apiBaseUrl }/api/login`, { email, password }, { withCredentials: true })
+    axios.post(`${ apiBaseUrl }/api/login`, { email, password })
       .then((res: AxiosResponse) => {
         if (res.data.login) {
+          setToken(res.data.token)
+          localStorage.setItem('token', res.data.token)
           setIsDataInvalid(false);
           navigate('/')
         }

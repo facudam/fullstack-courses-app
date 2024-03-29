@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors'
-// import crypto from 'crypto'
 import authorRoutes from './routes/authors.routes'
 import courseLanguages from './routes/course_languages.routes'
 import courseTypes from './routes/course_types.routes'
@@ -18,8 +17,6 @@ const app = express()
 app.use(express.urlencoded({extended: false}));
 app.use(express.json()) //Transformamos la req.body en json
 app.use(fileUpload())
-// const secret = crypto.randomBytes(64).toString('hex');
-
 
 app.use(cors({
     origin: URL_FOR_CORS,

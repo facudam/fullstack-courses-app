@@ -15,7 +15,7 @@ const useTechnology = () => {
                 const tecnologias = await getTechnologies()
                 setTechnologies(tecnologias)
             } catch (error) {
-                throw new Error(`Lo sentimos, ha habido un error al intentar procesar la solicitud: ${error}`)
+                throw new Error(`Lo sentimos, ha habido un error al intentar obtener lista de tecnologías: ${error}`)
             }
         }
         fetchTecnologies()

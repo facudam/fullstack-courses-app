@@ -79,7 +79,7 @@ const CreateCourse: FC = () => {
             alert('Curso añadido correctamente')
         } catch (error) {
             console.error('Error al enviar el formulario:', error);
-            alert('error al enviar datos')
+            alert('error al enviar datos: ' + error)
         }
       };
 

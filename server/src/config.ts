@@ -8,9 +8,12 @@ const PORT = process.env.PORT,
     DB_USER = process.env.DB_USER,
     DB_PASS = process.env.DB_PASS,
     DB_HOST = process.env.DB_HOST,
-    IMGUR_CLIENTID = process.env.IMGUR_CLIENTID,
     URL_FOR_CORS = process.env.URL_FOR_CORS,
-    SECRET = process.env.SECRET_KEY;
+    SECRET = process.env.SECRET_KEY,
+    CLOUD_NAME = process.env.CLOUD_NAME,
+    API_KEY = process.env.API_KEY,
+    API_SECRET = process.env.API_SECRET;
+
 
 export {
     PORT,
@@ -19,7 +22,9 @@ export {
     DB_PASS,
     DB_PORT,
     DB_USER,
-    IMGUR_CLIENTID,
     URL_FOR_CORS,
-    SECRET
+    SECRET,
+    CLOUD_NAME,
+    API_KEY,
+    API_SECRET
 }

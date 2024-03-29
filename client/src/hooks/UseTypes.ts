@@ -15,7 +15,6 @@ const useTypes = () => {
         throw new Error(`Ha habido un error al tratar de hacer esta llamada a la API: ${ error }`)
       }
     };
-
     fetchTypes();
   }, []);
 

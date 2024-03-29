@@ -11,10 +11,9 @@ const useLanguage = () => {
                 const idiomas = await getLanguages()
                 setLaguage(idiomas)
             } catch (error) {
-                throw new Error(`Lo sentimos, ha habido un error: ${error}`)
+                throw new Error(`Lo sentimos, ha habido un error al intentar obtener lista de lenguajes: ${error}`)
             }
         }
-
         fetchLanguages()
     }, [])
 
