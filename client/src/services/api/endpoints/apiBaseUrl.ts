@@ -1,4 +1,4 @@
 
-const apiBaseUrl: string = 'https://courseslibra-backend.onrender.com';
+const apiBaseUrl: string = 'http://localhost:4000';
 
 export default apiBaseUrl;

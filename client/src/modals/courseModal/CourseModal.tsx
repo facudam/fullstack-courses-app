@@ -10,12 +10,14 @@ import { CommentResponse, Comment } from '../../interfaces/models'
 import ModalLayout from '../modalLayout/ModalLayout.tsx'
 import UserComment from '../../components/commentComponent/Comment'
 import CommentInput from '../../components/commentInput/CommentInput'
+import CourseModalLoading from '../loadingsSkeletons/courseModalLoading/CourseModalLoading.tsx'
 
 
 const CourseModal: FC = () => {
     const {
         setIsCourseModalOpen,
         openCourseId,
+        setOpenCourseId,
         authorId,
         setAuthorId,
         authorInfo,
@@ -30,9 +32,12 @@ const CourseModal: FC = () => {
     const [ comments, setComments ] = useState<Comment[]>([])
     const [ newComment, setNewComment ] = useState<string>('')
     const [ showMore, setShowMore ] = useState(false);
+    const [ isInfoCourseLoading, setIsInfoCourseLoading ] = useState<boolean>(true)
 
     const closeModal = () => {
         setNewComment('')
+        setAuthorId('')
+        setOpenCourseId(undefined)
         setIsCourseModalOpen(false)
     };
 
@@ -69,6 +74,7 @@ const CourseModal: FC = () => {
                     const courseComments = await getCommentsByCourseId(curso.course_id)
                     setComments(courseComments)
                 }
+                setIsInfoCourseLoading(false)
             } catch (error) {
                 throw new Error(`Lo sentimos, ha habido un error: ${error}`);
             }
@@ -79,68 +85,76 @@ const CourseModal: FC = () => {
 
     return (
         <ModalLayout closeFn={ closeModal }>
-            <main className={ styles.main }>
-                <button 
-                    onClick={ closeModal }
-                    className={ styles.btn }>
-                    x
-                </button>
-                <div className={ styles['img-ctn'] }>
-                    <img src={ courseInfo?.image } />
-                </div>
-                <div className={ styles['info-ctn'] }>
-                    <h2>{courseInfo?.title}</h2>
-                    <p className={showMore ? '' : styles['truncate']}>
-                        {courseInfo?.description}
-                    </p>
-                    {
-                        (typeof courseInfo?.description === 'string' && courseInfo.description.length > 90) &&
-                        <button className={ styles.showBtn } onClick={() => setShowMore(!showMore)}>
+            {
+                isInfoCourseLoading
+                    ? <CourseModalLoading />
+                    : 
+                    <>
+                        <main className={ styles.main }>
+                            <button 
+                                onClick={ closeModal }
+                                className={ styles.btn }>
+                                x
+                            </button>
+                            <div className={ styles['img-ctn'] }>
+                                <img src={ courseInfo?.image } />
+                            </div>
+                            <div className={ styles['info-ctn'] }>
+                                <h2>{courseInfo?.title}</h2>
+                                <p className={showMore ? '' : styles['truncate']}>
+                                    {courseInfo?.description}
+                                </p>
+                                {
+                                    (typeof courseInfo?.description === 'string' && courseInfo.description.length > 90) &&
+                                    <button className={ styles.showBtn } onClick={() => setShowMore(!showMore)}>
+                                        {
+                                            showMore
+                                                ? '... leer menos'
+                                                : '... leer más'
+                                        }
+                                    </button>
+                                }
+                                
+                                <a href={ courseInfo?.resource_link } target='_blank' rel='noopener noreferrer nofollow'>Acceder al curso</a>
+                                <div className={ styles.types }>
+                                    <span className={ styles['light-blue'] }>{ (courseInfo?.is_free === 1) ? 'Gratis' : 'Pago' }</span>
+                                    <span className={ styles.blue }>{ courseInfo?.technology }</span>
+                                    <span className={ styles.green }>{ courseInfo?.type }</span>
+                                    <span className={ styles.pink }>{ courseInfo?.language }</span>
+                                    {
+                                        (courseInfo?.with_certification == '1') &&
+                                            <span className={ styles.yellow }>Certificado de finalización</span>
+                                    }
+                                </div>
+                                <p className={ styles.author }>
+                                    <strong>Author:</strong> <span>{ authorInfo?.author_name } - { authorInfo?.author_country }</span>
+                                </p>
+                            </div>
+                        </main>
+                        <div className={ styles.comments }>
+                            <h3>Feedback sobre el curso:</h3>
                             {
-                                showMore
-                                    ? '... leer menos'
-                                    : '... leer más'
+                                (comments && comments?.length > 0)
+                                    ? comments.map((comment, index) => (
+                                        <UserComment key={(comment.comment_id) ? comment.comment_id : index} 
+                                            userName={(comment.user) ? comment.user : userName }
+                                            comment={ comment.comment_description }
+                                        />
+                                    ))
+                                    : <p>Aún no se ha dejado ningún feedback sobre este curso</p>
                             }
-                        </button>
-                    }
-                    
-                    <a href={ courseInfo?.resource_link } target='_blank' rel='noopener noreferrer nofollow'>Acceder al curso</a>
-                    <div className={ styles.types }>
-                        <span className={ styles['light-blue'] }>{ (courseInfo?.is_free === 1) ? 'Gratis' : 'Pago' }</span>
-                        <span className={ styles.blue }>{ courseInfo?.technology }</span>
-                        <span className={ styles.green }>{ courseInfo?.type }</span>
-                        <span className={ styles.pink }>{ courseInfo?.language }</span>
-                        {
-                            (courseInfo?.with_certification == '1') &&
-                                <span className={ styles.yellow }>Certificado de finalización</span>
-                        }
-                    </div>
-                    <p className={ styles.author }>
-                        <strong>Author:</strong> <span>{ authorInfo?.author_name } - { authorInfo?.author_country }</span>
-                    </p>
-                </div>
-            </main>
-            <div className={ styles.comments }>
-                <h3>Feedback sobre el curso:</h3>
-                {
-                    (comments && comments?.length > 0)
-                        ? comments.map((comment, index) => (
-                            <UserComment key={(comment.comment_id) ? comment.comment_id : index} 
-                                userName={(comment.user) ? comment.user : userName }
-                                comment={ comment.comment_description }
-                            />
-                        ))
-                        : <p>Aún no se ha dejado ningún feedback sobre este curso</p>
-                }
-                {
-                    isAuthenticated && 
-                        <CommentInput 
-                            newComment={ newComment }
-                            handleChange={(e) => setNewComment(e.target.value)}
-                            handleNewComment={ handleNewComment }
-                        />  
-                }
-            </div>
+                            {
+                                isAuthenticated && 
+                                    <CommentInput 
+                                        newComment={ newComment }
+                                        handleChange={(e) => setNewComment(e.target.value)}
+                                        handleNewComment={ handleNewComment }
+                                    />  
+                            }
+                        </div>
+                    </>
+            }
+            
         </ModalLayout> 
     )
 }
