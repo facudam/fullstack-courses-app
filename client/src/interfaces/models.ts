@@ -9,6 +9,7 @@ interface Curso {
     language: string,
     type: string | number,
     author?: string,
+    author_country: string,
     author_id: number | string,
     technology: string | number,
     with_certification: number | string,

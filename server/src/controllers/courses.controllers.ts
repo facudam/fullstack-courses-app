@@ -16,6 +16,7 @@ const SqlQuery = `
       c.with_certification,
       c.author_id,
       a.author_name AS author,
+      a.author_country,
       t.tech_name AS technology,
       l.language_name AS language,
       ty.type_name AS type

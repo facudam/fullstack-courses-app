@@ -1,7 +1,6 @@
 import { FC, useContext, useEffect, useState } from 'react'
 import styles from './CourseModal.module.css'
 import { CoursesContext } from '../../context/CoursesContext'
-import getAuthorById from '../../services/api/endpoints/author/getAuthorById'
 import getCourseById from '../../services/api/endpoints/courses/getCourseById'
 import getCommentsByCourseId from '../../services/api/endpoints/comments/getCommentsByCourseId'
 import addNewComment from '../../services/api/endpoints/comments/addNewComment'
@@ -17,10 +16,6 @@ const CourseModal: FC = () => {
     const {
         setIsCourseModalOpen,
         openCourseId,
-        authorId,
-        setAuthorId,
-        authorInfo,
-        setAuthorInfo,
         courseInfo,
         setCourseInfo,
         isAuthenticated,
@@ -35,7 +30,6 @@ const CourseModal: FC = () => {
 
     const closeModal = () => {
         setNewComment('')
-        setAuthorInfo({ author_name: '', author_country: '' })
         setIsCourseModalOpen(false)
     };
 
@@ -60,13 +54,7 @@ const CourseModal: FC = () => {
         async function fetchData() {
             try {
                 const curso = await getCourseById(openCourseId);
-                setAuthorId(curso.author_id);
                 setCourseInfo(curso);
-
-                if (authorId) {
-                    const author = await getAuthorById(authorId);
-                    setAuthorInfo(author);
-                }
                 if (curso) {
                     const courseComments = await getCommentsByCourseId(curso.course_id)
                     setComments(courseComments)
@@ -77,7 +65,7 @@ const CourseModal: FC = () => {
             }
         }
         fetchData();
-    }, [ authorId, openCourseId, setAuthorId, setAuthorInfo, setCourseInfo ])
+    }, [ openCourseId, setCourseInfo ])
 
     return (
         <ModalLayout closeFn={ closeModal }>
@@ -123,7 +111,7 @@ const CourseModal: FC = () => {
                                     }
                                 </div>
                                 <p className={ styles.author }>
-                                    <strong>Author:</strong> <span>{ authorInfo?.author_name } - { authorInfo?.author_country }</span>
+                                    <strong>Author:</strong> <span>{ courseInfo?.author } - { courseInfo?.author_country }</span>
                                 </p>
                             </div>
                         </main>
