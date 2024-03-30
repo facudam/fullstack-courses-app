@@ -26,11 +26,11 @@ body {
   --white: #fff;
   --background: #f9f9ff;
   --toggle-eye: -1px;
-  --blue: #156dbb;
-  --blue-hover: #0a89f7;
+  --blue: rgb(21, 109, 187);
+  --blue-hover: rgb(10, 137, 247);
   --green: #1681ab;
   --green-hover: rgb(20, 148, 198);
   --background-gradient: linear-gradient(90deg, rgb(236, 239, 241) 0%, rgb(187, 216, 250),rgb(236, 239, 241)  100%);
   --opacity: 1;
-  --loading-ctn-color: rgb(230, 230, 230);
+  --loading-ctn-color: rgba(21, 109, 187, 0.5);
 }

@@ -35,7 +35,7 @@
 
 .info-ctn__info-link {
     height: 40px;
-    animation: backgroundAnimation .7s ease infinite alternate;
+    animation: backgroundAnimation .6s ease infinite alternate;
     border-radius: 6px;
 }
 
@@ -63,7 +63,7 @@
 .comments-title {
     width: 100%;
     height: 35px;
-    animation: backgroundAnimation .7s ease infinite alternate;
+    animation: backgroundAnimation .8s ease infinite alternate;
     border-radius: 6px;
 }
 
@@ -81,10 +81,10 @@
         background-color: var(--loading-ctn-color);
     }
     33% {
-        background-color: rgb(rgb(228, 225, 225));
+        background-color: rgb(rgba(21, 109, 187, 0.4));
     }
     66% {
-        background-color: rgb(223, 221, 221);
+        background-color: rgba(21, 109, 187, 0.6);
     }
     100% {
         background-color: var(--loading-ctn-color);

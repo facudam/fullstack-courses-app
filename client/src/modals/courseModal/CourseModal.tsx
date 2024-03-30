@@ -17,7 +17,6 @@ const CourseModal: FC = () => {
     const {
         setIsCourseModalOpen,
         openCourseId,
-        setOpenCourseId,
         authorId,
         setAuthorId,
         authorInfo,
@@ -36,8 +35,7 @@ const CourseModal: FC = () => {
 
     const closeModal = () => {
         setNewComment('')
-        setAuthorId('')
-        setOpenCourseId(undefined)
+        setAuthorInfo({ author_name: '', author_country: '' })
         setIsCourseModalOpen(false)
     };
 
@@ -69,17 +67,15 @@ const CourseModal: FC = () => {
                     const author = await getAuthorById(authorId);
                     setAuthorInfo(author);
                 }
-
                 if (curso) {
                     const courseComments = await getCommentsByCourseId(curso.course_id)
                     setComments(courseComments)
                 }
-                setIsInfoCourseLoading(false)
+                setIsInfoCourseLoading(false)  
             } catch (error) {
                 throw new Error(`Lo sentimos, ha habido un error: ${error}`);
             }
         }
-
         fetchData();
     }, [ authorId, openCourseId, setAuthorId, setAuthorInfo, setCourseInfo ])
 
