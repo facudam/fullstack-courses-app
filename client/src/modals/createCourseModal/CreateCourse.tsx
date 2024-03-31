@@ -20,6 +20,7 @@ const CreateCourse: FC = () => {
     const { technologies } = useTechnology()
 
     const [ hasAnyError, setHasAnyError ] = useState<boolean>(false)
+    const [ isSendingNewCourseInfo, setIsSendingNewCourseInfo ] = useState<boolean>(false)
 
     const [ formData, setFormData ] = useState<CourseRequest>({
         title: '',
@@ -52,6 +53,7 @@ const CreateCourse: FC = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsSendingNewCourseInfo(true)
         const formDataToSend = new FormData();
 
         const isValid = courseValidationForm(formData)
@@ -76,6 +78,7 @@ const CreateCourse: FC = () => {
                 }
             });
             console.log(response.data)
+            setIsSendingNewCourseInfo(false)
             alert('Curso añadido correctamente')
         } catch (error) {
             console.error('Error al enviar el formulario:', error);
@@ -301,7 +304,13 @@ const CreateCourse: FC = () => {
                         }
                     </div>
                 </div>
-                <button type="submit">Añadir curso</button>
+                <button type="submit">
+                    {
+                        isSendingNewCourseInfo
+                            ? 'Añadiendo curso...'
+                            : 'Añadir curso'
+                    }
+                </button>
             </form>
         </ModalLayout>
     )
