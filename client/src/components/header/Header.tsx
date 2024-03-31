@@ -29,7 +29,7 @@ export const Header: FC = () => {
                         <li>Descubre</li>
                         <li>Contribuye</li>
                     </ul>
-                    <h1>Tu formación al alcance de tu mano</h1>
+                    <h1 className={ styles['btn-shine']}>Tu formación al alcance de tu mano</h1>
                     <p>La biblioteca online con los mejores cursos de tecnología para Back-End, Front-End, Testing, Diseño UX/UI y más. Encuentra los cursos que necesitas para desarrollar tus habilidades IT, sin importar tu nivel de experiencia.</p>
                 </div>
             </div>
