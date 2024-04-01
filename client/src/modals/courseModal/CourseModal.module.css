@@ -138,6 +138,11 @@
     font-size: .9rem;
 }
 
+.comments h3 a {
+    color: var(--blue);
+    text-decoration: none;
+}
+
 @media screen and (min-width: 520px) {
     .info-ctn h2 {
         font-size: 1.25rem;

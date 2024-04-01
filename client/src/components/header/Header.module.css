@@ -32,7 +32,7 @@
     background-clip: text;
 	-moz-background-clip: text;
 	-webkit-background-clip: text;
-	font-size: clamp(1rem, 10vw, 3.263rem);
+	font-size: clamp(1rem, 10vw, 3.4rem);
     text-align: center;
 }
 
@@ -47,7 +47,7 @@
 .keywords {
     display: flex;
     justify-content: end;
-    gap: 35px;
+    gap: 25px;
 }
 
 .keywords li {
@@ -64,8 +64,8 @@
     transform: rotate(45deg);
     background-color: var(--blue);
     content: '';
-    right: -19px;
-    top: 20%;
+    right: -15px;
+    top: 1%;
 }
 
 .keywords li:nth-child(3):after {

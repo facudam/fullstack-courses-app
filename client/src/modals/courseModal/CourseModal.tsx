@@ -10,6 +10,7 @@ import ModalLayout from '../modalLayout/ModalLayout.tsx'
 import UserComment from '../../components/commentComponent/Comment'
 import CommentInput from '../../components/commentInput/CommentInput'
 import CourseModalLoading from '../loadingsSkeletons/courseModalLoading/CourseModalLoading.tsx'
+import { Link } from 'react-router-dom'
 
 
 const CourseModal: FC = () => {
@@ -128,12 +129,15 @@ const CourseModal: FC = () => {
                                     : <p>Aún no se ha dejado ningún feedback sobre este curso</p>
                             }
                             {
-                                isAuthenticated && 
-                                    <CommentInput 
-                                        newComment={ newComment }
-                                        handleChange={(e) => setNewComment(e.target.value)}
-                                        handleNewComment={ handleNewComment }
-                                    />  
+                                isAuthenticated 
+                                    ? 
+                                        <CommentInput 
+                                            newComment={ newComment }
+                                            handleChange={(e) => setNewComment(e.target.value)}
+                                            handleNewComment={ handleNewComment }
+                                        />
+                                    :
+                                        <h3>¿Quiéres compartir tu experiencia sobre este curso? <Link to='/iniciar-sesion'>Inicia sesión</Link>  y compártela con la comunidad.</h3>  
                             }
                         </div>
                     </>
