@@ -25,34 +25,17 @@
 }
 
 .header-ctn h1 {
+	background-image: 	url(https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExczlhMGl5bW13M2w3c3hleXhpdXdiYm4zMWtoYmlhM2prNnRvcmVxZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kg19fN5BXbZGIDznzG/giphy.gif);
+	background-size: cover;
     font-family: eina;
-    font-size: clamp(1rem, 10vw, 3.263rem);
-    /* color: var(--main-black); */
+	color: transparent;
+    background-clip: text;
+	-moz-background-clip: text;
+	-webkit-background-clip: text;
+	font-size: clamp(1rem, 10vw, 3.263rem);
     text-align: center;
-    line-height: 110%;
 }
 
-.btn-shine {
-    background: linear-gradient(to right, var(--main-black) 0, rgba(255, 255, 255, .5) var(--first-percent), var(--main-black) var(--second-percent));
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shine 3s infinite linear forwards;
-  }
-  
-  @keyframes shine {
-    0% { --first-percent: 10%; --second-percent: 11%; }
-    10% { --first-percent: 20%; --second-percent: 21%; }
-    20% { --first-percent: 30%; --second-percent: 31%; }
-    40% { --first-percent: 40%; --second-percent: 41%; }
-    50% { --first-percent: 50%; --second-percent: 51%; }
-    60% { --first-percent: 60%; --second-percent: 61%; }
-    70% { --first-percent: 70%; --second-percent: 71%; }
-    80% { --first-percent: 80%; --second-percent: 81%; }
-    90% { --first-percent: 90%; --second-percent: 91%; }
-    100% { --first-percent: 100%; --second-percent: 1%; }
-  }
-  
 .header-ctn__titles {
     max-width: 900px;
     display: flex;
@@ -121,6 +104,10 @@
 }
 
 @media screen and (max-width: 520px) {
+    .header-ctn h1 {
+        background-image: none;
+        color: var(--secondary-black);
+    }
     .keywords {
         justify-content: center;
         gap: 30px;
