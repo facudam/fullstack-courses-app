@@ -42,6 +42,16 @@ const getCourses = async(_req: Request, res: Response) => {
     }
 }
 
+const getCoursesByUser = async(req: Request, res: Response) => {
+    try {
+        const [ result ]  = await pool.query<ResultSetHeader[]>( `${ SqlQuery } WHERE user_id = ?`, [req.params.id]);
+        return res.json(result)
+
+    } catch (error) {
+        return res.status(500).send(serverErrorMessage + error)
+    }
+}
+
 const getCourseById = async(req: Request, res: Response) => {
     try {
         const [ result ]  = await pool.query<ResultSetHeader[]>( `${ SqlQuery } WHERE course_id = ?`, [req.params.id])
@@ -137,5 +147,6 @@ export {
     createCourse,
     updateCourse,
     deleteCourse,
-    getCourseById
+    getCourseById,
+    getCoursesByUser
 }
