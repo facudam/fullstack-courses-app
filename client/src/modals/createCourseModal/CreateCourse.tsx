@@ -306,7 +306,7 @@ const CreateCourse: FC = () => {
                 </div>
                 <button type="submit">
                     {
-                        isSendingNewCourseInfo
+                        (isSendingNewCourseInfo && !hasAnyError) 
                             ? 'Añadiendo curso...'
                             : 'Añadir curso'
                     }
