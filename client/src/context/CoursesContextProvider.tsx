@@ -25,6 +25,8 @@ export const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
     const [ toggleTechState, setToggleTechState ] = useState<boolean>(false)
     const [ toggleAuthorState, setToggleAuthorState ] = useState<boolean>(false)
 
+    const [ alertNewCourseWasAdded, setAlertNewCourseWasAdded ] = useState<boolean>(false)
+
     return(
         <CoursesContext.Provider 
             value={
@@ -41,7 +43,8 @@ export const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
                     userId, setUserId,
                     isCreateCourseModalOpen, setIsCreateCourseModalOpen,
                     toggleTechState, setToggleTechState,
-                    toggleAuthorState, setToggleAuthorState
+                    toggleAuthorState, setToggleAuthorState,
+                    alertNewCourseWasAdded, setAlertNewCourseWasAdded 
                 }   
             }
         >

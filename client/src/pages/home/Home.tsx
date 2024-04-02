@@ -17,8 +17,9 @@ const Home: FC = () => {
             isCourseModalOpen, 
             setUserId,
             isCreateCourseModalOpen,
-            token
-           }   = useContext(CoursesContext)
+            token,
+            alertNewCourseWasAdded
+          } = useContext(CoursesContext)
 
 
         useEffect(() => {
@@ -48,7 +49,7 @@ const Home: FC = () => {
               }
             };
             fetchData();
-          }, []);
+          }, [ alertNewCourseWasAdded ]);
 
   return (
     <MainLayout>

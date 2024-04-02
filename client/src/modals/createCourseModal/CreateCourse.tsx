@@ -12,7 +12,11 @@ import { courseValidationForm, errorMessages } from "./validation";
 
 const CreateCourse: FC = () => {
 
-    const { setIsCreateCourseModalOpen, userId } = useContext(CoursesContext)
+    const { 
+            setIsCreateCourseModalOpen, 
+            userId, setAlertNewCourseWasAdded, 
+            alertNewCourseWasAdded 
+          } = useContext(CoursesContext)
 
     const { authors } = useAuthor();
     const { language } = useLanguage()
@@ -79,6 +83,7 @@ const CreateCourse: FC = () => {
             });
             console.log(response.data)
             setIsSendingNewCourseInfo(false)
+            setAlertNewCourseWasAdded(!alertNewCourseWasAdded)
             alert('Curso añadido correctamente')
         } catch (error) {
             console.error('Error al enviar el formulario:', error);

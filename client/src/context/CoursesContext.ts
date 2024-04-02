@@ -27,7 +27,9 @@ interface CoursesContext {
   toggleAuthorState: boolean, 
   setToggleAuthorState: (toggleTechState: boolean) => void,
   token: string,
-  setToken: (token: string) => void
+  setToken: (token: string) => void,
+  alertNewCourseWasAdded: boolean,
+  setAlertNewCourseWasAdded: (alertNewCourseWasAdded: boolean) => void
 
 }
 
@@ -57,7 +59,10 @@ const initialState: CoursesContext = {
   toggleAuthorState: false, 
   setToggleAuthorState: (toggleTechState: boolean) => { toggleTechState },
   token: '',
-  setToken: (token: string) => { token }
+  setToken: (token: string) => { token },
+  alertNewCourseWasAdded: false,
+  setAlertNewCourseWasAdded: (alertNewCourseWasAdded: boolean) => { alertNewCourseWasAdded }
+
 }
 
 export const CoursesContext = createContext<CoursesContext>(initialState);
