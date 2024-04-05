@@ -17,8 +17,7 @@ const Home: FC = () => {
             isCourseModalOpen, 
             setUserId,
             isCreateCourseModalOpen,
-            token,
-            alertNewCourseWasAdded
+            token
           } = useContext(CoursesContext)
 
 
@@ -49,7 +48,7 @@ const Home: FC = () => {
               }
             };
             fetchData();
-          }, [ alertNewCourseWasAdded ]);
+          }, []);
 
   return (
     <MainLayout>

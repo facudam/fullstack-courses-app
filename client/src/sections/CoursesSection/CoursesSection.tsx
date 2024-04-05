@@ -10,7 +10,7 @@ import NoCoursesComponent from '../../components/noCoursesComponent/NoCourses';
 
 const CoursesSection: FC = () => {
 
-    const { technology } = useContext(CoursesContext)
+    const { technology, alertNewCourseWasAdded } = useContext(CoursesContext)
 
     const [ cursos, setCursos ] = useState<Curso[]>([])
     const [ isLoading, setIsLoading ] = useState<boolean>(true)
@@ -37,7 +37,7 @@ const CoursesSection: FC = () => {
         };
     
         fetchCourses();
-      }, []);
+      }, [ alertNewCourseWasAdded ]);
 
     useEffect(() => {
       if(technology.trim().length > 0) {
