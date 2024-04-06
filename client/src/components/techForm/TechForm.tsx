@@ -38,7 +38,7 @@ const TechForm: FC = () => {
 
             console.log(response.data)
             setToggleTechState(!toggleTechState) // Para renderizar nuevamente la lista de tecnologías una vez añadido una nueva a la BD (toggleTechState es una dependencia en useTechnology)
-            alert('technologia agregada!')
+            alert('¡La tecnología se ha añadido correctamente!')
 
         } catch (error) {
             alert(`Error: ${error}`)
