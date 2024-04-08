@@ -12,7 +12,12 @@ const PORT = process.env.PORT,
     SECRET = process.env.SECRET_KEY,
     CLOUD_NAME = process.env.CLOUD_NAME,
     API_KEY = process.env.API_KEY,
-    API_SECRET = process.env.API_SECRET;
+    API_SECRET = process.env.API_SECRET,
+    URL_BACKEND = process.env.URL_BACKEND,
+    NODEMAILER_EMAIL = process.env.NODEMAILER_EMAIL,
+    NODEMAILER_EMAILPASS = process.env.NODEMAILER_EMAILPASS,
+    NODEMAILER_HOST = process.env.NODEMAILER_HOST,
+    NODEMAILER_PORT = process.env.NODEMAILER_PORT
 
 
 export {
@@ -26,5 +31,10 @@ export {
     SECRET,
     CLOUD_NAME,
     API_KEY,
-    API_SECRET
+    API_SECRET,
+    NODEMAILER_EMAIL,
+    NODEMAILER_EMAILPASS,
+    NODEMAILER_HOST,
+    NODEMAILER_PORT,
+    URL_BACKEND
 }

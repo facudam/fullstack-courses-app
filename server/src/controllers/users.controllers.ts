@@ -5,6 +5,8 @@ import { serverErrorMessage } from "../error/serverErrorMessage";
 import { ResultSetHeader} from "mysql2";
 import bcryptjs from "bcryptjs"
 import { SECRET } from "../config";
+import { generateID } from "./helpers/generateID";
+import { sendEmail } from "./helpers/sendEmail";
 
 
 interface UserReq extends ResultSetHeader {
@@ -47,7 +49,13 @@ const createUser = async(req: Request, res: Response) => {
 
         let encryptedPass = await bcryptjs.hash(password, 8)
 
-        await pool.query('INSERT INTO users (user_name, user_email, user_password) VALUES(?,?,?)', [ name, email, encryptedPass ])
+        const token: string = generateID()
+
+        const datos = { email, name, token }
+
+        sendEmail(datos)
+
+        await pool.query('INSERT INTO users (user_name, user_email, user_password, token) VALUES(?,?,?,?)', [ name, email, encryptedPass, token ])
         return res.json({ name, email, encryptedPass })
 
     } catch (error: unknown) {
@@ -85,6 +93,26 @@ const loginUser: any  = async(req: Request, res: Response) => {
         return res.header('authorization', token).json({ login: true, user: userSessionData, token: token });
 
     } catch (error: unknown) {
+        return res.status(500).send(serverErrorMessage + error)
+    }
+}
+
+const confirmAccount = async (req: Request, res: Response) => {
+    const { token } = req.params;
+
+    try {
+        const [result] = await pool.query<UserReq[]>(`SELECT * FROM users WHERE token = ?`, [token]);
+        
+        if (result.length === 0) return res.status(404).send({ message: 'No user found' });
+
+        const user = result[0];
+
+        await pool.query('UPDATE users SET is_confirmed = 1 WHERE user_id = ?', [user.user_id]);
+        await pool.query('UPDATE users SET token = NULL WHERE user_id = ?', [user.user_id]);
+
+        return res.redirect('https://courseslibra.vercel.app/iniciar-sesion');
+
+    } catch (error) {
         return res.status(500).send(serverErrorMessage + error)
     }
 }
@@ -147,5 +175,6 @@ export {
     deleteUser,
     createUser,
     loginUser,
-    verification
+    verification,
+    confirmAccount
 }
