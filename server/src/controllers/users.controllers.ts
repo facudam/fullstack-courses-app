@@ -13,7 +13,8 @@ interface UserReq extends ResultSetHeader {
     user_id: number
     user_name: string,
     user_email: string,
-    user_password: string
+    user_password: string,
+    is_confirmed?: number
 }
 
 const getUsers = async(_req: Request, res: Response) => {
@@ -56,7 +57,7 @@ const createUser = async(req: Request, res: Response) => {
         sendEmail(datos)
 
         await pool.query('INSERT INTO users (user_name, user_email, user_password, token) VALUES(?,?,?,?)', [ name, email, encryptedPass, token ])
-        return res.json({ name, email, encryptedPass })
+        return res.json({ message: 'User was successfully created' })
 
     } catch (error: unknown) {
         return res.status(500).send(serverErrorMessage + error)
@@ -76,9 +77,14 @@ const loginUser: any  = async(req: Request, res: Response) => {
         
         // 3. Verificamos la contraseña utilizando bcryptjs:
         const user = result[0];
+
         const passwordMatch = await bcryptjs.compare(password, user.user_password);
 
         if (!passwordMatch) return res.status(401).json({ message: 'Invalid email or password' });
+
+        // 4. Verificamos si la cuenta del usuario está confirmado:
+
+        if (user.is_confirmed === 0) return res.status(403).json({ is_confirmed: false })
 
         const userSessionData = { valid: true, username: user.user_name, userId: user.user_id  }
 
@@ -88,7 +94,7 @@ const loginUser: any  = async(req: Request, res: Response) => {
             throw new Error("SECRET_KEY is not defined");
           }
 
-        const token = jwt.sign(userSessionData, secretKey, { expiresIn: 60 * 60 * 24 * 7 })
+        const token = jwt.sign(userSessionData, secretKey, { expiresIn: '1d' })
 
         return res.header('authorization', token).json({ login: true, user: userSessionData, token: token });
 

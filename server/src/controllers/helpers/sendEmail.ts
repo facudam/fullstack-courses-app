@@ -18,9 +18,9 @@ export const sendEmail = async(data: Data) => {
           user: NODEMAILER_EMAIL,
           pass: NODEMAILER_EMAILPASS,
         },
-        // tls: {
-        //     rejectUnauthorized: false
-        // }
+        tls: {
+            rejectUnauthorized: false
+        }
       });
 
       await transporter.sendMail({
@@ -29,7 +29,7 @@ export const sendEmail = async(data: Data) => {
         subject: "Confirma tu cuenta en CoursesLibra",
         text: "Confirma tu cuenta en CoursesLibra",
         html: `
-            <p>¡Hola ${name}! Te damos la bienvenida a CoursesLibra, para poder utilizar tu cuenta te pedimos que confirmes tu email haciendo clic en el siguiente enlace:<a href="${URL_BACKEND}/api/confirmar/${token}">confirmar mi cuenta</a></p>
+            <p>¡Hola ${name}! Te damos la bienvenida a CoursesLibra, para poder utilizar tu cuenta te pedimos que confirmes tu email haciendo clic en el siguiente enlace: <a href="${URL_BACKEND}/api/confirmar/${token}">confirmar mi cuenta</a></p>
             <p>Si no has creado una cuenta en la plataforma ignora este mensaje.</p>
             <p>¡Saludos amigo/a!</p>
         `
