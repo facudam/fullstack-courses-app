@@ -82,7 +82,7 @@ const loginUser: any  = async(req: Request, res: Response) => {
 
         if (!passwordMatch) return res.status(401).json({ message: 'Invalid email or password' });
 
-        // 4. Verificamos si la cuenta del usuario está confirmado:
+        // 4. Verificamos si la cuenta del usuario está confirmada:
 
         if (user.is_confirmed === 0) return res.status(403).json({ is_confirmed: false })
 
@@ -90,10 +90,8 @@ const loginUser: any  = async(req: Request, res: Response) => {
 
         const secretKey: string | undefined = SECRET;
 
-        if (!secretKey) {
-            throw new Error("SECRET_KEY is not defined");
-          }
-
+        if (!secretKey) throw new Error("SECRET_KEY is not defined");
+          
         const token = jwt.sign(userSessionData, secretKey, { expiresIn: '1d' })
 
         return res.header('authorization', token).json({ login: true, user: userSessionData, token: token });

@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import styles from './Login.module.css'
 import { ChangeEvent, useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import { toggleEye } from "../../helpers/toggleEye";
 import { courses } from "../../assets/images/images"
 import SecondaryNav from "../../components/secondaryNav/SecondaryNav";
 import { CoursesContext } from "../../context/CoursesContext";
-
+import { showRelatedStatusErrorMessage } from "../../helpers/showRelatedStatusErrorMessage";
 
 export const Login = () => {
 
@@ -17,6 +17,7 @@ export const Login = () => {
   const [ email, setEmail ] = useState<string>("");
   const [ password, setPassword ] = useState<string>("");
   const [ isDataInvalid, setIsDataInvalid ] = useState<boolean>(false);
+  const [ isUserAccountConfirmed, setIsUserAccountConfirmed ] = useState<boolean>(true)
   const [ isDataEmpty, setIsDataEmpty ] = useState<boolean>(false)
   const [ showPassword, setShowPassword ] = useState<boolean>(false)
 
@@ -47,9 +48,10 @@ export const Login = () => {
           navigate('/')
         }
       })
-      .catch((err) => {
-        setIsDataInvalid(true);
-        console.log("Hubo un error: " + err);
+      .catch((err: AxiosError) => {
+        if (err.response) {
+          showRelatedStatusErrorMessage(err.response.status, setIsDataInvalid, setIsUserAccountConfirmed)
+        }
       });
   };
 
@@ -109,6 +111,7 @@ export const Login = () => {
           <button className={ styles.button } type="submit">Iniciar sesión</button>
           <Link className={ styles.link } to="/">O continua sin iniciar sesión</Link>
           { isDataInvalid && <span style={{ "textAlign": "center" }}><strong>Usuario y/o contraseña inválidos</strong></span> }
+          { !isUserAccountConfirmed && <span style={{ "textAlign": "center", "color": "rgb(230,0,0)" }}>Su cuenta aún no ha sido confirmada, por favor ingrese a su correo y confírmela.</span> }
         </form>
         <img src={ courses } alt="courses" width={500} />
       </main>
