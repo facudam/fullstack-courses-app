@@ -6,7 +6,7 @@ import { ResultSetHeader} from "mysql2";
 import bcryptjs from "bcryptjs"
 import { SECRET } from "../config";
 import { generateID } from "./helpers/generateID";
-import { sendEmailConfirmation } from "./helpers/sendEmailsRequest";
+import { sendEmail } from "./helpers/sendEmail";
 
 
 interface UserReq extends ResultSetHeader {
@@ -54,7 +54,7 @@ const createUser = async(req: Request, res: Response) => {
 
         const datos = { email, name, token }
 
-        sendEmailConfirmation(datos)
+        sendEmail(datos)
 
         await pool.query('INSERT INTO users (user_name, user_email, user_password, token) VALUES(?,?,?,?)', [ name, email, encryptedPass, token ])
         return res.json({ message: 'User was successfully created' })
@@ -84,7 +84,7 @@ const loginUser: any  = async(req: Request, res: Response) => {
 
         // 4. Verificamos si la cuenta del usuario está confirmada:
 
-        if (user.is_confirmed === 0) return res.status(403).json({ is_confirmed: false })
+        // if (user.is_confirmed === 0) return res.status(403).json({ is_confirmed: false })
 
         const userSessionData = { valid: true, username: user.user_name, userId: user.user_id  }
 
