@@ -20,7 +20,8 @@ const SqlQuery = `
       t.tech_name AS technology,
       l.language_name AS language,
       ty.type_name AS type,
-      AVG(r.rate) AS rating
+      AVG(r.rate) AS rating,
+      COUNT(r.rate_id) AS rates_quantity
     FROM
       courses c
     INNER JOIN
