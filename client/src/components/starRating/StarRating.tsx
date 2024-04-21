@@ -3,9 +3,10 @@ import { FC } from "react";
 import styles from './StarRating.module.css'
 
 interface Props {
-    rating: number
+    rating: number,
+    rates_quantity: number
 }
-const StarRating: FC<Props> = ({ rating }) => {
+const StarRating: FC<Props> = ({ rating, rates_quantity }) => {
     const filledStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
 
@@ -21,7 +22,9 @@ const StarRating: FC<Props> = ({ rating }) => {
                 {
                     hasHalfStar && <img width={16} src={ halfStar } alt="media estrella" />
                 }
+                
             </div>
+            <p className={ styles.quantity }>({ rates_quantity })</p>
         </div>
     )
 }

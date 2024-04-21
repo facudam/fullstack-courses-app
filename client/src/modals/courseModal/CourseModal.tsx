@@ -101,7 +101,7 @@ const CourseModal: FC = () => {
                                 }
                                 {
                                     (courseInfo?.rating !== null && courseInfo?.rating !== undefined) &&
-                                        <StarRating rating={courseInfo?.rating} />
+                                        <StarRating rating={courseInfo?.rating} rates_quantity={courseInfo.rates_quantity} />
                                 }
                                 
                                 <a href={ courseInfo?.resource_link } target='_blank' rel='noopener noreferrer nofollow'>Acceder al curso</a>
