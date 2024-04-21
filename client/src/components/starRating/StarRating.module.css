@@ -1,0 +1,10 @@
+.flex-ctn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stars-ctn {
+    display: flex;
+    gap: 3px;
+}

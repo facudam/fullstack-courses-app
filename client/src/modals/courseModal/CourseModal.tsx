@@ -11,7 +11,7 @@ import UserComment from '../../components/commentComponent/Comment'
 import CommentInput from '../../components/commentInput/CommentInput'
 import CourseModalLoading from '../loadingsSkeletons/courseModalLoading/CourseModalLoading.tsx'
 import { Link } from 'react-router-dom'
-
+import StarRating from '../../components/starRating/StarRating.tsx'
 
 const CourseModal: FC = () => {
     const {
@@ -98,6 +98,10 @@ const CourseModal: FC = () => {
                                                 : '... leer más'
                                         }
                                     </button>
+                                }
+                                {
+                                    (courseInfo?.rating !== null && courseInfo?.rating !== undefined) &&
+                                        <StarRating rating={courseInfo?.rating} />
                                 }
                                 
                                 <a href={ courseInfo?.resource_link } target='_blank' rel='noopener noreferrer nofollow'>Acceder al curso</a>

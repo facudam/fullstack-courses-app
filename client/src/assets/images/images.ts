@@ -7,5 +7,7 @@ import hat from './hat.webp'
 import logout from './logout.svg'
 import add from './add.svg'
 import courses from './coursesvg.webp'
+import star from './star.png'
+import halfStar from './half-star.png'
 
-export { lupa, rocket, profile, nodata, graduado, hat, logout, add, courses }
+export { lupa, rocket, profile, nodata, graduado, hat, logout, add, courses, star, halfStar }
