@@ -1,0 +1,8 @@
+.box-message {
+    padding: 7px 10px;
+    font-size: 14px;
+    background-color: var(--blue-hover);
+    border-radius: 6px;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+}

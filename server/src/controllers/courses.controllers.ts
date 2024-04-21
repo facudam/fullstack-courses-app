@@ -9,7 +9,7 @@ const SqlQuery = `
     SELECT
       c.course_id,
       c.title,
-      is_free,
+      c.is_free,
       c.resource_link,
       c.description,
       c.image,
@@ -19,7 +19,9 @@ const SqlQuery = `
       a.author_country,
       t.tech_name AS technology,
       l.language_name AS language,
-      ty.type_name AS type
+      ty.type_name AS type,
+      AVG(r.rate) AS rating,
+      COUNT(r.rate_id) AS rates_quantity
     FROM
       courses c
     INNER JOIN
@@ -30,11 +32,14 @@ const SqlQuery = `
       course_types ty ON c.type_id = ty.type_id
     INNER JOIN
       authors a ON c.author_id = a.author_id
+    LEFT JOIN
+      ratings r ON c.course_id = r.course_id
   `;
 
 const getCourses = async(_req: Request, res: Response) => {
     try {
-        const [ result ]  = await pool.query(SqlQuery);
+        const [ result ]  = await pool.query(`${SqlQuery} GROUP BY
+        c.course_id`);
         return res.json(result)
     }
     catch (error: unknown) {
@@ -54,7 +59,7 @@ const getCoursesByUser = async(req: Request, res: Response) => {
 
 const getCourseById = async(req: Request, res: Response) => {
     try {
-        const [ result ]  = await pool.query<ResultSetHeader[]>( `${ SqlQuery } WHERE course_id = ?`, [req.params.id])
+        const [ result ]  = await pool.query<ResultSetHeader[]>( `${ SqlQuery } WHERE c.course_id = ${req.params.id} GROUP BY c.course_id`);
 
         if ( result.length <= 0) return res.status(404).json({'message': 'Course not found'})
     

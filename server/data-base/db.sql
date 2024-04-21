@@ -62,16 +62,16 @@ CREATE TABLE courses (
 	REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-CREATE TABLE star_rating_per_courses(
+CREATE TABLE ratings(
 	rate_id INT NOT NULL AUTO_INCREMENT,
 	rate INT,
 	course_id INT,
 	user_id INT,
 	PRIMARY KEY(rate_id),
 	CONSTRAINT fk_course_id FOREIGN KEY(course_id)
-	REFERENCES courses(course_id),
+	REFERENCES courses(course_id) ON DELETE CASCADE,
 	CONSTRAINT fk_user_id_rating FOREIGN KEY (user_id)
-	REFERENCES users(user_id)
+	REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE comments (

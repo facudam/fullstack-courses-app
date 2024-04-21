@@ -13,7 +13,9 @@ interface Curso {
     author_id: number | string,
     technology: string | number,
     with_certification: number | string,
-    user_id: number
+    user_id: number,
+    rating: number | null,
+    rates_quantity : number
 }
 
 interface CourseRequest { 

@@ -25,6 +25,7 @@
 }
 
 .header-ctn h1 {
+    background-color: var(--main-black);
 	background-image: url(https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExczlhMGl5bW13M2w3c3hleXhpdXdiYm4zMWtoYmlhM2prNnRvcmVxZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kg19fN5BXbZGIDznzG/giphy.gif);
 	background-size: cover;
     font-family: Eina;

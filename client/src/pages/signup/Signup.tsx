@@ -1,6 +1,6 @@
 import styles from '../login/Login.module.css'
 import { ChangeEvent, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import axios from 'axios'
 import apiBaseUrl from "../../services/api/endpoints/apiBaseUrl"
 import Eye from "../../components/eye/Eye"
@@ -8,6 +8,7 @@ import { toggleEye } from '../../helpers/toggleEye'
 import { courses } from "../../assets/images/images"
 import { signUpValidation, validateEmail, validatePassword } from '../validations/signUpValidation'
 import SecondaryNav from '../../components/secondaryNav/SecondaryNav'
+import { BoxMessage } from '../../components/boxMessage/BoxMessage'
 
 
 export const Signup = () => {
@@ -17,7 +18,7 @@ export const Signup = () => {
     const [ name, setName ] = useState<string>('')
     const [ hasAnyError, setHasAnyError ] = useState<boolean>(false)
     const [ showPassword, setShowPassword ] = useState<boolean>(false)
-    const navigate = useNavigate()
+    const [ wasAccountCreated, setWasAccountCreated ] = useState<boolean>(false)
 
     const handleEmail = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)
     const handlePassword = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)
@@ -37,7 +38,7 @@ export const Signup = () => {
         axios.post(`${apiBaseUrl}/api/users`, { name, email, password })
         .then(res => {
             console.log(res)
-            navigate('/iniciar-sesion')
+            setWasAccountCreated(true)
         })
         .catch(err => {
             console.log(err)
@@ -63,6 +64,11 @@ export const Signup = () => {
                 <h1>Regístrate</h1>
                 <p>Crea una cuenta para añadir cursos y compartir feedback con la comunidad.</p> 
             </div>
+
+            {
+                wasAccountCreated && 
+                    <BoxMessage message='¡Cuenta creada con éxito! Te hemos enviado un email para confirmación. No olvides revisar el spam.' />    
+            }
             
             <div className={ styles['input-ctn'] }>
                 <label htmlFor="name">Nombre:</label>

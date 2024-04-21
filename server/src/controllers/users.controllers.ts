@@ -5,13 +5,16 @@ import { serverErrorMessage } from "../error/serverErrorMessage";
 import { ResultSetHeader} from "mysql2";
 import bcryptjs from "bcryptjs"
 import { SECRET } from "../config";
+import { generateID } from "./helpers/generateID";
+import { sendEmail } from "./helpers/sendEmail";
 
 
 interface UserReq extends ResultSetHeader {
     user_id: number
     user_name: string,
     user_email: string,
-    user_password: string
+    user_password: string,
+    is_confirmed?: number
 }
 
 const getUsers = async(_req: Request, res: Response) => {
@@ -47,8 +50,14 @@ const createUser = async(req: Request, res: Response) => {
 
         let encryptedPass = await bcryptjs.hash(password, 8)
 
-        await pool.query('INSERT INTO users (user_name, user_email, user_password) VALUES(?,?,?)', [ name, email, encryptedPass ])
-        return res.json({ name, email, encryptedPass })
+        const token: string = generateID()
+
+        const datos = { email, name, token }
+
+        sendEmail(datos)
+
+        await pool.query('INSERT INTO users (user_name, user_email, user_password, token) VALUES(?,?,?,?)', [ name, email, encryptedPass, token ])
+        return res.json({ message: 'User was successfully created' })
 
     } catch (error: unknown) {
         return res.status(500).send(serverErrorMessage + error)
@@ -68,23 +77,46 @@ const loginUser: any  = async(req: Request, res: Response) => {
         
         // 3. Verificamos la contraseña utilizando bcryptjs:
         const user = result[0];
+
         const passwordMatch = await bcryptjs.compare(password, user.user_password);
 
         if (!passwordMatch) return res.status(401).json({ message: 'Invalid email or password' });
+
+        // 4. Verificamos si la cuenta del usuario está confirmada:
+
+        // if (user.is_confirmed === 0) return res.status(403).json({ is_confirmed: false })
 
         const userSessionData = { valid: true, username: user.user_name, userId: user.user_id  }
 
         const secretKey: string | undefined = SECRET;
 
-        if (!secretKey) {
-            throw new Error("SECRET_KEY is not defined");
-          }
-
-        const token = jwt.sign(userSessionData, secretKey, { expiresIn: 60 * 60 * 24 * 7 })
+        if (!secretKey) throw new Error("SECRET_KEY is not defined");
+          
+        const token = jwt.sign(userSessionData, secretKey, { expiresIn: '1d' })
 
         return res.header('authorization', token).json({ login: true, user: userSessionData, token: token });
 
     } catch (error: unknown) {
+        return res.status(500).send(serverErrorMessage + error)
+    }
+}
+
+const confirmAccount = async (req: Request, res: Response) => {
+    const { token } = req.params;
+
+    try {
+        const [result] = await pool.query<UserReq[]>(`SELECT * FROM users WHERE token = ?`, [token]);
+        
+        if (result.length === 0) return res.status(404).send({ message: 'No user found' });
+
+        const user = result[0];
+
+        await pool.query('UPDATE users SET is_confirmed = 1 WHERE user_id = ?', [user.user_id]);
+        await pool.query('UPDATE users SET token = NULL WHERE user_id = ?', [user.user_id]);
+
+        return res.redirect('https://courseslibra.vercel.app/iniciar-sesion');
+
+    } catch (error) {
         return res.status(500).send(serverErrorMessage + error)
     }
 }
@@ -147,5 +179,6 @@ export {
     deleteUser,
     createUser,
     loginUser,
-    verification
+    verification,
+    confirmAccount
 }
