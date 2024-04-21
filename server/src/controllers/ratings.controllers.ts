@@ -17,6 +17,9 @@ const getRatings = async(_req:Request, res: Response) => {
 const createRating = async(req: Request, res: Response) => {
     try {
         const { rate, course_id, user_id }: Rating = req.body
+
+        if (rate < 1 || rate > 5) return res.status(420).json({ "message": "Rates can be only from 1 to 5" })
+
         await pool.query('INSERT INTO ratings (rate, course_id, user_id) VALUES(?,?,?)', [rate, course_id, user_id])
         return res.json({ 'rate': rate, 'course_id': course_id , 'user_id': user_id})
     } catch (error: unknown) {
@@ -39,11 +42,9 @@ const getRatingById = async(req: Request, res: Response) => {
 const updateRating = async(req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const {
-            rate,
-            course_id,
-            user_id
-        }: Rating = req.body
+        const { rate, course_id, user_id }: Rating = req.body
+        if (rate < 1 || rate > 5) return res.status(420).json({ "message": "Rates can be only from 1 to 5" })
+            
         await pool.query('UPDATE ratings SET rate = IFNULL(?, rate), course_id = IFNULL(?, course_id), user_id = IFNULL (?, user_id) WHERE rate_id = ?', [ rate, course_id, user_id, id ])
 
         return res.send('rating succesfully updated')
