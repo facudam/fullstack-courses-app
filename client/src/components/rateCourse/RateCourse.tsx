@@ -12,7 +12,7 @@ interface Props {
 }
 const RateCourse: FC<Props> = ({ user_id, course_id }) => {
 
-  const { starsAssigned, setStarsAssigned } = useContext(CoursesContext)
+  const { starsAssigned } = useContext(CoursesContext)
 
   
   const handleRate = async() => {
@@ -20,7 +20,6 @@ const RateCourse: FC<Props> = ({ user_id, course_id }) => {
     addNewRate(starsAssigned, course_id, user_id)
       .then((response: AxiosResponse) => {
         console.log(response.data)
-        setStarsAssigned(0);
         alert('¡Calificación agregada correctamente!');
       })
       .catch((error: AxiosError) => {
@@ -29,7 +28,6 @@ const RateCourse: FC<Props> = ({ user_id, course_id }) => {
         } else {
           alert('Lo sentimos, ha habido un error al intentar procesar la puntuación')
         }
-        setStarsAssigned(0);
       })
   }
 
@@ -39,14 +37,14 @@ const RateCourse: FC<Props> = ({ user_id, course_id }) => {
           {
             [...Array(5)].map((_, index) => (
               <EmptyStarImg 
-                color={(index < starsAssigned) ? 'gold' : '#eceff1' } 
+                color={(index < starsAssigned) ? 'gold' : '#fff' } 
                 key={ index }
                 value={ index }
               />
             ))
           }
         </div>
-        <button onClick={ handleRate }>Calificar</button>
+        <button onClick={ handleRate }>Enviar</button>
     </div>
   )
 }

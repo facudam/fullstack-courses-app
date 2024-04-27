@@ -64,9 +64,8 @@ const initialState: CoursesContext = {
   setToken: (token: string) => { token },
   alertNewCourseWasAdded: false,
   setAlertNewCourseWasAdded: (alertNewCourseWasAdded: boolean) => { alertNewCourseWasAdded },
-  starsAssigned: 0, 
+  starsAssigned: 3, 
   setStarsAssigned: (starsAssigned: number) => {starsAssigned}
-
 }
 
 export const CoursesContext = createContext<CoursesContext>(initialState);

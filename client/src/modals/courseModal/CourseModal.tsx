@@ -33,7 +33,7 @@ const CourseModal: FC = () => {
 
     const closeModal = () => {
         setNewComment('')
-        setStarsAssigned(0)
+        setStarsAssigned(3)
         setIsCourseModalOpen(false)
     };
 
@@ -124,13 +124,20 @@ const CourseModal: FC = () => {
                             </div>
                         </main>
                         <div className={ styles.comments }>
-                            <button>Califica este curso</button>
+                            
                             {
                                 isAuthenticated &&
-                                  <RateCourse 
-                                    course_id={ courseInfo?.course_id } 
-                                    user_id={ userId } 
-                                   />  
+                                    <div className={ styles['rate-ctn'] }>
+                                        <h3 className={ styles['rate-btn'] }>¿Te ha gustado este curso?</h3>
+                                        <p>Comparte con la comunidad el puntaje que le das.</p>
+                                        <div>
+                                            <RateCourse 
+                                            course_id={ courseInfo?.course_id } 
+                                            user_id={ userId } 
+                                            />
+                                        </div>  
+                                    </div>
+                                   
                             }
                             
                             <h3>Feedback sobre el curso:</h3>
