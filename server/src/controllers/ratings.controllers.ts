@@ -4,7 +4,6 @@ import { serverErrorMessage } from "../error/serverErrorMessage";
 import { Rating } from "../types";
 import { ResultSetHeader } from "mysql2";
 
-
 const getRatings = async(_req:Request, res: Response) => {
     try {
         const [ result ] = await pool.query('SELECT * FROM ratings')
@@ -27,7 +26,7 @@ const createRating = async(req: Request, res: Response) => {
         // Enviamos el nuevo rating a la base de datos:
         await pool.query('INSERT INTO ratings (rate, course_id, user_id) VALUES(?,?,?)', [rate, course_id, user_id])
         return res.json({ 'rate': rate, 'course_id': course_id , 'user_id': user_id})
-    } catch (error: unknown) {
+    } catch (error) {
         return res.status(500).send(serverErrorMessage + error)
     }
 }

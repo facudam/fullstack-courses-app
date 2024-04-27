@@ -4,7 +4,7 @@ import { CoursesContext } from '../../context/CoursesContext'
 import getCourseById from '../../services/api/endpoints/courses/getCourseById'
 import getCommentsByCourseId from '../../services/api/endpoints/comments/getCommentsByCourseId'
 import addNewComment from '../../services/api/endpoints/comments/addNewComment'
-import { AxiosResponse } from 'axios'
+import { AxiosError, AxiosResponse } from 'axios'
 import { CommentResponse, Comment } from '../../interfaces/models'
 import ModalLayout from '../modalLayout/ModalLayout.tsx'
 import UserComment from '../../components/commentComponent/Comment'
@@ -49,7 +49,7 @@ const CourseModal: FC = () => {
                 setComments((prevComments) => [...prevComments, respuesta.data])
                 setNewComment('')
             })
-            .catch((error) => {
+            .catch((error: AxiosError) => {
             console.error('Error al agregar comentario:', error);
             });
     }

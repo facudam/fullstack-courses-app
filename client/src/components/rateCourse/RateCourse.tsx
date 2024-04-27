@@ -3,7 +3,7 @@ import EmptyStarImg from "../../components/emptyStarImg/EmptyStarImg"
 import styles from './RateCourse.module.css'
 import { CoursesContext } from "../../context/CoursesContext"
 import { addNewRate } from "../../services/api/endpoints/rates/addNewRate"
-
+import { AxiosError, AxiosResponse } from "axios"
 
 interface Props {
     id?: number,
@@ -17,14 +17,20 @@ const RateCourse: FC<Props> = ({ user_id, course_id }) => {
   
   const handleRate = async() => {
     if (starsAssigned < 1) return;
-    try {
-      const response = await addNewRate(starsAssigned, course_id, user_id);
-      console.log(response.data)
-      setStarsAssigned(0)
-      alert('¡Calificación agregada correctamente!');
-    } catch (error) {
-      console.error('Error al agregar la calificación:', error);
-    }
+    addNewRate(starsAssigned, course_id, user_id)
+      .then((response: AxiosResponse) => {
+        console.log(response.data)
+        setStarsAssigned(0);
+        alert('¡Calificación agregada correctamente!');
+      })
+      .catch((error: AxiosError) => {
+        if (error.response?.status == 409) {
+          alert('Ya has calificado este curso previamente y sólo se permite una calificación a un mismo curso por usuario')
+        } else {
+          alert('Lo sentimos, ha habido un error al intentar procesar la puntuación')
+        }
+        setStarsAssigned(0);
+      })
   }
 
   return (
