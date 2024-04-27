@@ -35,12 +35,10 @@ const Home: FC = () => {
           
                 if (data.data.valid) {
                   setIsAuthenticated(true);
-                  localStorage.setItem('isUserAuthenticated', 'true');
                   setUserId(data.data.userId);
                   setUserName(data.data.username);
                 } else {
                   setIsAuthenticated(false);
-                  localStorage.setItem('isUserAuthenticated', 'false');
                 }
               } catch (error) {
                 setIsAuthenticated(false);

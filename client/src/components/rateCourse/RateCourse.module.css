@@ -1,0 +1,9 @@
+.main-ctn {
+    display: flex;
+    gap: 15px;
+    padding: 15px 0;
+}
+.stars-ctn {
+    display: flex;
+    gap: 5px;
+}

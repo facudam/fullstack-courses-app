@@ -7,9 +7,10 @@ interface Props {
     rates_quantity: number
 }
 const StarRating: FC<Props> = ({ rating, rates_quantity }) => {
+    const maxStars: number = 5;
     const filledStars: number = Math.floor(rating);
     const hasHalfStar: boolean = rating % 1 !== 0;
-    const restOfStars: number = 5 - filledStars - (hasHalfStar ? 1 : 0);
+    const restOfStars: number = maxStars - filledStars - (hasHalfStar ? 1 : 0);
 
     return(
         <div className={ styles['flex-ctn'] }>

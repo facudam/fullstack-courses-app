@@ -4,10 +4,12 @@ import styles from './CommentInput.module.css'
 interface CommentInputProps {
     newComment: string;
     handleNewComment: () => void;
-    handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handleChange: (e: ChangeEvent<HTMLInputElement>) => void,
+    placeholder: string,
+    textButton: string
 }
 
-const CommentInput: FC<CommentInputProps> = ({ newComment, handleNewComment, handleChange }) => {
+const CommentInput: FC<CommentInputProps> = ({ newComment, handleNewComment, handleChange, placeholder, textButton }) => {
 
     return(
         <div className={ styles['comment-input-ctn'] }>
@@ -18,10 +20,10 @@ const CommentInput: FC<CommentInputProps> = ({ newComment, handleNewComment, han
                     value={ newComment } 
                     onChange={ handleChange } 
                     maxLength={ 200 }
-                    placeholder='Escribe aquí tu feedback'
+                    placeholder={ placeholder }
                 />
                 <span>{ newComment.length }/200</span>
-                <button onClick={ handleNewComment }>Enviar feedback</button>
+                <button onClick={ handleNewComment }>{ textButton }</button>
             </div>
         </div> 
     )

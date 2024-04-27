@@ -12,6 +12,7 @@ import CommentInput from '../../components/commentInput/CommentInput'
 import CourseModalLoading from '../loadingsSkeletons/courseModalLoading/CourseModalLoading.tsx'
 import { Link } from 'react-router-dom'
 import StarRating from '../../components/starRating/StarRating.tsx'
+import RateCourse from '../../components/rateCourse/RateCourse.tsx'
 
 const CourseModal: FC = () => {
     const {
@@ -21,7 +22,8 @@ const CourseModal: FC = () => {
         setCourseInfo,
         isAuthenticated,
         userId,
-        userName
+        userName,
+        setStarsAssigned
     } = useContext(CoursesContext);
 
     const [ comments, setComments ] = useState<Comment[]>([])
@@ -31,6 +33,7 @@ const CourseModal: FC = () => {
 
     const closeModal = () => {
         setNewComment('')
+        setStarsAssigned(0)
         setIsCourseModalOpen(false)
     };
 
@@ -121,6 +124,15 @@ const CourseModal: FC = () => {
                             </div>
                         </main>
                         <div className={ styles.comments }>
+                            <button>Califica este curso</button>
+                            {
+                                isAuthenticated &&
+                                  <RateCourse 
+                                    course_id={ courseInfo?.course_id } 
+                                    user_id={ userId } 
+                                   />  
+                            }
+                            
                             <h3>Feedback sobre el curso:</h3>
                             {
                                 (comments && comments?.length > 0)
@@ -139,6 +151,8 @@ const CourseModal: FC = () => {
                                             newComment={ newComment }
                                             handleChange={(e) => setNewComment(e.target.value)}
                                             handleNewComment={ handleNewComment }
+                                            placeholder='Escribe aquí tu feedback'
+                                            textButton='Enviar feedback'
                                         />
                                     :
                                         <h3>¿Quiéres compartir tu experiencia sobre este curso? <Link to='/iniciar-sesion'>Inicia sesión</Link>  y compártela con la comunidad.</h3>  
