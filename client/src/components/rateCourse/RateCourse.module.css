@@ -23,6 +23,11 @@
 .main-ctn button:hover {
     background-color: var(--blue-hover);
 }
+
+.main-ctn button:disabled {
+    cursor: not-allowed;
+}
+
 .stars-ctn {
     display: flex;
     gap: 5px;
