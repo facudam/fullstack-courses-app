@@ -35,12 +35,15 @@ const Home: FC = () => {
           
                 if (data.data.valid) {
                   setIsAuthenticated(true);
+                  localStorage.setItem('isUserAuthenticated', 'true');
                   setUserId(data.data.userId);
                   setUserName(data.data.username);
                 } else {
                   setIsAuthenticated(false);
+                  localStorage.setItem('isUserAuthenticated', 'false');
                 }
               } catch (error) {
+                localStorage.setItem('isUserAuthenticated', 'false');
                 setIsAuthenticated(false);
                 console.log(`Ups, ha ocurrido un error al intentar realizar la validación: ${error}`);
               }
