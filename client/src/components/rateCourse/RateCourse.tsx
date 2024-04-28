@@ -1,4 +1,4 @@
-import { FC, useContext } from "react"
+import { FC, useContext, useState } from "react"
 import EmptyStarImg from "../../components/emptyStarImg/EmptyStarImg"
 import styles from './RateCourse.module.css'
 import { CoursesContext } from "../../context/CoursesContext"
@@ -12,15 +12,27 @@ interface Props {
 }
 const RateCourse: FC<Props> = ({ user_id, course_id }) => {
 
-  const { starsAssigned } = useContext(CoursesContext)
+  const { starsAssigned } = useContext(CoursesContext);
 
-  
+  const APP_STATUS = {
+    IDLE: 'idle',
+    UPLOADING: 'uploading',
+    READY_SENT: 'ready_sent',
+    ERROR: 'error'
+  } 
+
+  type AppStatusType = typeof APP_STATUS[keyof typeof APP_STATUS];
+
+  const [ appStatus, setAppStatus ] = useState<AppStatusType>(APP_STATUS.IDLE)
+
   const handleRate = async() => {
     if (starsAssigned < 1) return;
+    setAppStatus(APP_STATUS.UPLOADING)
     addNewRate(starsAssigned, course_id, user_id)
       .then((response: AxiosResponse) => {
         console.log(response.data)
         alert('¡Calificación agregada correctamente!');
+        setAppStatus(APP_STATUS.READY_SENT)
       })
       .catch((error: AxiosError) => {
         if (error.response?.status == 409) {
@@ -28,6 +40,7 @@ const RateCourse: FC<Props> = ({ user_id, course_id }) => {
         } else {
           alert('Lo sentimos, ha habido un error al intentar procesar la puntuación')
         }
+        setAppStatus(APP_STATUS.ERROR)
       })
   }
 
@@ -44,7 +57,13 @@ const RateCourse: FC<Props> = ({ user_id, course_id }) => {
             ))
           }
         </div>
-        <button onClick={ handleRate }>Enviar</button>
+       
+        <button onClick={ handleRate } disabled={ appStatus !== APP_STATUS.IDLE }>
+          { (appStatus !== APP_STATUS.UPLOADING)
+            ? 'Enviar'
+            : 'Enviando'
+          }
+        </button>
     </div>
   )
 }
