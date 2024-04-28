@@ -4,7 +4,7 @@ import { CoursesContext } from '../../context/CoursesContext'
 import getCourseById from '../../services/api/endpoints/courses/getCourseById'
 import getCommentsByCourseId from '../../services/api/endpoints/comments/getCommentsByCourseId'
 import addNewComment from '../../services/api/endpoints/comments/addNewComment'
-import { AxiosResponse } from 'axios'
+import { AxiosError, AxiosResponse } from 'axios'
 import { CommentResponse, Comment } from '../../interfaces/models'
 import ModalLayout from '../modalLayout/ModalLayout.tsx'
 import UserComment from '../../components/commentComponent/Comment'
@@ -12,6 +12,7 @@ import CommentInput from '../../components/commentInput/CommentInput'
 import CourseModalLoading from '../loadingsSkeletons/courseModalLoading/CourseModalLoading.tsx'
 import { Link } from 'react-router-dom'
 import StarRating from '../../components/starRating/StarRating.tsx'
+import RateCourse from '../../components/rateCourse/RateCourse.tsx'
 
 const CourseModal: FC = () => {
     const {
@@ -21,7 +22,8 @@ const CourseModal: FC = () => {
         setCourseInfo,
         isAuthenticated,
         userId,
-        userName
+        userName,
+        setStarsAssigned
     } = useContext(CoursesContext);
 
     const [ comments, setComments ] = useState<Comment[]>([])
@@ -31,6 +33,7 @@ const CourseModal: FC = () => {
 
     const closeModal = () => {
         setNewComment('')
+        setStarsAssigned(3)
         setIsCourseModalOpen(false)
     };
 
@@ -46,7 +49,7 @@ const CourseModal: FC = () => {
                 setComments((prevComments) => [...prevComments, respuesta.data])
                 setNewComment('')
             })
-            .catch((error) => {
+            .catch((error: AxiosError) => {
             console.error('Error al agregar comentario:', error);
             });
     }
@@ -121,6 +124,22 @@ const CourseModal: FC = () => {
                             </div>
                         </main>
                         <div className={ styles.comments }>
+                            
+                            {
+                                isAuthenticated &&
+                                    <div className={ styles['rate-ctn'] }>
+                                        <h3 className={ styles['rate-btn'] }>¿Te ha gustado este curso?</h3>
+                                        <p>Comparte con la comunidad el puntaje que le das.</p>
+                                        <div>
+                                            <RateCourse 
+                                            course_id={ courseInfo?.course_id } 
+                                            user_id={ userId } 
+                                            />
+                                        </div>  
+                                    </div>
+                                   
+                            }
+                            
                             <h3>Feedback sobre el curso:</h3>
                             {
                                 (comments && comments?.length > 0)
@@ -139,6 +158,8 @@ const CourseModal: FC = () => {
                                             newComment={ newComment }
                                             handleChange={(e) => setNewComment(e.target.value)}
                                             handleNewComment={ handleNewComment }
+                                            placeholder='Escribe aquí tu feedback'
+                                            textButton='Enviar feedback'
                                         />
                                     :
                                         <h3>¿Quiéres compartir tu experiencia sobre este curso? <Link to='/iniciar-sesion'>Inicia sesión</Link>  y compártela con la comunidad.</h3>  

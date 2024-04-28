@@ -66,6 +66,12 @@ interface Comment {
     user: string
 }
 
+interface Rate {
+    rate: number,
+    course_id: number,
+    user_id: number
+}
+
 interface CommentResponse {
     comment_id?: number,
     comment_description: string,
@@ -100,5 +106,6 @@ export type
                 CommentResponse,
                 Types,
                 Language,
-                Technology
+                Technology,
+                Rate
             }

@@ -29,7 +29,9 @@ interface CoursesContext {
   token: string,
   setToken: (token: string) => void,
   alertNewCourseWasAdded: boolean,
-  setAlertNewCourseWasAdded: (alertNewCourseWasAdded: boolean) => void
+  setAlertNewCourseWasAdded: (alertNewCourseWasAdded: boolean) => void,
+  starsAssigned: number, 
+  setStarsAssigned: (starsAssigned: number) => void
 
 }
 
@@ -61,8 +63,9 @@ const initialState: CoursesContext = {
   token: '',
   setToken: (token: string) => { token },
   alertNewCourseWasAdded: false,
-  setAlertNewCourseWasAdded: (alertNewCourseWasAdded: boolean) => { alertNewCourseWasAdded }
-
+  setAlertNewCourseWasAdded: (alertNewCourseWasAdded: boolean) => { alertNewCourseWasAdded },
+  starsAssigned: 3, 
+  setStarsAssigned: (starsAssigned: number) => {starsAssigned}
 }
 
 export const CoursesContext = createContext<CoursesContext>(initialState);

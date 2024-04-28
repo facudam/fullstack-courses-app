@@ -27,6 +27,8 @@ export const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
 
     const [ alertNewCourseWasAdded, setAlertNewCourseWasAdded ] = useState<boolean>(false)
 
+    const [ starsAssigned, setStarsAssigned ] = useState<number>(3)
+
     return(
         <CoursesContext.Provider 
             value={
@@ -44,7 +46,8 @@ export const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
                     isCreateCourseModalOpen, setIsCreateCourseModalOpen,
                     toggleTechState, setToggleTechState,
                     toggleAuthorState, setToggleAuthorState,
-                    alertNewCourseWasAdded, setAlertNewCourseWasAdded 
+                    alertNewCourseWasAdded, setAlertNewCourseWasAdded,
+                    starsAssigned, setStarsAssigned 
                 }   
             }
         >

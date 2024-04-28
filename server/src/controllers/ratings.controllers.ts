@@ -4,7 +4,6 @@ import { serverErrorMessage } from "../error/serverErrorMessage";
 import { Rating } from "../types";
 import { ResultSetHeader } from "mysql2";
 
-
 const getRatings = async(_req:Request, res: Response) => {
     try {
         const [ result ] = await pool.query('SELECT * FROM ratings')
@@ -17,12 +16,17 @@ const getRatings = async(_req:Request, res: Response) => {
 const createRating = async(req: Request, res: Response) => {
     try {
         const { rate, course_id, user_id }: Rating = req.body
+        // Verificamos que el puntaje sea correcto:
+        if (rate < 1 || rate > 5) return res.status(400).json({ message: "Rates can be only from 1 to 5" })
+        // Verificamos que el usuario no haya calificado el curso previamente:
+        const [ result ] = await pool.query<ResultSetHeader[]>('SELECT * FROM ratings WHERE user_id = ? AND course_id = ?', [user_id, course_id])
 
-        if (rate < 1 || rate > 5) return res.status(420).json({ "message": "Rates can be only from 1 to 5" })
+        if (result.length > 0) return res.status(409).json({ message: "User has already rated this course and can't do it twice"})
 
+        // Enviamos el nuevo rating a la base de datos:
         await pool.query('INSERT INTO ratings (rate, course_id, user_id) VALUES(?,?,?)', [rate, course_id, user_id])
         return res.json({ 'rate': rate, 'course_id': course_id , 'user_id': user_id})
-    } catch (error: unknown) {
+    } catch (error) {
         return res.status(500).send(serverErrorMessage + error)
     }
 }

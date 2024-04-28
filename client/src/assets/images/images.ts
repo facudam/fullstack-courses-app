@@ -9,5 +9,6 @@ import add from './add.svg'
 import courses from './coursesvg.webp'
 import star from './star.png'
 import halfStar from './half-star.png'
+import emptyStar from './emptystar.svg'
 
-export { lupa, rocket, profile, nodata, graduado, hat, logout, add, courses, star, halfStar }
+export { lupa, rocket, profile, nodata, graduado, hat, logout, add, courses, star, halfStar, emptyStar }
