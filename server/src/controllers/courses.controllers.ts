@@ -59,7 +59,7 @@ const getCoursesByUser = async(req: Request, res: Response) => {
 
 const getCourseById = async(req: Request, res: Response) => {
     try {
-        const [ result ]  = await pool.query<ResultSetHeader[]>( `${ SqlQuery } WHERE c.course_id = ${req.params.id} GROUP BY c.course_id`);
+        const [ result ]  = await pool.query<ResultSetHeader[]>( `${ SqlQuery } WHERE c.course_id = ? GROUP BY c.course_id`, [req.params.id]);
 
         if ( result.length <= 0) return res.status(404).json({'message': 'Course not found'})
     
