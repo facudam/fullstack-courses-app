@@ -33,6 +33,7 @@ CREATE TABLE users (
 	user_email VARCHAR(60) UNIQUE,
 	user_password VARCHAR(250),
 	is_confirmed BOOLEAN DEFAULT 0,
+	token VARCHAR(250),
 	PRIMARY KEY (user_id)
 );
 
