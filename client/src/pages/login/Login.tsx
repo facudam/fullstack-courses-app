@@ -76,7 +76,7 @@ export const Login = () => {
               onChange={ handleEmail }
               type="email"
               name="email"
-              placeholder="Ingresa tu email"
+              placeholder="Pruébalo con: usuario@prueba.com"
               value={email}
             />
             {
@@ -91,7 +91,7 @@ export const Login = () => {
               onChange={ handlePassword }
               type={ showPassword ? "text" : "password" }
               name="password"
-              placeholder="Ingresa tu contraseña"
+              placeholder="Ingresa: User12345678"
               value={ password }
               />
               <div className={ styles['eye-btn-ctn'] }>
