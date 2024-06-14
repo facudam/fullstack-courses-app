@@ -3,7 +3,7 @@ import styles from './CoursesSection.module.css'
 import getCourses from '../../services/api/endpoints/courses/getCourses';
 import { Curso } from '../../interfaces/models';
 import Card from '../../components/card/Card';
-import { useAuthor, useLanguage, useTypes } from '../../hooks';
+import { useAuthor, useLanguage } from '../../hooks';
 import { filterByAuthor, filterByFree, filterByLanguage, filterByType, filterByCertification, filteringCoursesByTech } from '../../helpers/filters';
 import { CoursesContext } from '../../context/CoursesContext';
 import NoCoursesComponent from '../../components/noCoursesComponent/NoCourses';
@@ -21,7 +21,7 @@ const CoursesSection: FC = () => {
     const [ withCertification, setWithCertification ] = useState<number | string>('')
     const [ areTypesButtonsDisabled, setAreTypesButtonsDisabled] = useState<boolean>(false)
 
-    const { types } = useTypes()
+    const types = [ {type_id: 1, type_name: 'Front-End'}, {type_id: 2, type_name: 'Back-End'}, {type_id: 3, type_name: 'Diseño UX-UI'}, {type_id: 4, type_name: 'Testing'}, {type_id: 5, type_name: 'Dev-Tools'} ]
     const { language } = useLanguage()
     const { authors } = useAuthor()
 
@@ -40,12 +40,12 @@ const CoursesSection: FC = () => {
       }, [ alertNewCourseWasAdded ]);
 
     useEffect(() => {
-      if(technology.trim().length > 0) {
+      if(technology.trim().length > 0 || isLoading) {
         setAreTypesButtonsDisabled(true)
       } else {
         setAreTypesButtonsDisabled(false)
       }
-    }, [ technology ])
+    }, [ technology, isLoading ])
 
     useEffect(() => {
       const typeButtons = document.querySelectorAll('button');

@@ -4,7 +4,7 @@ import getTypes from '../services/api/endpoints/types/getTypes';
 
 
 const useTypes = () => {
-  const [types, setTypes] = useState<Types[]>([]);
+  const [ types, setTypes ] = useState<Types[]>([]);
 
   useEffect(() => {
     const fetchTypes = async () => {

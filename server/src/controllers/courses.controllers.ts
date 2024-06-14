@@ -59,7 +59,7 @@ const getCoursesByUser = async(req: Request, res: Response) => {
 
 const getCourseById = async(req: Request, res: Response) => {
     try {
-        const [ result ]  = await pool.query<ResultSetHeader[]>( `${ SqlQuery } WHERE c.course_id = ${req.params.id} GROUP BY c.course_id`);
+        const [ result ]  = await pool.query<ResultSetHeader[]>( `${ SqlQuery } WHERE c.course_id = ? GROUP BY c.course_id`, [req.params.id]);
 
         if ( result.length <= 0) return res.status(404).json({'message': 'Course not found'})
     
@@ -91,9 +91,7 @@ const createCourse = async (req: Request, res: Response) => {
       if (isNaN(Number(language_id)) || isNaN(Number(type_id)) || isNaN(Number(tech_id)) || isNaN(Number(author_id)) || isNaN(Number(with_certification)) || isNaN(Number(user_id))) return res.status(422).send({ error: 'Please, complete the request with valid information' })
 
       const sampleFile: any = req.files.sampleFile;
-
-      console.log(sampleFile)
-    
+      
       const imageUrl = await uploadAndGetUrlImage(sampleFile)
 
       await pool.query(
