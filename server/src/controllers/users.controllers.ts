@@ -101,7 +101,6 @@ const loginUser: any  = async(req: Request, res: Response) => {
                 sameSite: 'strict', // Sólo desde el mismo sitio
                 maxAge: 86400000 // 1 día
             })
-            .header('authorization', token)
             .json({ login: true, user: userSessionData, token: token });
 
     } catch (error: unknown) {
@@ -130,28 +129,29 @@ const confirmAccount = async (req: Request, res: Response) => {
 }
 
 const verification = (req: Request, res: Response) => {
-    let token = req.headers['x-acces-token'] || req.headers['authorization']
-    
+    const token = req.cookies.access_token;
     if(!token) {
         res.status(401).send({ valid: false, message: "Invalid or non-existent token" })
     }
     if (token !== undefined && typeof token === 'string') {
-        token = token.split(' ')[1]
-
         const secretKey: string | undefined = SECRET;
-
-        if (!secretKey) {
-            throw new Error("SECRET_KEY is not defined");
-          }
-
+        if (!secretKey) throw new Error("SECRET_KEY is not defined");
+          
         jwt.verify(token, secretKey, (err, data) => {
             if (err) {
                 res.status(403).send({ valid: false, Message: "invalid or non-existent token"})
             } else {
-                res.json({ data })
+                console.log(data)
+                res.json(data)
             }
         })
     }
+}
+
+const logout = (_req: Request, res: Response) => {
+    res
+        .clearCookie('access_token')
+        .json({ message: 'Logout successfull'})
 }
 
 const updateUser = async(req: Request, res: Response) => {
@@ -188,5 +188,6 @@ export {
     createUser,
     loginUser,
     verification,
-    confirmAccount
+    confirmAccount,
+    logout
 }

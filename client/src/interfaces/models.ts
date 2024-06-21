@@ -33,13 +33,8 @@ interface CourseRequest {
     user_id: number | undefined
 }
 
-interface NavProps {
-    handleLogout: () => void,
-}
-
 interface AuthNavProps {
     userName: string,
-    handleLogout: () => void,
     handleNewCourse: () => void
 }
 
@@ -97,8 +92,7 @@ interface Technology {
 export type 
             { 
                 Curso,
-                CourseRequest,
-                NavProps, 
+                CourseRequest, 
                 CardProps, 
                 AuthNavProps, 
                 Author, 
