@@ -94,7 +94,15 @@ const loginUser: any  = async(req: Request, res: Response) => {
           
         const token = jwt.sign(userSessionData, secretKey, { expiresIn: '1d' })
 
-        return res.header('authorization', token).json({ login: true, user: userSessionData, token: token });
+        return res
+            .cookie('access_token', token, {
+                httpOnly: true, // La cookie sólo se podrá acceder desde el servidor
+                secure: false, // Con certificado SSL
+                sameSite: 'strict', // Sólo desde el mismo sitio
+                maxAge: 86400000 // 1 día
+            })
+            .header('authorization', token)
+            .json({ login: true, user: userSessionData, token: token });
 
     } catch (error: unknown) {
         return res.status(500).send(serverErrorMessage + error)

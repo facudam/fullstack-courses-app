@@ -30,7 +30,7 @@
     object-fit: cover;
 }
 
-.card h3 {
+.card h2 {
     padding: 10px 0px;
     color: var(--main-black);
     font-weight: 700;
