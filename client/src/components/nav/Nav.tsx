@@ -1,12 +1,11 @@
 import { FC, useContext } from "react"
 import { Link } from "react-router-dom"
-import { NavProps } from "../../interfaces/models"
 import { CoursesContext } from "../../context/CoursesContext"
 import { profile, hat} from "../../assets/images/images"
 import styles from '../nav/Nav.module.css'
 import AuthNav from "../authNav/AuthNav"
 
-const Nav: FC<NavProps> = ({ handleLogout }) => {
+const Nav: FC = () => {
 
     const { isAuthenticated, userName, setIsCreateCourseModalOpen } = useContext(CoursesContext);
 
@@ -34,8 +33,7 @@ const Nav: FC<NavProps> = ({ handleLogout }) => {
                                     <img src={ profile } alt="" width={35} />
                                     <div className={ styles['secondary-nav-ctn'] }>
                                         <AuthNav 
-                                            userName={ userName } 
-                                            handleLogout={ handleLogout } 
+                                            userName={ userName }  
                                             handleNewCourse={ () => setIsCreateCourseModalOpen(true) } 
                                         />
                                     </div>

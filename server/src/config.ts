@@ -20,7 +20,6 @@ const PORT = process.env.PORT,
     NODEMAILER_PORT = process.env.NODEMAILER_PORT,
     URL_EMAILSENDER = process.env.URL_EMAILSENDER
 
-
 export {
     PORT,
     DB_HOST,

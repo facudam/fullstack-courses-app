@@ -17,33 +17,21 @@ const Home: FC = () => {
             isCourseModalOpen, 
             setUserId,
             isCreateCourseModalOpen,
-            token
           } = useContext(CoursesContext)
 
 
         useEffect(() => {
             const fetchData = async () => {
-              const storageToken = localStorage.getItem('token');
-              if (!token && storageToken !== null && storageToken.length <= 0) return;
-
               try {
-                const { data } = await axios.get(`${apiBaseUrl}/api/validation`, {
-                  headers: {
-                    Authorization: `Bearer ${(token) ? token : localStorage.getItem('token')}`
-                  }
-                });
-          
-                if (data.data.valid) {
+                const { data } = await axios.get(`${apiBaseUrl}/api/validation`, { withCredentials: true })
+                if (data.valid) {
                   setIsAuthenticated(true);
-                  localStorage.setItem('isUserAuthenticated', 'true');
-                  setUserId(data.data.userId);
-                  setUserName(data.data.username);
+                  setUserId(data.userId);
+                  setUserName(data.username);
                 } else {
                   setIsAuthenticated(false);
-                  localStorage.setItem('isUserAuthenticated', 'false');
                 }
               } catch (error) {
-                localStorage.setItem('isUserAuthenticated', 'false');
                 setIsAuthenticated(false);
                 console.log(`Ups, ha ocurrido un error al intentar realizar la validación: ${error}`);
               }
