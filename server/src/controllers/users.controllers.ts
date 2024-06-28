@@ -94,14 +94,7 @@ const loginUser: any  = async(req: Request, res: Response) => {
           
         const token = jwt.sign(userSessionData, secretKey, { expiresIn: '1d' })
 
-        return res
-            .cookie('access_token', token, {
-                httpOnly: true, // La cookie sólo se podrá acceder desde el servidor
-                secure: false, // Con certificado SSL
-                sameSite: 'strict', // Sólo desde el mismo sitio
-                maxAge: 86400000 // 1 día
-            })
-            .json({ login: true, user: userSessionData, token: token });
+        return res.header('authorization', token).json({ login: true, user: userSessionData, token: token });
 
     } catch (error: unknown) {
         return res.status(500).send(serverErrorMessage + error)
@@ -129,29 +122,28 @@ const confirmAccount = async (req: Request, res: Response) => {
 }
 
 const verification = (req: Request, res: Response) => {
-    const token = req.cookies.access_token;
+    let token = req.headers['x-acces-token'] || req.headers['authorization']
+    
     if(!token) {
         res.status(401).send({ valid: false, message: "Invalid or non-existent token" })
     }
     if (token !== undefined && typeof token === 'string') {
+        token = token.split(' ')[1]
+
         const secretKey: string | undefined = SECRET;
-        if (!secretKey) throw new Error("SECRET_KEY is not defined");
-          
+
+        if (!secretKey) {
+            throw new Error("SECRET_KEY is not defined");
+          }
+
         jwt.verify(token, secretKey, (err, data) => {
             if (err) {
                 res.status(403).send({ valid: false, Message: "invalid or non-existent token"})
             } else {
-                console.log(data)
-                res.json(data)
+                res.json({ data })
             }
         })
     }
-}
-
-const logout = (_req: Request, res: Response) => {
-    res
-        .clearCookie('access_token')
-        .json({ message: 'Logout successfull'})
 }
 
 const updateUser = async(req: Request, res: Response) => {
@@ -188,6 +180,5 @@ export {
     createUser,
     loginUser,
     verification,
-    confirmAccount,
-    logout
+    confirmAccount
 }
