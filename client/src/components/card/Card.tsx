@@ -19,7 +19,7 @@ const Card: FC<CardProps> = ({ id,  title, author, image, is_free, technology, w
             onClick={() => openCourse(id) } 
             className={ styles.card }>
             <div className={ styles['image-ctn'] }>
-                <img src={ image } alt={ title }/>
+                <img src={ image } alt=""/>
             </div>
             <h2>{ title }</h2>
             <div className={ styles['full-data-card'] }>

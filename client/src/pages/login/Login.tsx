@@ -39,10 +39,7 @@ export const Login = () => {
 
     setIsDataEmpty(false)
 
-    axios.post(`${ apiBaseUrl }/api/login`, { 
-      email, password }, {
-        withCredentials: true // Incluímos las credenciales: la cookie con el token
-      })
+    axios.post(`${ apiBaseUrl }/api/login`, { email, password })
       .then((res: AxiosResponse) => {
         if (res.data.login) {
           setToken(res.data.token)
