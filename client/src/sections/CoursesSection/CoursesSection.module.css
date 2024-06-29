@@ -8,31 +8,83 @@
     padding: var(--general-padding);
 }
 
-.filters-ctn {
+.filter-btn {
+    border: none;
+    width: 75px;
+    padding: 5px 7px;
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
     display: flex;
-    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.filter-btn img {
+    width: 20px;
+}
+
+.filter-btn span {
+    font-size: .8rem;
+    color: var(--blue);
+}
+
+.filters-ctn {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 0;
+    background-color: #fff;
+    flex-direction: column;
+    z-index: 100;
     gap: 15px;
     flex-wrap: wrap;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity .2s ease-in;
+}
+
+.filters-ctn.active {
+    padding: 25px;
+    width: 100vw;
+    max-height: 100vh;
+    opacity: 1;
+}
+
+.filters-ctn_btn {
+    width: 25px;
+    margin-right: auto;
+    border: none;
+    background-color: inherit;
+    font-size: 1.2rem;
+    color: var(--blue);
+    font-weight: 700;
+    cursor: pointer;
 }
 
 .btn-ctn {
     display: flex;
-    gap: 15px;
+    flex-direction: column;
+    gap: 10px;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 25px;
 }
 
 .btn-ctn button {
-    border: 2px solid transparent;
-    background-color: var(--background);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background-color: inherit;
     cursor: pointer;
-    font-size: .8rem;
+    font-size: .9rem;
     font-weight: 600;
     color: var(--blue);
-    opacity: .4;
-    padding-bottom: 2px;
+    padding: 3px;
     transition: all .2s ease;
-    font-family: Poppins;
+    font-family: Poppins;   
 }
 
 .btn-ctn button:hover {
@@ -40,23 +92,24 @@
 }
 
 .btn-ctn button.is-active {
-    border-bottom:  2px solid var(--blue);
+    background-color: rgba(21, 109, 187, .17);
+    color: var(--blue);
     opacity: 1;
 }
 
-
-
 .info-filters-ctn {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 25px;
     justify-content: center;
+    margin-top: 25px;
 }
 
 .info-filters-ctn select {
-    border: 1.9px solid #d3d3d3;
-    padding: 1px 0 1px 3px;
-    border-radius: 3px;
+    border: none;
+    border-bottom: 1px solid #d3d3d3;
+    padding: 3px;
     font-family: Poppins;
     min-width: 120px;
     overflow: hidden;
@@ -74,11 +127,49 @@
     .card-section {
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
-    .info-filters-ctn {
-        justify-content: space-between;
+    .filter-btn {
+        display: none;
+    }
+    .filters-ctn {
+        display: flex;
+        position: static;
+        flex-direction: row;
+        padding: 0;
+        width: auto;
+        max-height: 100vh;
+        background-color: inherit;
+        justify-content: center;
+        opacity: 1;
+    }
+    .filters-ctn_btn {
+        display: none;
+    }
+    .btn-ctn {
+        flex-direction: row;
+        gap: 15px;
+        margin-top: 0;
     }
     .btn-ctn button {
+        padding: 0 0 2px 0;
         font-size: .95rem;
+        opacity: .4;
+        border-width: 2px;
+    }
+    .btn-ctn button.is-active {
+        color: var(--blue);
+        background-color: inherit;
+        border-bottom:  2px solid var(--blue);
+    }
+    .info-filters-ctn {
+        margin-top: 0;
+        gap: 10px;
+        justify-content: space-between;
+        flex-direction: row;
+    }
+    .info-filters-ctn select {
+        padding: 1px 0 1px 3px;
+        border: 1.9px solid #d3d3d3;
+        border-radius: 3px;
     }
 }
 
