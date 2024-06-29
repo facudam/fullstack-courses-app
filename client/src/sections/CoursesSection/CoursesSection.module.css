@@ -34,7 +34,7 @@
     position: fixed;
     top: 0;
     right: 0;
-    height: 100%;
+    bottom: 0;
     width: 0;
     background-color: #fff;
     flex-direction: column;
@@ -114,6 +114,7 @@
     min-width: 120px;
     overflow: hidden;
     outline: none;
+    background-color: #fff;
 }
 
 .card-section {
@@ -140,6 +141,7 @@
         background-color: inherit;
         justify-content: center;
         opacity: 1;
+        z-index: 0;
     }
     .filters-ctn_btn {
         display: none;
@@ -154,6 +156,7 @@
         font-size: .95rem;
         opacity: .4;
         border-width: 2px;
+        border-radius: 0;
     }
     .btn-ctn button.is-active {
         color: var(--blue);
