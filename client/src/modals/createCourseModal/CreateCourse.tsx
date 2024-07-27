@@ -92,7 +92,7 @@ const CreateCourse: FC = () => {
       };
 
     return(
-        <ModalLayout closeFn={ closeModal }>
+        <ModalLayout closeFn={ closeModal } maxWidth="850px">
             <form onSubmit={handleSubmit} className={ styles.form }>
                 <div className={`${styles.header} ${styles['space-beetwen']}`}>
                     <h2>Añade un nuevo curso</h2>

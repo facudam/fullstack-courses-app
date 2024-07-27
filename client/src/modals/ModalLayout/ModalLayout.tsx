@@ -4,14 +4,15 @@ import styles from './ModalLayout.module.css'
 
 interface ModalLayoutProps {
     children?: React.ReactNode,
-    closeFn: () => void
+    closeFn: () => void,
+    maxWidth?: string
 }
 
-const ModalLayout: FC<ModalLayoutProps> = ({ children, closeFn }) => {
+const ModalLayout: FC<ModalLayoutProps> = ({ children, closeFn, maxWidth = "1000px" }) => {
     return ReactDOM.createPortal(
         <>
             <div onClick={ closeFn } className={ styles['full-screen'] }></div>
-            <div className={ styles.modal }>
+            <div className={ styles.modal } style={{ "maxWidth": maxWidth }}>
                 { children }
             </div>
         </>,
