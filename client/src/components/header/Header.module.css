@@ -1,6 +1,6 @@
 @font-face {
-    font-family: eina;
-    src: url('../../fonts/eina-03-bold.ttf');
+    font-family: SairaCondensed;
+    src: url('../../fonts/SairaCondensed-SemiBold.ttf');
     font-display: swap;
 }
 
@@ -28,13 +28,14 @@
     background-color: var(--main-black);
 	background-image: url(https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExczlhMGl5bW13M2w3c3hleXhpdXdiYm4zMWtoYmlhM2prNnRvcmVxZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kg19fN5BXbZGIDznzG/giphy.gif);
 	background-size: cover;
-    font-family: Eina;
+    font-family: SairaCondensed;
 	color: transparent;
     background-clip: text;
 	-moz-background-clip: text;
 	-webkit-background-clip: text;
-	font-size: clamp(1rem, 10vw, 3.2rem);
+	font-size: clamp(1.4rem, 13vw, 4.1rem);
     text-align: center;
+    line-height: 1.1;
 }
 
 .header-ctn__titles {
